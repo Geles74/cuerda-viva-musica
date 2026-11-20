@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuerda Viva Música · Músicos de Cuerda de Conservatorio para Eventos</title>
+  <meta name="description" content="Plataforma exclusiva que conecta a jóvenes músicos de cuerda (+18) estudiantes de conservatorio con organizadores de eventos y bodas." />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --surface-alt: #f3efe8;
+      --text: #1c1917;
+      --text-muted: #57534e;
+      --primary: #7c2d12;
+      --primary-hover: #9a3412;
+      --accent: #b45309;
+      --accent-soft: #fef3c7;
+      --border: #e7e5e4;
+      --success: #15803d;
+      --success-bg: #dcfce7;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(28, 25, 23, 0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .nav-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.5px;
+    }
+    .brand-text strong {
+      display: block;
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+    .brand-text span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--primary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-outline {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .btn-sm { padding: 0.45rem 0.9rem; font-size: 0.85rem; }
+
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 3rem;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.3px;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 4.5vw, 3.3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      max-width: 850px;
+      margin: 0 auto 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--primary);
+      font-family: Georgia, serif;
+    }
+    .hero p {
+      font-size: 1.12rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 2rem;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .pillars {
+      max-width: 1180px;
+      margin: 0 auto 3.5rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .pillar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .pillar-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--surface-alt);
+      color: var(--primary);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.9rem;
+      font-size: 0.9rem;
+    }
+    .pillar-card h3 {
+      font-size: 1.08rem;
+      margin-bottom: 0.4rem;
+    }
+    .pillar-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .about-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+    .about-container {
+      max-width: 1060px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    @media (max-width: 820px) {
+      .about-container { grid-template-columns: 1fr; }
+    }
+    .about-tag {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .about-container h2 {
+      font-size: 1.95rem;
+      line-height: 1.25;
+      margin-bottom: 1.1rem;
+    }
+    .about-container p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .about-highlight {
+      background: var(--bg);
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .about-highlight h4 {
+      font-size: 1.05rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+    .about-highlight ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.93rem;
+      color: var(--text-muted);
+    }
+    .about-highlight li strong {
+      color: var(--text);
+    }
+
+    .section {
+      max-width: 1180px;
+      margin: 0 auto 4rem;
+      padding: 0 1.5rem;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-header h2 {
+      font-size: 1.75rem;
+      margin-bottom: 0.25rem;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .count-pill {
+      background: var(--surface-alt);
+      color: var(--text);
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      border: 1px solid var(--border);
+    }
+
+    .filters-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      align-items: end;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .filter-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.94rem;
+      font-family: inherit;
+      background: #fff;
+      color: var(--text);
+    }
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .musicians-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.5rem;
+    }
+    .musician-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .instrument-tag {
+      background: var(--accent-soft);
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+    }
+    .verified-tag {
+      background: var(--success-bg);
+      color: var(--success);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+    .musician-card h3 {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .musician-meta {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .musician-bio {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin: 0.75rem 0;
+    }
+    .card-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .price-box span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .price-box strong {
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .security-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .security-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+    .security-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      background: #1c1917;
+      color: #d6d3d1;
+      padding: 2.5rem 1.5rem;
+      margin-top: 4rem;
+    }
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+    }
+    .footer-links button {
+      background: none;
+      border: none;
+      color: #a8a29e;
+      cursor: pointer;
+      font-size: 0.85rem;
+      text-decoration: underline;
+    }
+    .footer-links button:hover { color: #fff; }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 25, 23, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 100;
+      overflow-y: auto;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border-radius: 16px;
+      max-width: 640px;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+    .modal-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: var(--surface-alt);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .modal-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .modal h2 { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .modal-sub { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+    .form-full { grid-column: 1 / -1; }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0.5rem 0;
+    }
+    .checkbox-row input { width: auto; margin-top: 0.25rem; }
+    .alert-success {
+      display: none;
+      background: var(--success-bg);
+      color: var(--success);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 0.92rem;
+    }
+    .admin-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      background: var(--bg);
+    }
+    .admin-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <div class="brand-logo">CVM</div>
+        <div class="brand-text">
+          <strong>Cuerda Viva Música</strong>
+          <span>Talento de Conservatorio · Solo Cuerda</span>
+        </div>
+      </a>
+      <nav>
+        <a href="#quienes-somos">Quiénes somos</a>
+        <a href="#catalogo">Músicos</a>
+        <a href="#garantias">Garantías</a>
+        <button class="btn btn-outline btn-sm" onclick="openModal('modal-musico')">Soy músico (+18) · Unirme</button>
+        <button class="btn btn-primary btn-sm" onclick="openModal('modal-evento')">Contratar músicos</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <span class="badge">Plataforma Exclusiva · Instrumentos de Cuerda · Conservatorio (+18)</span>
+    <h1>El talento de la cuerda sinfónica, <em>directamente en tu evento</em></h1>
+    <p>Conectamos a estudiantes mayores de 18 años de conservatorio (violín, viola, violonchelo, contrabajo y arpa) con organizadores de bodas, galas y eventos que buscan música en vivo de máxima calidad.</p>
+    <div class="hero-actions">
+      <a href="#catalogo" class="btn btn-primary">Explorar músicos verificados</a>
+      <button class="btn btn-outline" onclick="openModal('modal-musico')">Soy estudiante de cuerda (+18)</button>
+    </div>
+  </section>
+
+  <section class="pillars">
+    <div class="pillar-card">
+      <div class="pillar-icon">100%</div>
+      <h3>Exclusivo de Cuerda Sinfónica</h3>
+      <p>Dedicado únicamente a violín, viola, violonchelo, contrabajo y arpa, tanto en formato solista como en dúos, tríos o cuartetos de cuerda.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon">+18</div>
+      <h3>Estudiantes de Conservatorio</h3>
+      <p>Verificamos la mayoría de edad y la matrícula o expediente académico en conservatorio, además de audiciones reales en vídeo.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon">RGPD</div>
+      <h3>Intermediación Segura</h3>
+      <p>Protegemos la privacidad de los jóvenes intérpretes ocultando sus datos personales y validando cada solicitud de evento.</p>
+    </div>
+  </section>
+
+  <section id="quienes-somos" class="about-section">
+    <div class="about-container">
+      <div>
+        <span class="about-tag">Quiénes somos · Nuestra historia</span>
+        <h2>Nacidos en casa, entre partituras, estuches y ensayos</h2>
+        <p><strong>Cuerda Viva Música</strong> nace de nuestra propia experiencia como padres. Desde que nuestras hijas eran bien pequeñas se iniciaron en la música con instrumentos de cuerda, y a lo largo de todos estos años de conservatorio hemos vivido de cerca su esfuerzo, disciplina y pasión.</p>
+        <p>Con el tiempo comprobamos lo difícil que resulta para los instrumentos de orquesta sinfónica abrirse paso en el mundo laboral. Mientras que los instrumentos de viento cuentan con una enorme demanda en bandas de música, charangas, fallas y festejos populares, los intérpretes de cuerda suelen verse limitados casi siempre a participar como colaboradores puntuales en orquestas jóvenes.</p>
+        <p>Por eso decidimos crear este puente: un espacio propio y cuidado donde los <strong>músicos de cuerda mayores de 18 años que estudian en conservatorio</strong> puedan darse a conocer, conseguir sus primeras actuaciones remuneradas con garantías y acercar la elegancia de la cuerda a todo tipo de celebraciones.</p>
+      </div>
+      <div class="about-highlight">
+        <h4>Nuestro compromiso con los jóvenes músicos</h4>
+        <ul>
+          <li><strong>Visibilidad real:</strong> Damos protagonismo exclusivo a los instrumentos de cuerda frente a circuitos más saturados.</li>
+          <li><strong>Criterio académico:</strong> Solo admitimos perfiles mayores de edad con formación activa o titulada en conservatorio.</li>
+          <li><strong>Trato justo y seguro:</strong> Filtramos cada petición de evento para evitar intermediarios abusivos o contactos no deseados.</li>
+          <li><strong>Impulso profesional:</strong> Ayudamos a transformar años de estudio en experiencia escénica y remuneración digna.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalogo" class="section">
+    <div class="section-header">
+      <div>
+        <h2>Músicos de Cuerda Verificados</h2>
+        <p>Intérpretes mayores de 18 años con estudios de conservatorio y audición revisada.</p>
+      </div>
+      <span class="count-pill" id="musicians-count">4 músicos verificados</span>
+    </div>
+
+    <div class="filters-bar">
+      <div class="filter-group">
+        <label for="filter-instrument">Instrumento o Formación</label>
+        <select id="filter-instrument" onchange="renderCatalog()">
+          <option value="">Todos los instrumentos de cuerda</option>
+          <option value="Violín">Violín</option>
+          <option value="Viola">Viola</option>
+          <option value="Violonchelo">Violonchelo</option>
+          <option value="Contrabajo">Contrabajo</option>
+          <option value="Arpa">Arpa</option>
+          <option value="Cuarteto de Cuerda">Cuarteto de Cuerda</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="filter-city">Provincia / Ciudad</label>
+        <select id="filter-city" onchange="renderCatalog()">
+          <option value="">Toda España</option>
+          <option value="València">València</option>
+          <option value="Madrid">Madrid</option>
+          <option value="Barcelona">Barcelona</option>
+          <option value="Alicante">Alicante</option>
+          <option value="Castellón">Castellón</option>
+          <option value="Sevilla">Sevilla</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="filter-event">Tipo de Evento</label>
+        <select id="filter-event" onchange="renderCatalog()">
+          <option value="">Cualquier evento</option>
+          <option value="Boda / Ceremonia">Boda / Ceremonia</option>
+          <option value="Evento Corporativo / Gala">Evento Corporativo / Gala</option>
+          <option value="Concierto Privado">Concierto Privado</option>
+          <option value="Grabación / Estudio">Grabación / Estudio</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <button class="btn btn-outline" style="width:100%" onclick="resetFilters()">Limpiar filtros</button>
+      </div>
+    </div>
+
+    <div class="musicians-grid" id="catalog-grid"></div>
+  </section>
+
+  <section id="garantias" class="section">
+    <div class="section-header">
+      <div>
+        <h2>Garantía de calidad y protección de datos</h2>
+        <p>Un entorno de confianza pensado tanto para las familias y músicos como para los clientes.</p>
+      </div>
+    </div>
+    <div class="security-grid">
+      <div class="security-card">
+        <h3>1. Verificación de Conservatorio y +18</h3>
+        <p>Ningún perfil se publica automáticamente. Comprobamos la mayoría de edad, los estudios en conservatorio y un enlace real tocando el instrumento.</p>
+      </div>
+      <div class="security-card">
+        <h3>2. Privacidad del Músico (RGPD)</h3>
+        <p>El teléfono, correo electrónico y documentación académica nunca se muestran en público, evitando spam o contactos indebidos.</p>
+      </div>
+      <div class="security-card">
+        <h3>3. Solicitudes Validadas</h3>
+        <p>Para pedir presupuesto o disponibilidad exigimos identificación real del organizador y detalles concretos del evento antes de ponerles en contacto.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <strong>Cuerda Viva Música</strong> · Plataforma de intermediación exclusiva para músicos de cuerda de conservatorio (+18) · Cumplimiento RGPD
+      </div>
+      <div class="footer-links">
+        <button onclick="openAdminModal()">Acceso Administración</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL ALTA MÚSICO -->
+  <div class="modal-backdrop" id="modal-musico">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-musico')">✕</button>
+      <span class="modal-tag">Alta de Intérprete · Revisión Manual</span>
+      <h2>Únete a Cuerda Viva Música</h2>
+      <p class="modal-sub">Exclusivo para músicos de cuerda mayores de 18 años que cursen o hayan cursado estudios en conservatorio.</p>
+      <form id="form-musico" onsubmit="submitMusician(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre y Apellidos *</label>
+            <input type="text" id="m-name" required placeholder="Ej. Laura Martínez" />
+          </div>
+          <div class="form-group">
+            <label>Instrumento Principal *</label>
+            <select id="m-instrument" required>
+              <option value="">Selecciona instrumento...</option>
+              <option value="Violín">Violín</option>
+              <option value="Viola">Viola</option>
+              <option value="Violonchelo">Violonchelo</option>
+              <option value="Contrabajo">Contrabajo</option>
+              <option value="Arpa">Arpa</option>
+              <option value="Cuarteto de Cuerda">Cuarteto de Cuerda</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Conservatorio y Curso / Titulación *</label>
+            <input type="text" id="m-conservatory" required placeholder="Ej. CSM Joaquín Rodrigo · 3º Superior" />
+          </div>
+          <div class="form-group">
+            <label>Ciudad / Provincia Base *</label>
+            <select id="m-city" required>
+              <option value="València">València</option>
+              <option value="Madrid">Madrid</option>
+              <option value="Barcelona">Barcelona</option>
+              <option value="Alicante">Alicante</option>
+              <option value="Castellón">Castellón</option>
+              <option value="Sevilla">Sevilla</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Especialidad de Evento *</label>
+            <select id="m-specialty" required>
+              <option value="Boda / Ceremonia">Boda / Ceremonia</option>
+              <option value="Evento Corporativo / Gala">Evento Corporativo / Gala</option>
+              <option value="Concierto Privado">Concierto Privado</option>
+              <option value="Grabación / Estudio">Grabación / Estudio</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Caché Orientativo (€/evento) *</label>
+            <input type="number" id="m-price" required min="50" placeholder="Ej. 180" />
+          </div>
+          <div class="form-group">
+            <label>Teléfono de contacto (Privado) *</label>
+            <input type="tel" id="m-phone" required placeholder="Solo visible para administración" />
+          </div>
+          <div class="form-group">
+            <label>Correo electrónico (Privado) *</label>
+            <input type="email" id="m-email" required placeholder="tu@email.com" />
+          </div>
+          <div class="form-group form-full">
+            <label>Enlace a Vídeo Tocando (YouTube / Vimeo / Instagram) *</label>
+            <input type="url" id="m-video" required placeholder="https://..." />
+          </div>
+          <div class="form-group form-full">
+            <label>Currículum Vitae o Acreditación de Conservatorio (PDF)</label>
+            <input type="file" id="m-cv" accept=".pdf" />
+          </div>
+          <div class="form-group form-full">
+            <label>Repertorio y Experiencia en Orquestas o Cámara *</label>
+            <textarea id="m-bio" rows="3" required placeholder="Cuéntanos tu experiencia en orquestas jóvenes, música de cámara y estilos que interpretas..."></textarea>
+          </div>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="m-age" required />
+          <label for="m-age">Declaro ser <strong>mayor de 18 años</strong> y estar cursando (o haber finalizado) estudios oficiales en un conservatorio de música.</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="m-rgpd" required />
+          <label for="m-rgpd">Acepto la Política de Privacidad (RGPD) y autorizo a Cuerda Viva Música a custodiar mis datos de forma confidencial.</label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem;">Enviar perfil a verificación</button>
+      </form>
+      <div class="alert-success" id="musico-success">
+        <strong>¡Solicitud recibida correctamente!</strong> Revisaremos tu acreditación de conservatorio y vídeo antes de publicar tu ficha en el catálogo.
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL SOLICITAR EVENTO -->
+  <div class="modal-backdrop" id="modal-evento">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-evento')">✕</button>
+      <span class="modal-tag">Contratación Protegida</span>
+      <h2>Solicitar Músicos para Evento</h2>
+      <p class="modal-sub">Indícanos los detalles de tu celebración y conectaremos tu propuesta con el intérprete seleccionado.</p>
+      <form id="form-evento" onsubmit="submitEvent(event)">
+        <div class="form-grid">
+          <div class="form-group form-full">
+            <label>Músico o Formación Seleccionada *</label>
+            <input type="text" id="e-musician" required placeholder="Ej. Clara Vidal (Violonchelo) o cualquier violín en València" />
+          </div>
+          <div class="form-group">
+            <label>Nombre del Organizador o Empresa *</label>
+            <input type="text" id="e-client" required placeholder="Tu nombre o empresa" />
+          </div>
+          <div class="form-group">
+            <label>Correo Electrónico de Contacto *</label>
+            <input type="email" id="e-email" required placeholder="contacto@empresa.com" />
+          </div>
+          <div class="form-group">
+            <label>Teléfono de Contacto *</label>
+            <input type="tel" id="e-phone" required placeholder="600 000 000" />
+          </div>
+          <div class="form-group">
+            <label>Tipo de Evento *</label>
+            <select id="e-type" required>
+              <option value="Boda / Ceremonia">Boda / Ceremonia</option>
+              <option value="Evento Corporativo / Gala">Evento Corporativo / Gala</option>
+              <option value="Concierto Privado">Concierto Privado</option>
+              <option value="Grabación / Estudio">Grabación / Estudio</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Fecha del Evento *</label>
+            <input type="date" id="e-date" required />
+          </div>
+          <div class="form-group">
+            <label>Ciudad / Lugar del Evento *</label>
+            <input type="text" id="e-city" required placeholder="Ej. València" />
+          </div>
+          <div class="form-group form-full">
+            <label>Presupuesto Estimado (€) *</label>
+            <input type="number" id="e-budget" required min="50" placeholder="Ej. 250" />
+          </div>
+          <div class="form-group form-full">
+            <label>Detalles del Repertorio y Horario *</label>
+            <textarea id="e-details" rows="3" required placeholder="Duración aproximada, piezas deseadas, interior o exterior..."></textarea>
+          </div>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="e-terms" required />
+          <label for="e-terms">Confirmo que los datos del evento son reales y acepto las condiciones de intermediación de Cuerda Viva Música.</label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem;">Enviar solicitud de disponibilidad</button>
+      </form>
+      <div class="alert-success" id="evento-success">
+        <strong>¡Solicitud enviada!</strong> Hemos registrado tu propuesta y nos pondremos en contacto contigo tras confirmar disponibilidad con el músico.
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ADMINISTRACIÓN -->
+  <div class="modal-backdrop" id="modal-admin">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-admin')">✕</button>
+      <span class="modal-tag">Área Privada</span>
+      <h2>Panel de Auditoría y Gestión</h2>
+      <div id="admin-login-box">
+        <p class="modal-sub">Introduce la clave de administración para revisar perfiles pendientes y solicitudes.</p>
+        <div class="form-group">
+          <label>Contraseña de Administrador</label>
+          <input type="password" id="admin-pass" placeholder="••••••••" />
+        </div>
+        <button class="btn btn-primary" style="margin-top:0.75rem;" onclick="checkAdminPass()">Entrar al panel</button>
+      </div>
+      <div id="admin-panel-content" style="display:none;">
+        <h3 style="margin: 1rem 0 0.5rem;">Músicos pendientes de verificación</h3>
+        <div id="admin-pending-list"></div>
+        <h3 style="margin: 1.5rem 0 0.5rem;">Solicitudes de eventos recibidas</h3>
+        <div id="admin-events-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // CONFIGURACIÓN SUPABASE (Pega aquí tus credenciales reales de Supabase)
+    // =========================================================================
+    const SUPABASE_URL = "";      // Ej: "https://tuproyecto.supabase.co"
+    const SUPABASE_ANON_KEY = ""; // Ej: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    const ADMIN_PASSWORD = "cuerdaviva2026"; // Cámbiala por tu contraseña segura
+
+    const supabaseClient = (SUPABASE_URL && SUPABASE_ANON_KEY)
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
+
+    // Perfiles iniciales de ejemplo mientras conectas tu base de datos Supabase
+    const initialMusicians = [
+      {
+        id: 1,
+        name: "Elena Navarro",
+        instrument: "Violín",
+        conservatory: "CSM Joaquín Rodrigo de València · Grado Superior",
+        city: "València",
+        specialty: "Boda / Ceremonia",
+        price: 180,
+        video: "https://youtube.com",
+        bio: "Violinista de 21 años con experiencia en orquestas jóvenes y música de cámara. Repertorio clásico y bandas sonoras para ceremonias.",
+        status: "aprobado"
+      },
+      {
+        id: 2,
+        name: "Sofía & Alba (Dúo Cuerda Viva)",
+        instrument: "Violonchelo",
+        conservatory: "Conservatorio Profesional de Música de València · 6º EE.PP.",
+        city: "València",
+        specialty: "Evento Corporativo / Gala",
+        price: 320,
+        video: "https://youtube.com",
+        bio: "Dúo de violín y violonchelo formado por jóvenes intérpretes de conservatorio (+18). Elegancia acústica para cócteles y cenas de gala.",
+        status: "aprobado"
+      },
+      {
+        id: 3,
+        name: "Marc Soler",
+        instrument: "Contrabajo",
+        conservatory: "ESMUC Barcelona · Grado Superior",
+        city: "Barcelona",
+        specialty: "Concierto Privado",
+        price: 210,
+        video: "https://youtube.com",
+        bio: "Contrabajista clásico y de jazz acústico. Colaborador habitual en agrupaciones sinfónicas juveniles.",
+        status: "aprobado"
+      },
+      {
+        id: 4,
+        name: "Cuarteto Turia",
+        instrument: "Cuarteto de Cuerda",
+        conservatory: "CSM València · Estudiantes de Superior (+18)",
+        city: "València",
+        specialty: "Boda / Ceremonia",
+        price: 580,
+        video: "https://youtube.com",
+        bio: "Cuarteto clásico (2 violines, viola y violonchelo) formado por compañeros de conservatorio. Especialistas en ceremonias y eventos exclusivos.",
+        status: "aprobado"
+      }
+    ];
+
+    let musicians = [...initialMusicians];
+    let eventRequests = [];
+
+    async function loadData() {
+      if (supabaseClient) {
+        const { data: mData } = await supabaseClient.from('musicos').select('*');
+        if (mData && mData.length > 0) musicians = mData;
+        const { data: eData } = await supabaseClient.from('solicitudes').select('*');
+        if (eData) eventRequests = eData;
+      }
+      renderCatalog();
+    }
+
+    function renderCatalog() {
+      const inst = document.getElementById('filter-instrument').value;
+      const city = document.getElementById('filter-city').value;
+      const ev = document.getElementById('filter-event').value;
+
+      const filtered = musicians.filter(m =>
+        m.status === 'aprobado' &&
+        (!inst || m.instrument === inst) &&
+        (!city || m.city === city) &&
+        (!ev || m.specialty === ev)
+      );
+
+      document.getElementById('musicians-count').textContent =
+        `${filtered.length} ${filtered.length === 1 ? 'músico verificado' : 'músicos verificados'}`;
+
+      const grid = document.getElementById('catalog-grid');
+      if (filtered.length === 0) {
+        grid.innerHTML = `<p style="color:var(--text-muted); grid-column:1/-1;">No hay músicos disponibles con estos filtros ahora mismo. Prueba a ampliar la búsqueda.</p>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(m => `
+        <article class="musician-card">
+          <div>
+            <div class="card-top">
+              <span class="instrument-tag">${m.instrument}</span>
+              <span class="verified-tag">✓ Conservatorio +18</span>
+            </div>
+            <h3>${m.name}</h3>
+            <div class="musician-meta">${m.conservatory} · <strong>${m.city}</strong></div>
+            <p class="musician-bio">${m.bio}</p>
+          </div>
+          <div>
+            <div style="margin-bottom:0.75rem;">
+              <a href="${m.video}" target="_blank" rel="noopener" style="font-size:0.85rem; color:var(--primary); font-weight:600; text-decoration:none;">▶ Ver audición en vídeo</a>
+            </div>
+            <div class="card-footer">
+              <div class="price-box">
+                <span>Caché orientativo</span>
+                <strong>Desde ${m.price} €</strong>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="requestMusician('${m.name} (${m.instrument})')">Solicitar</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function resetFilters() {
+      document.getElementById('filter-instrument').value = '';
+      document.getElementById('filter-city').value = '';
+      document.getElementById('filter-event').value = '';
+      renderCatalog();
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function requestMusician(label) {
+      document.getElementById('e-musician').value = label;
+      openModal('modal-evento');
+    }
+
+    async function submitMusician(e) {
+      e.preventDefault();
+      const newM = {
+        name: document.getElementById('m-name').value,
+        instrument: document.getElementById('m-instrument').value,
+        conservatory: document.getElementById('m-conservatory').value,
+        city: document.getElementById('m-city').value,
+        specialty: document.getElementById('m-specialty').value,
+        price: Number(document.getElementById('m-price').value),
+        phone: document.getElementById('m-phone').value,
+        email: document.getElementById('m-email').value,
+        video: document.getElementById('m-video').value,
+        bio: document.getElementById('m-bio').value,
+        status: 'pendiente'
+      };
+
+      if (supabaseClient) {
+        await supabaseClient.from('musicos').insert([newM]);
+      } else {
+        newM.id = Date.now();
+        musicians.push(newM);
+      }
+
+      document.getElementById('form-musico').reset();
+      document.getElementById('musico-success').style.display = 'block';
+    }
+
+    async function submitEvent(e) {
+      e.preventDefault();
+      const newE = {
+        musician: document.getElementById('e-musician').value,
+        client: document.getElementById('e-client').value,
+        email: document.getElementById('e-email').value,
+        phone: document.getElementById('e-phone').value,
+        type: document.getElementById('e-type').value,
+        date: document.getElementById('e-date').value,
+        city: document.getElementById('e-city').value,
+        budget: Number(document.getElementById('e-budget').value),
+        details: document.getElementById('e-details').value
+      };
+
+      if (supabaseClient) {
+        await supabaseClient.from('solicitudes').insert([newE]);
+      } else {
+        newE.id = Date.now();
+        eventRequests.push(newE);
+      }
+
+      document.getElementById('form-evento').reset();
+      document.getElementById('evento-success').style.display = 'block';
+    }
+
+    function openAdminModal() {
+      openModal('modal-admin');
+    }
+
+    function checkAdminPass() {
+      const val = document.getElementById('admin-pass').value;
+      if (val === ADMIN_PASSWORD) {
+        document.getElementById('admin-login-box').style.display = 'none';
+        document.getElementById('admin-panel-content').style.display = 'block';
+        renderAdmin();
+      } else {
+        alert('Contraseña incorrecta');
+      }
+    }
+
+    function renderAdmin() {
+      const pending = musicians.filter(m => m.status === 'pendiente');
+      const pList = document.getElementById('admin-pending-list');
+      pList.innerHTML = pending.length === 0
+        ? '<p style="font-size:0.9rem; color:var(--text-muted);">No hay músicos pendientes de revisión.</p>'
+        : pending.map(m => `
+          <div class="admin-item">
+            <strong>${m.name}</strong> · ${m.instrument} (${m.city})<br/>
+            <small>${m.conservatory} | Tel: ${m.phone || '-'} | Email: ${m.email || '-'}</small>
+            <div class="admin-actions">
+              <button class="btn btn-primary btn-sm" onclick="approveMusician(${m.id})">Aprobar y publicar</button>
+            </div>
+          </div>
+        `).join('');
+
+      const eList = document.getElementById('admin-events-list');
+      eList.innerHTML = eventRequests.length === 0
+        ? '<p style="font-size:0.9rem; color:var(--text-muted);">No hay solicitudes de eventos todavía.</p>'
+        : eventRequests.map(ev => `
+          <div class="admin-item">
+            <strong>${ev.type} en ${ev.city}</strong> (${ev.date})<br/>
+            <small>Músico: ${ev.musician} | Cliente: ${ev.client} (${ev.email} / ${ev.phone}) | Presupuesto: ${ev.budget} €</small>
+            <p style="font-size:0.85rem; margin-top:0.35rem;">${ev.details}</p>
+          </div>
+        `).join('');
+    }
+
+    async function approveMusician(id) {
+      if (supabaseClient) {
+        await supabaseClient.from('musicos').update({ status: 'aprobado' }).eq('id', id);
+        await loadData();
+      } else {
+        const target = musicians.find(m => m.id === id);
+        if (target) target.status = 'aprobado';
+        renderCatalog();
+      }
+      renderAdmin();
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
