@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cuerda Viva Música | Directorio Verificado de Músicos y Eventos</title>
+  <title>Cuerda Viva Música | Directorio Verificado de Músicos de Cuerda y Eventos</title>
   <style>
     :root {
       --bg: #0f1115;
@@ -439,7 +439,7 @@
     <div class="nav-container">
       <div class="brand">Cuerda Viva <span>Música</span></div>
       <nav>
-        <a href="#directorio">Músicos y Eventos</a>
+        <a href="#directorio">Músicos de Cuerda y Eventos</a>
         <a href="#registro">Solicitar Alta Verificada</a>
         <a href="#contacto">Contacto</a>
         <a href="#privacidad">Privacidad</a>
@@ -448,50 +448,50 @@
   </header>
 
   <section class="hero">
-    <div class="badge-verified">Comunidad 100% Verificada · Revisión Humana Previa</div>
-    <h1>Conecta con músicos reales y eventos en directo</h1>
+    <div class="badge-verified">Exclusivo Instrumentos de Cuerda · Revisión Humana Previa</div>
+    <h1>Conecta con músicos de cuerda reales y eventos en directo</h1>
     <p>
-      Directorio independiente de artistas, bandas y salas. Cada perfil se revisa manualmente antes de su publicación para garantizar autenticidad y evitar suplantaciones.
+      Directorio independiente dedicado exclusivamente a intérpretes y agrupaciones de instrumentos de cuerda (frotada y pulsada). Cada perfil se revisa manualmente antes de su publicación para garantizar autenticidad y evitar suplantaciones.
     </p>
   </section>
 
   <main class="container">
     <!-- Directorio aprobado manualmente -->
     <section id="directorio">
-      <h2 class="section-title">Perfiles y Eventos Destacados</h2>
-      <p class="section-subtitle">Publicados únicamente tras superar nuestra verificación de identidad.</p>
+      <h2 class="section-title">Músicos de Cuerda y Eventos Destacados</h2>
+      <p class="section-subtitle">Publicados únicamente tras superar nuestra verificación de identidad y especialidad en cuerda.</p>
 
       <div class="grid-cards">
         <article class="card">
-          <span class="card-tag">Músico Verificado</span>
+          <span class="card-tag">Cuerda Verificada · Guitarra y Contrabajo</span>
           <h3>Trío Acústico del Turia</h3>
-          <p>Jazz manouche, boleros y repertorio acústico para eventos privados y salas culturales en València.</p>
+          <p>Dos guitarras acústicas y contrabajo. Jazz manouche, boleros y repertorio instrumental para eventos privados y salas en València.</p>
         </article>
 
         <article class="card">
-          <span class="card-tag">Músico Verificado</span>
+          <span class="card-tag">Cuerda Verificada · Violonchelo</span>
           <h3>Elena Navarro · Violonchelo</h3>
-          <p>Solista clásica y contemporánea. Disponible para grabaciones de estudio, ceremonias y recitales.</p>
+          <p>Violonchelista solista clásica y contemporánea. Disponible para grabaciones de estudio, ceremonias y recitales.</p>
         </article>
 
         <article class="card">
-          <span class="card-tag">Evento Verificado</span>
+          <span class="card-tag">Evento Verificado · Cuerda</span>
           <h3>Ciclo Noches de Cuerda</h3>
-          <p>Encuentro mensual de cantautores y formato acústico íntimo. Entrada libre hasta completar aforo.</p>
+          <p>Encuentro mensual de solistas y ensembles de cuerda pulsada y frotada. Entrada libre hasta completar aforo.</p>
         </article>
       </div>
     </section>
 
     <!-- Formulario de Alta con Revisión Humana y Verificación Separada -->
     <section id="registro" class="form-box">
-      <h2 class="section-title">Solicitar Alta de Músico o Evento</h2>
+      <h2 class="section-title">Solicitar Alta de Músico de Cuerda o Evento</h2>
       <p class="section-subtitle">
         Ningún dato se publica automáticamente. Tu solicitud llegará a nuestro equipo para revisión manual.
       </p>
 
       <form id="registroForm" action="https://formsubmit.co/cuerdavivamusica@gmail.com" method="POST" enctype="multipart/form-data">
         <!-- Configuración FormSubmit -->
-        <input type="hidden" name="_subject" value="Nueva Solicitud de Verificación - Cuerda Viva Música" />
+        <input type="hidden" name="_subject" value="Nueva Solicitud de Verificación (Cuerda) - Cuerda Viva Música" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
 
@@ -499,14 +499,51 @@
           <div class="form-group">
             <label for="tipoPerfil">Tipo de solicitud *</label>
             <select id="tipoPerfil" name="Tipo_Solicitud" required>
-              <option value="Músico / Banda">Músico / Banda</option>
-              <option value="Evento / Sala">Evento / Sala de conciertos</option>
+              <option value="Solista de Cuerda">Solista de Cuerda</option>
+              <option value="Agrupación / Ensemble de Cuerda">Agrupación / Ensemble de Cuerda</option>
+              <option value="Evento / Ciclo de Cuerda">Evento / Ciclo de Cuerda</option>
             </select>
           </div>
 
           <div class="form-group">
+            <label for="instrumentoCuerda">Instrumento de cuerda principal *</label>
+            <select id="instrumentoCuerda" name="Instrumento_Cuerda" required>
+              <option value="" disabled selected>Selecciona un instrumento de cuerda...</option>
+              <optgroup label="Cuerda frotada">
+                <option value="Violín">Violín</option>
+                <option value="Viola">Viola</option>
+                <option value="Violonchelo">Violonchelo</option>
+                <option value="Contrabajo">Contrabajo</option>
+                <option value="Viola da gamba / Zanfona">Viola da gamba / Zanfona</option>
+              </optgroup>
+              <optgroup label="Cuerda pulsada">
+                <option value="Guitarra española / clásica">Guitarra española / clásica</option>
+                <option value="Guitarra flamenca">Guitarra flamenca</option>
+                <option value="Guitarra acústica">Guitarra acústica</option>
+                <option value="Guitarra eléctrica">Guitarra eléctrica</option>
+                <option value="Bajo eléctrico">Bajo eléctrico</option>
+                <option value="Arpa">Arpa</option>
+                <option value="Bandurria / Laúd / Mandolina">Bandurria / Laúd / Mandolina</option>
+                <option value="Ukelele / Timple / Charango">Ukelele / Timple / Charango</option>
+                <option value="Banjo / Bouzouki / Sitar">Banjo / Bouzouki / Sitar</option>
+              </optgroup>
+              <optgroup label="Formaciones y eventos">
+                <option value="Cuarteto / Ensemble de cuerda">Cuarteto / Ensemble de cuerda</option>
+                <option value="Evento exclusivamente de cuerda">Evento exclusivamente de cuerda</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
             <label for="nombreArtistico">Nombre artístico o del evento *</label>
-            <input type="text" id="nombreArtistico" name="Nombre_Artistico_o_Evento" placeholder="Ej. Cuarteto Mediterráneo" required />
+            <input type="text" id="nombreArtistico" name="Nombre_Artistico_o_Evento" placeholder="Ej. Cuarteto de Cuerda Mediterráneo" required />
+          </div>
+
+          <div class="form-group">
+            <label for="ciudad">Ciudad / Provincia *</label>
+            <input type="text" id="ciudad" name="Ciudad_Provincia" placeholder="Ej. València" required />
           </div>
         </div>
 
@@ -523,21 +560,14 @@
           </div>
         </div>
 
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="emailRegistro">Correo electrónico de contacto *</label>
-            <input type="email" id="emailRegistro" name="Email_Contacto" placeholder="tu@correo.com" required />
-          </div>
-
-          <div class="form-group">
-            <label for="ciudad">Ciudad / Provincia *</label>
-            <input type="text" id="ciudad" name="Ciudad_Provincia" placeholder="Ej. València" required />
-          </div>
+        <div class="form-group">
+          <label for="emailRegistro">Correo electrónico de contacto *</label>
+          <input type="email" id="emailRegistro" name="Email_Contacto" placeholder="tu@correo.com" required />
         </div>
 
         <div class="form-group">
           <label for="descripcion">Descripción artística o detalles del evento *</label>
-          <textarea id="descripcion" name="Descripcion" rows="3" placeholder="Estilo musical, enlaces a muestras de audio/vídeo, fecha o disponibilidad..." required></textarea>
+          <textarea id="descripcion" name="Descripcion" rows="3" placeholder="Repertorio de cuerda, enlaces a muestras de audio/vídeo, fecha o disponibilidad..." required></textarea>
         </div>
 
         <!-- Bloque de Verificación de Identidad en 2 Pasos -->
@@ -643,7 +673,7 @@
       <div class="privacy-summary-box">
         <strong>Información Básica sobre Protección de Datos (Política de Privacidad):</strong><br />
         <strong>Responsable:</strong> Cuerda Viva Música (<a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>).<br />
-        <strong>Finalidad:</strong> Gestionar solicitudes de alta en el directorio, verificar puntualmente la identidad del solicitante para evitar suplantaciones y responder a consultas.<br />
+        <strong>Finalidad:</strong> Gestionar solicitudes de alta en el directorio de música de cuerda, verificar puntualmente la identidad del solicitante para evitar suplantaciones y responder a consultas.<br />
         <strong>Legitimación:</strong> Consentimiento expreso del interesado al marcar las casillas de aceptación y enviar el formulario (art. 6.1.a RGPD).<br />
         <strong>Conservación y borrado:</strong> Los archivos de verificación (selfie en directo y documento DNI/NIE) se <strong>eliminan de forma definitiva inmediatamente después</strong> de comprobar la identidad. Los datos de perfiles aprobados se conservan mientras permanezcan publicados o hasta que solicites su baja.<br />
         <strong>Destinatarios:</strong> No se ceden datos a terceros salvo obligación legal. Los formularios utilizan FormSubmit únicamente como canal técnico de envío hacia el correo del responsable.<br />
@@ -652,7 +682,7 @@
       </div>
 
       <div class="footer-bottom">
-        <span>&copy; 2026 Cuerda Viva Música · Comunidad Cultural Independiente</span>
+        <span>&copy; 2026 Cuerda Viva Música · Comunidad Cultural de Instrumentos de Cuerda</span>
         <span>
           <a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a> ·
           <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>
@@ -673,7 +703,7 @@
 
       <h4>2. Datos tratados y finalidad</h4>
       <p>
-        Tratamos únicamente los datos que nos facilitas voluntariamente a través de nuestros formularios: datos identificativos y artísticos para publicar tu ficha de músico o evento previa revisión, datos de contacto para atender tus consultas, y documentación puntual de verificación (número de DNI/NIE, fotografía del documento y selfie en directo) con la exclusiva finalidad de confirmar tu identidad y prevenir fraudes o suplantaciones.
+        Tratamos únicamente los datos que nos facilitas voluntariamente a través de nuestros formularios: datos identificativos y artísticos para publicar tu ficha de músico de cuerda o evento previa revisión, datos de contacto para atender tus consultas, y documentación puntual de verificación (número de DNI/NIE, fotografía del documento y selfie en directo) con la exclusiva finalidad de confirmar tu identidad y prevenir fraudes o suplantaciones.
       </p>
 
       <h4>3. Base jurídica</h4>
