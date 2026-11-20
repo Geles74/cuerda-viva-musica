@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cuerda Viva Música | Directorio Verificado de Músicos de Cuerda y Eventos</title>
+  <title>Cuerda Viva Música | Directorio Verificado de Músicos y Eventos</title>
   <style>
     :root {
       --bg: #0f1115;
@@ -439,7 +439,7 @@
     <div class="nav-container">
       <div class="brand">Cuerda Viva <span>Música</span></div>
       <nav>
-        <a href="#directorio">Músicos de Cuerda y Eventos</a>
+        <a href="#directorio">Músicos y Eventos</a>
         <a href="#registro">Solicitar Alta Verificada</a>
         <a href="#contacto">Contacto</a>
         <a href="#privacidad">Privacidad</a>
@@ -448,36 +448,36 @@
   </header>
 
   <section class="hero">
-    <div class="badge-verified">Exclusivo Instrumentos de Cuerda · Revisión Humana Previa</div>
+    <div class="badge-verified">Comunidad 100% Verificada · Revisión Humana Previa</div>
     <h1>Conecta con músicos de cuerda reales y eventos en directo</h1>
     <p>
-      Directorio independiente dedicado exclusivamente a intérpretes y agrupaciones de instrumentos de cuerda (frotada y pulsada). Cada perfil se revisa manualmente antes de su publicación para garantizar autenticidad y evitar suplantaciones.
+      Directorio independiente exclusivo de intérpretes de cuerda, agrupaciones y conciertos. Cada perfil se revisa manualmente antes de su publicación para garantizar autenticidad y evitar suplantaciones.
     </p>
   </section>
 
   <main class="container">
-    <!-- Directorio aprobado manualmente -->
+    <!-- Directorio aprobado manualmente + cargado desde Google Sheets -->
     <section id="directorio">
-      <h2 class="section-title">Músicos de Cuerda y Eventos Destacados</h2>
-      <p class="section-subtitle">Publicados únicamente tras superar nuestra verificación de identidad y especialidad en cuerda.</p>
+      <h2 class="section-title">Perfiles y Eventos Destacados</h2>
+      <p class="section-subtitle">Publicados únicamente tras superar nuestra verificación de identidad.</p>
 
-      <div class="grid-cards">
+      <div id="gridCards" class="grid-cards">
         <article class="card">
-          <span class="card-tag">Cuerda Verificada · Guitarra y Contrabajo</span>
+          <span class="card-tag">Músico Verificado · Guitarra y Contrabajo</span>
           <h3>Trío Acústico del Turia</h3>
-          <p>Dos guitarras acústicas y contrabajo. Jazz manouche, boleros y repertorio instrumental para eventos privados y salas en València.</p>
+          <p>Jazz manouche, boleros y repertorio de cuerda acústica para eventos privados y salas culturales en València.</p>
         </article>
 
         <article class="card">
-          <span class="card-tag">Cuerda Verificada · Violonchelo</span>
+          <span class="card-tag">Músico Verificado · Violonchelo</span>
           <h3>Elena Navarro · Violonchelo</h3>
-          <p>Violonchelista solista clásica y contemporánea. Disponible para grabaciones de estudio, ceremonias y recitales.</p>
+          <p>Solista clásica y contemporánea. Disponible para grabaciones de estudio, ceremonias y recitales.</p>
         </article>
 
         <article class="card">
-          <span class="card-tag">Evento Verificado · Cuerda</span>
+          <span class="card-tag">Evento Verificado · Cuerda Pulsada y Frotada</span>
           <h3>Ciclo Noches de Cuerda</h3>
-          <p>Encuentro mensual de solistas y ensembles de cuerda pulsada y frotada. Entrada libre hasta completar aforo.</p>
+          <p>Encuentro mensual de guitarristas, cuartetos y formato acústico íntimo. Entrada libre hasta completar aforo.</p>
         </article>
       </div>
     </section>
@@ -491,7 +491,7 @@
 
       <form id="registroForm" action="https://formsubmit.co/cuerdavivamusica@gmail.com" method="POST" enctype="multipart/form-data">
         <!-- Configuración FormSubmit -->
-        <input type="hidden" name="_subject" value="Nueva Solicitud de Verificación (Cuerda) - Cuerda Viva Música" />
+        <input type="hidden" name="_subject" value="Nueva Solicitud de Verificación - Cuerda Viva Música" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
 
@@ -499,24 +499,23 @@
           <div class="form-group">
             <label for="tipoPerfil">Tipo de solicitud *</label>
             <select id="tipoPerfil" name="Tipo_Solicitud" required>
-              <option value="Solista de Cuerda">Solista de Cuerda</option>
-              <option value="Agrupación / Ensemble de Cuerda">Agrupación / Ensemble de Cuerda</option>
+              <option value="Músico / Agrupación de Cuerda">Músico / Agrupación de Cuerda</option>
               <option value="Evento / Ciclo de Cuerda">Evento / Ciclo de Cuerda</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="instrumentoCuerda">Instrumento de cuerda principal *</label>
+            <label for="instrumentoCuerda">Instrumento o formación de cuerda *</label>
             <select id="instrumentoCuerda" name="Instrumento_Cuerda" required>
-              <option value="" disabled selected>Selecciona un instrumento de cuerda...</option>
-              <optgroup label="Cuerda frotada">
+              <option value="">Selecciona instrumento de cuerda...</option>
+              <optgroup label="Cuerda Frotada">
                 <option value="Violín">Violín</option>
                 <option value="Viola">Viola</option>
                 <option value="Violonchelo">Violonchelo</option>
                 <option value="Contrabajo">Contrabajo</option>
                 <option value="Viola da gamba / Zanfona">Viola da gamba / Zanfona</option>
               </optgroup>
-              <optgroup label="Cuerda pulsada">
+              <optgroup label="Cuerda Pulsada">
                 <option value="Guitarra española / clásica">Guitarra española / clásica</option>
                 <option value="Guitarra flamenca">Guitarra flamenca</option>
                 <option value="Guitarra acústica">Guitarra acústica</option>
@@ -527,9 +526,10 @@
                 <option value="Ukelele / Timple / Charango">Ukelele / Timple / Charango</option>
                 <option value="Banjo / Bouzouki / Sitar">Banjo / Bouzouki / Sitar</option>
               </optgroup>
-              <optgroup label="Formaciones y eventos">
-                <option value="Cuarteto / Ensemble de cuerda">Cuarteto / Ensemble de cuerda</option>
-                <option value="Evento exclusivamente de cuerda">Evento exclusivamente de cuerda</option>
+              <optgroup label="Agrupaciones y Eventos de Cuerda">
+                <option value="Dúo / Trío / Cuarteto de cuerda">Dúo / Trío / Cuarteto de cuerda</option>
+                <option value="Orquesta / Rondalla / Ensemble de cuerda">Orquesta / Rondalla / Ensemble de cuerda</option>
+                <option value="Evento exclusivo de instrumentos de cuerda">Evento exclusivo de instrumentos de cuerda</option>
               </optgroup>
             </select>
           </div>
@@ -538,7 +538,7 @@
         <div class="form-grid">
           <div class="form-group">
             <label for="nombreArtistico">Nombre artístico o del evento *</label>
-            <input type="text" id="nombreArtistico" name="Nombre_Artistico_o_Evento" placeholder="Ej. Cuarteto de Cuerda Mediterráneo" required />
+            <input type="text" id="nombreArtistico" name="Nombre_Artistico_o_Evento" placeholder="Ej. Cuarteto Mediterráneo" required />
           </div>
 
           <div class="form-group">
@@ -673,7 +673,7 @@
       <div class="privacy-summary-box">
         <strong>Información Básica sobre Protección de Datos (Política de Privacidad):</strong><br />
         <strong>Responsable:</strong> Cuerda Viva Música (<a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>).<br />
-        <strong>Finalidad:</strong> Gestionar solicitudes de alta en el directorio de música de cuerda, verificar puntualmente la identidad del solicitante para evitar suplantaciones y responder a consultas.<br />
+        <strong>Finalidad:</strong> Gestionar solicitudes de alta en el directorio, verificar puntualmente la identidad del solicitante para evitar suplantaciones y responder a consultas.<br />
         <strong>Legitimación:</strong> Consentimiento expreso del interesado al marcar las casillas de aceptación y enviar el formulario (art. 6.1.a RGPD).<br />
         <strong>Conservación y borrado:</strong> Los archivos de verificación (selfie en directo y documento DNI/NIE) se <strong>eliminan de forma definitiva inmediatamente después</strong> de comprobar la identidad. Los datos de perfiles aprobados se conservan mientras permanezcan publicados o hasta que solicites su baja.<br />
         <strong>Destinatarios:</strong> No se ceden datos a terceros salvo obligación legal. Los formularios utilizan FormSubmit únicamente como canal técnico de envío hacia el correo del responsable.<br />
@@ -682,7 +682,7 @@
       </div>
 
       <div class="footer-bottom">
-        <span>&copy; 2026 Cuerda Viva Música · Comunidad Cultural de Instrumentos de Cuerda</span>
+        <span>&copy; 2026 Cuerda Viva Música · Comunidad Cultural Independiente</span>
         <span>
           <a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a> ·
           <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>
@@ -733,6 +733,44 @@
   </div>
 
   <script>
+    // URL de tu aplicación web de Google Apps Script (sustituye el texto entre comillas por tu URL real)
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxn6gKITwjQqWw28YK2qcKkl-0JMc9qxePXxkO0R7vGtMDnorigjy8t3A9p3fvXOJd/exec';
+
+    // Cargar automáticamente las fichas aprobadas desde Google Sheets
+    async function cargarPerfilesAprobados() {
+      if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('PEGA_AQUI')) return;
+      try {
+        const res = await fetch(GOOGLE_SCRIPT_URL);
+        const lista = await res.json();
+        const grid = document.getElementById('gridCards');
+        if (!Array.isArray(lista) || lista.length === 0) return;
+
+        lista.forEach(item => {
+          const card = document.createElement('article');
+          card.className = 'card';
+
+          const tag = document.createElement('span');
+          tag.className = 'card-tag';
+          tag.textContent = (item.tipo || 'Verificado') + ' · ' + (item.instrumento || 'Cuerda');
+
+          const h3 = document.createElement('h3');
+          h3.textContent = (item.nombre || '') + (item.ciudad ? ' (' + item.ciudad + ')' : '');
+
+          const p = document.createElement('p');
+          p.textContent = item.descripcion || '';
+
+          card.appendChild(tag);
+          card.appendChild(h3);
+          card.appendChild(p);
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        console.warn('No se pudieron cargar los perfiles desde Google Sheets:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarPerfilesAprobados);
+
     // 1. Validación matemática oficial de DNI / NIE español
     function validarDniNie(valor) {
       const str = valor.trim().toUpperCase();
@@ -864,7 +902,7 @@
       startCamera();
     });
 
-    // Validación final antes de enviar el formulario de registro
+    // Validación final + envío silencioso de datos artísticos a Google Sheets antes de enviar el correo
     document.getElementById('registroForm').addEventListener('submit', (e) => {
       if (!validarDniNie(dniInput.value)) {
         e.preventDefault();
@@ -875,6 +913,23 @@
       if (!selfieFileInput.files || selfieFileInput.files.length === 0) {
         e.preventDefault();
         alert('Debes activar la cámara y capturar tu selfie en directo antes de enviar la solicitud.');
+        return;
+      }
+
+      if (GOOGLE_SCRIPT_URL && !GOOGLE_SCRIPT_URL.includes('PEGA_AQUI')) {
+        const payload = JSON.stringify({
+          tipo: document.getElementById('tipoPerfil').value,
+          instrumento: document.getElementById('instrumentoCuerda').value,
+          nombre: document.getElementById('nombreArtistico').value,
+          ciudad: document.getElementById('ciudad').value,
+          descripcion: document.getElementById('descripcion').value
+        });
+        fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: payload
+        }).catch(() => {});
       }
     });
 
