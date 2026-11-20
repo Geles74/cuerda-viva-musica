@@ -1,1308 +1,1375 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cuerda Viva Música | Red de Músicos de Cuerda de la Comunitat Valenciana</title>
-<style>
-  :root {
-    --wood-dark: #2c1e16;
-    --wood-medium: #5c3a21;
-    --varnish-amber: #a85d22;
-    --gold-brass: #c59b27;
-    --ivory-bg: #faf6f0;
-    --parchment: #f1e9dc;
-    --text-main: #241914;
-    --text-muted: #665448;
-    --border-light: #dfd2c0;
-    --success-green: #2d5a3c;
-    --alert-red: #8c2d23;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Georgia', 'Times New Roman', serif;
-    background-color: var(--ivory-bg);
-    color: var(--text-main);
-    line-height: 1.6;
-  }
-
-  .sans {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-
-  header {
-    background: linear-gradient(135deg, var(--wood-dark) 0%, #3e281c 100%);
-    color: #fff;
-    padding: 1.2rem 2rem;
-    border-bottom: 3px solid var(--gold-brass);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .brand-icon {
-    font-size: 1.8rem;
-    color: var(--gold-brass);
-  }
-
-  .brand h1 {
-    font-size: 1.5rem;
-    letter-spacing: 0.5px;
-    font-weight: normal;
-  }
-
-  .brand span {
-    display: block;
-    font-size: 0.75rem;
-    color: #d6c5b3;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-  }
-
-  nav button {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.25);
-    color: #f5ece0;
-    padding: 0.5rem 0.9rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.88rem;
-    transition: all 0.2s;
-  }
-
-  nav button:hover, nav button.active {
-    background: var(--varnish-amber);
-    border-color: var(--gold-brass);
-    color: #fff;
-  }
-
-  .auth-status {
-    background: rgba(0,0,0,0.3);
-    padding: 0.45rem 0.85rem;
-    border-radius: 20px;
-    font-size: 0.82rem;
-    border: 1px solid var(--gold-brass);
-    color: #f8e8c8;
-  }
-
-  .hero {
-    background: var(--parchment);
-    border-bottom: 1px solid var(--border-light);
-    padding: 2.2rem 2rem;
-    text-align: center;
-  }
-
-  .hero h2 {
-    font-size: 1.85rem;
-    color: var(--wood-dark);
-    margin-bottom: 0.5rem;
-    font-weight: normal;
-  }
-
-  .hero p {
-    max-width: 760px;
-    margin: 0 auto 1.2rem auto;
-    color: var(--text-muted);
-    font-size: 1.02rem;
-  }
-
-  .rules-banner {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    max-width: 960px;
-    margin: 0 auto;
-  }
-
-  .rule-pill {
-    background: #fff;
-    border: 1px solid var(--border-light);
-    border-left: 3px solid var(--varnish-amber);
-    padding: 0.55rem 0.9rem;
-    border-radius: 4px;
-    font-size: 0.83rem;
-    color: var(--wood-dark);
-  }
-
-  main {
-    max-width: 1140px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-  }
-
-  .section {
-    display: none;
-  }
-
-  .section.active {
-    display: block;
-  }
-
-  /* Eventos Teaser en Portada */
-  .teaser-box {
-    background: #fff;
-    border: 1px solid var(--border-light);
-    border-top: 4px solid var(--gold-brass);
-    border-radius: 6px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 8px rgba(44,30,22,0.05);
-  }
-
-  .teaser-header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    gap: 0.5rem;
-  }
-
-  .teaser-header h3 {
-    color: var(--wood-dark);
-    font-size: 1.25rem;
-  }
-
-  .teaser-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-  }
-
-  .teaser-card {
-    background: var(--ivory-bg);
-    border: 1px solid var(--border-light);
-    border-radius: 5px;
-    padding: 1rem;
-    position: relative;
-  }
-
-  .teaser-tag {
-    display: inline-block;
-    background: var(--wood-medium);
-    color: #fff;
-    font-size: 0.72rem;
-    padding: 0.2rem 0.55rem;
-    border-radius: 3px;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  .blurred-text {
-    filter: blur(4.5px);
-    user-select: none;
-    color: var(--text-muted);
-    margin: 0.4rem 0;
-    font-size: 0.9rem;
-  }
-
-  .teaser-lock {
-    margin-top: 0.6rem;
-    font-size: 0.82rem;
-    color: var(--varnish-amber);
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-
-  /* Filtros */
-  .filter-bar {
-    background: #fff;
-    border: 1px solid var(--border-light);
-    padding: 1.25rem;
-    border-radius: 6px;
-    margin-bottom: 1.5rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 1rem;
-  }
-
-  .filter-group label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: var(--wood-medium);
-    margin-bottom: 0.35rem;
-    text-transform: uppercase;
-  }
-
-  .filter-group select,
-  .filter-group input {
-    width: 100%;
-    padding: 0.55rem;
-    border: 1px solid #cbbba6;
-    border-radius: 4px;
-    background: var(--ivory-bg);
-    font-size: 0.92rem;
-    color: var(--text-main);
-  }
-
-  /* Tarjetas de Músicos */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-    gap: 1.4rem;
-  }
-
-  .card {
-    background: #fff;
-    border: 1px solid var(--border-light);
-    border-radius: 6px;
-    padding: 1.35rem;
-    box-shadow: 0 2px 6px rgba(44,30,22,0.04);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 0.75rem;
-    border-bottom: 1px solid var(--parchment);
-    padding-bottom: 0.6rem;
-  }
-
-  .instrument-badge {
-    background: var(--wood-dark);
-    color: var(--gold-brass);
-    padding: 0.25rem 0.65rem;
-    border-radius: 4px;
-    font-size: 0.82rem;
-    font-weight: bold;
-  }
-
-  .age-badge {
-    background: var(--parchment);
-    color: var(--wood-dark);
-    padding: 0.2rem 0.55rem;
-    border-radius: 4px;
-    font-size: 0.78rem;
-    border: 1px solid var(--border-light);
-  }
-
-  .card h4 {
-    font-size: 1.15rem;
-    color: var(--wood-dark);
-    margin-bottom: 0.35rem;
-  }
-
-  .card-meta {
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    margin-bottom: 0.75rem;
-  }
-
-  .card-meta p {
-    margin-bottom: 0.25rem;
-  }
-
-  .protected-overlay {
-    background: var(--parchment);
-    border: 1px dashed var(--varnish-amber);
-    padding: 0.75rem;
-    border-radius: 4px;
-    font-size: 0.84rem;
-    color: var(--wood-dark);
-    margin-top: 0.5rem;
-  }
-
-  .btn {
-    display: inline-block;
-    background: var(--varnish-amber);
-    color: #fff;
-    border: none;
-    padding: 0.6rem 1.1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    text-align: center;
-    text-decoration: none;
-    transition: background 0.2s;
-    width: 100%;
-    margin-top: 0.75rem;
-  }
-
-  .btn:hover {
-    background: var(--wood-medium);
-  }
-
-  .btn-secondary {
-    background: var(--wood-dark);
-  }
-
-  /* Formularios */
-  .form-container {
-    background: #fff;
-    border: 1px solid var(--border-light);
-    border-radius: 6px;
-    padding: 1.8rem;
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
-  .form-container h3 {
-    color: var(--wood-dark);
-    margin-bottom: 0.5rem;
-    font-size: 1.4rem;
-  }
-
-  .form-container p.subtitle {
-    color: var(--text-muted);
-    font-size: 0.92rem;
-    margin-bottom: 1.4rem;
-  }
-
-  .form-row {
-    margin-bottom: 1.1rem;
-  }
-
-  .form-row label {
-    display: block;
-    font-weight: bold;
-    font-size: 0.88rem;
-    margin-bottom: 0.35rem;
-    color: var(--wood-dark);
-  }
-
-  .form-row input[type="text"],
-  .form-row input[type="email"],
-  .form-row input[type="number"],
-  .form-row input[type="date"],
-  .form-row select,
-  .form-row textarea {
-    width: 100%;
-    padding: 0.6rem;
-    border: 1px solid #cbbba6;
-    border-radius: 4px;
-    background: var(--ivory-bg);
-    font-size: 0.95rem;
-  }
-
-  .checkbox-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-    background: var(--parchment);
-    padding: 0.85rem;
-    border-radius: 4px;
-    border: 1px solid var(--border-light);
-    margin-bottom: 1rem;
-    font-size: 0.88rem;
-  }
-
-  .checkbox-row input {
-    margin-top: 0.25rem;
-  }
-
-  .alert-box {
-    padding: 0.9rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-  }
-
-  .alert-info {
-    background: #eef4f0;
-    border-left: 4px solid var(--success-green);
-    color: #1f3d29;
-  }
-
-  .alert-warn {
-    background: #fdf3f2;
-    border-left: 4px solid var(--alert-red);
-    color: #611d16;
-  }
-
-  /* Mensajes y Plazo 3 días */
-  .msg-card {
-    background: #fff;
-    border: 1px solid var(--border-light);
-    border-left: 4px solid var(--gold-brass);
-    padding: 1.2rem;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-  }
-
-  .countdown-badge {
-    display: inline-block;
-    background: #fdf3f2;
-    color: var(--alert-red);
-    border: 1px solid #e0b4af;
-    padding: 0.25rem 0.6rem;
-    border-radius: 4px;
-    font-size: 0.82rem;
-    font-weight: bold;
-    margin-top: 0.4rem;
-  }
-
-  /* Footer discreto */
-  footer {
-    background: var(--wood-dark);
-    color: #cbbba6;
-    text-align: center;
-    padding: 1.8rem 1rem;
-    margin-top: 3.5rem;
-    font-size: 0.85rem;
-    border-top: 3px solid var(--gold-brass);
-  }
-
-  .footer-links {
-    margin-top: 0.6rem;
-    display: flex;
-    justify-content: center;
-    gap: 1.2rem;
-    flex-wrap: wrap;
-  }
-
-  .footer-links button {
-    background: none;
-    border: none;
-    color: #e6d5be;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 0.83rem;
-  }
-
-  /* Modal Aviso Legal / Titularidad */
-  .modal-backdrop {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(20, 12, 8, 0.72);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-  }
-
-  .modal-backdrop.open {
-    display: flex;
-  }
-
-  .modal-content {
-    background: #fff;
-    max-width: 580px;
-    width: 100%;
-    padding: 1.8rem;
-    border-radius: 6px;
-    border-top: 5px solid var(--varnish-amber);
-    max-height: 85vh;
-    overflow-y: auto;
-  }
-
-  .modal-content h3 {
-    color: var(--wood-dark);
-    margin-bottom: 0.8rem;
-  }
-
-  .modal-content p {
-    font-size: 0.9rem;
-    color: var(--text-main);
-    margin-bottom: 0.7rem;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuerda Viva Música | Intérpretes de Cuerda en la Comunitat Valenciana</title>
+    <style>
+        :root {
+            --bg-primary: #FAF7F2;
+            --bg-secondary: #F2ECE1;
+            --bg-card: #FFFFFF;
+            --wood-dark: #2C1810;
+            --wood-medium: #5C3A21;
+            --wood-warm: #8B5A2B;
+            --gold-accent: #B8860B;
+            --gold-light: #E8D5A7;
+            --text-main: #241914;
+            --text-muted: #6B5B53;
+            --border-subtle: #E2D7C5;
+            --success: #2E6F40;
+            --warning: #B45309;
+            --danger: #991B1B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .sans {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--wood-dark);
+            color: #FAF7F2;
+            padding: 1.1rem 2rem;
+            border-bottom: 3px solid var(--gold-accent);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: #FAF7F2;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--gold-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--wood-dark);
+            font-size: 1.2rem;
+        }
+
+        .brand-title {
+            font-size: 1.35rem;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-sub {
+            font-size: 0.72rem;
+            color: var(--gold-light);
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: #E8DFD5;
+            padding: 0.45rem 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(184, 134, 11, 0.2);
+            border-color: var(--gold-accent);
+            color: #FFFFFF;
+        }
+
+        .verify-badge {
+            font-size: 0.78rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+        }
+
+        .verify-badge.unverified {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .verify-badge.verified {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--wood-dark) 0%, var(--wood-medium) 100%);
+            color: #FAF7F2;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .hero h1 {
+            font-size: 2.35rem;
+            max-width: 820px;
+            margin: 0 auto 1rem;
+            font-weight: normal;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            color: #E8DFD5;
+            font-size: 1.05rem;
+        }
+
+        .trust-pills {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(232, 213, 167, 0.4);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            color: var(--gold-light);
+        }
+
+        /* Container & Sections */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.65rem;
+            color: var(--wood-dark);
+            font-weight: normal;
+        }
+
+        /* Teaser Events Strip on Home */
+        .teaser-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-left: 4px solid var(--gold-accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .teaser-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .teaser-header h3 {
+            color: var(--wood-dark);
+            font-size: 1.2rem;
+            font-weight: normal;
+        }
+
+        .teaser-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .teaser-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .teaser-tag {
+            display: inline-block;
+            background: var(--wood-dark);
+            color: var(--gold-light);
+            font-size: 0.72rem;
+            padding: 0.15rem 0.55rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .blurred-text {
+            filter: blur(4px);
+            user-select: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin: 0.5rem 0;
+        }
+
+        /* Sponsor Banner (Luthiers) */
+        .sponsor-banner {
+            background: linear-gradient(90deg, #F5EFE6 0%, #EFE5D5 100%);
+            border: 1px dashed var(--wood-warm);
+            border-radius: 8px;
+            padding: 1.1rem 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .sponsor-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--wood-warm);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1.25rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(44, 24, 16, 0.04);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--wood-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        input, select, textarea {
+            padding: 0.6rem 0.75rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: 5px;
+            font-size: 0.92rem;
+            background: #FFFEFC;
+            color: var(--text-main);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--gold-accent);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .musician-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 3px 10px rgba(44, 24, 16, 0.05);
+            position: relative;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .instrument-badge {
+            background: var(--bg-secondary);
+            color: var(--wood-dark);
+            border: 1px solid var(--border-subtle);
+            padding: 0.25rem 0.65rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .age-badge {
+            font-size: 0.75rem;
+            color: var(--success);
+            background: #ECFDF5;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            border: 1px solid #A7F3D0;
+        }
+
+        .musician-name {
+            font-size: 1.25rem;
+            color: var(--wood-dark);
+            margin-bottom: 0.35rem;
+        }
+
+        .masked-info {
+            background: #F8F4EC;
+            border: 1px dashed var(--wood-warm);
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin: 0.75rem 0;
+            font-size: 0.85rem;
+            color: var(--wood-medium);
+        }
+
+        .meta-list {
+            list-style: none;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin: 0.75rem 0;
+        }
+
+        .meta-list li {
+            margin-bottom: 0.35rem;
+        }
+
+        .meta-list strong {
+            color: var(--text-main);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.65rem 1.15rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--wood-dark);
+            color: #FAF7F2;
+        }
+
+        .btn-primary:hover {
+            background: var(--wood-medium);
+        }
+
+        .btn-gold {
+            background: var(--gold-accent);
+            color: #FFFFFF;
+        }
+
+        .btn-gold:hover {
+            background: #9A7009;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--wood-dark);
+            color: var(--wood-dark);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-secondary);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* Forms */
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .checkbox-box {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-subtle);
+            margin: 1rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
+            font-size: 0.88rem;
+        }
+
+        .checkbox-box input[type="checkbox"] {
+            margin-top: 0.25rem;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Messages / 3-Day Rule */
+        .agreement-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-left: 4px solid var(--warning);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .countdown-pill {
+            display: inline-block;
+            background: #FEF3C7;
+            color: #92400E;
+            font-weight: 700;
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.82rem;
+        }
+
+        /* Modals */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(24, 14, 10, 0.7);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 8px;
+            max-width: 540px;
+            width: 100%;
+            padding: 1.75rem;
+            border-top: 4px solid var(--gold-accent);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 0.6rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--wood-dark);
+            color: #D6C7B8;
+            padding: 2rem 1.5rem;
+            margin-top: 4rem;
+            font-size: 0.85rem;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-link {
+            color: var(--gold-light);
+            text-decoration: underline;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+    </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">
-    <div class="brand-icon">&#119070;</div>
-    <div>
-      <h1>Cuerda Viva Música</h1>
-      <span class="sans">Red Comunitaria · Valencia · Castellón · Alicante</span>
+    <div class="nav-container">
+        <a href="#" class="brand" onclick="showSection('inicio')">
+            <div class="brand-icon">𝄞</div>
+            <div>
+                <span class="brand-title">Cuerda Viva Música</span>
+                <span class="brand-sub sans">Comunitat Valenciana · Cuerda Clásica</span>
+            </div>
+        </a>
+
+        <nav class="sans">
+            <button class="nav-btn active" id="nav-inicio" onclick="showSection('inicio')">Intérpretes</button>
+            <button class="nav-btn" id="nav-eventos" onclick="showSection('eventos')">Eventos Publicados</button>
+            <button class="nav-btn" id="nav-publicar" onclick="showSection('publicar')">Publicar Evento</button>
+            <button class="nav-btn" id="nav-registro-musico" onclick="showSection('registro-musico')">Alta Músico (+18)</button>
+            <button class="nav-btn" id="nav-mensajes" onclick="showSection('mensajes')">Acuerdos (Plazo 3 días)</button>
+        </nav>
+
+        <button id="authStatusBtn" class="verify-badge unverified sans" onclick="openVerifyModal()">
+            🔒 Invitado (Verificar DNI)
+        </button>
     </div>
-  </div>
-
-  <nav class="sans">
-    <button id="nav-explorar" class="active" onclick="showSection('explorar')">Explorar Músicos</button>
-    <button id="nav-eventos" onclick="showSection('eventos')">Tablón de Eventos</button>
-    <button id="nav-registro" onclick="showSection('registro')">Registro y Verificación</button>
-    <button id="nav-mensajes" onclick="showSection('mensajes')">Mensajes (Plazo 3 días)</button>
-  </nav>
-
-  <div id="auth-indicator" class="auth-status sans">
-    Visitante sin verificar
-  </div>
 </header>
 
 <section class="hero">
-  <h2>Encuentro directo entre músicos de cuerda y organizadores</h2>
-  <p>Plataforma independiente para estudiantes y titulados de conservatorios de Valencia, Castellón y Alicante. Sin tarifas publicadas ni intermediarios: contacto directo con identidad verificada.</p>
-  <div class="rules-banner sans">
-    <div class="rule-pill"><strong>100% Sin Tarifas:</strong> Acuerdos libres entre ambas partes</div>
-    <div class="rule-pill"><strong>Identidad Real:</strong> Acceso a datos solo tras validar documento</div>
-    <div class="rule-pill"><strong>+18 Años:</strong> Músicos mayores de edad verificados</div>
-    <div class="rule-pill"><strong>Respuesta en 3 días:</strong> Compromiso máximo de 72 horas</div>
-  </div>
+    <h1>Intérpretes de cuerda de conservatorio para tus eventos en la Comunitat Valenciana</h1>
+    <p class="sans">Encuentra violinistas, violistas, violonchelistas y contrabajistas de Valencia, Castellón y Alicante. Sin tarifas prefijadas ni intermediarios: contacto directo tras verificación de identidad y respuesta garantizada en un máximo de 3 días.</p>
+    <div class="trust-pills sans">
+        <span class="pill">🎻 Exclusivo Instrumentos de Cuerda</span>
+        <span class="pill">🪪 Fichas Protegidas (Verificación DNI/NIE)</span>
+        <span class="pill">🤝 Trato Directo Sin Tarifas Fijas</span>
+        <span class="pill">⏳ Compromiso de Respuesta en 3 Días</span>
+    </div>
 </section>
 
-<main>
+<main class="container">
 
-  <!-- SECCIÓN 1: EXPLORAR MÚSICOS + CARAMELO DE EVENTOS EN PORTADA -->
-  <section id="sec-explorar" class="section active">
+    <!-- SECCIÓN 1: INICIO / BUSCADOR DE INTÉRPRETES -->
+    <div id="sec-inicio" class="section active">
 
-    <!-- Caramelo de Eventos Publicados en Portada -->
-    <div class="teaser-box">
-      <div class="teaser-header">
-        <h3>Últimos eventos publicados en la Comunitat Valenciana</h3>
-        <span class="sans" style="font-size: 0.83rem; color: var(--varnish-amber); font-weight: bold;">Vista previa · Regístrate para leer detalles y postularte</span>
-      </div>
-      <div id="home-events-teaser" class="teaser-grid"></div>
-    </div>
-
-    <!-- Buscador por Población y Conservatorios de las 3 provincias -->
-    <div class="filter-bar sans">
-      <div class="filter-group">
-        <label for="filter-instrumento">Instrumento de cuerda</label>
-        <select id="filter-instrumento" onchange="renderMusicians()">
-          <option value="">Todos los instrumentos</option>
-          <option value="Violín">Violín</option>
-          <option value="Viola">Viola</option>
-          <option value="Violonchelo">Violonchelo</option>
-          <option value="Contrabajo">Contrabajo</option>
-          <option value="Cuarteto de Cuerda">Cuarteto de Cuerda</option>
-          <option value="Trío / Dúo de Cuerda">Trío / Dúo de Cuerda</option>
-        </select>
-      </div>
-
-      <div class="filter-group">
-        <label for="filter-conservatorio">Conservatorio (CV)</label>
-        <select id="filter-conservatorio" onchange="renderMusicians()">
-          <option value="">Todos los conservatorios</option>
-          <optgroup label="Provincia de Valencia">
-            <option value="CSM Joaquín Rodrigo (Valencia)">CSM Joaquín Rodrigo (Valencia)</option>
-            <option value="CPM de Valencia">CPM de Valencia</option>
-            <option value="CPM José Iturbi (Valencia)">CPM José Iturbi (Valencia)</option>
-            <option value="CPM Torrent">CPM Torrent</option>
-            <option value="CPM Catarroja">CPM Catarroja</option>
-            <option value="CPM Llíria">CPM Llíria</option>
-            <option value="CPM Ontinyent">CPM Ontinyent</option>
-            <option value="CPM Xàtiva (Lluís Milà)">CPM Xàtiva (Lluís Milà)</option>
-            <option value="CPM Gandia (Josep Climent Oliva)">CPM Gandia / Oliva</option>
-            <option value="CPM Sagunto (Joaquín Rodrigo)">CPM Sagunto</option>
-            <option value="CPM Requena (Mariano Pérez Sánchez)">CPM Requena</option>
-            <option value="CPM Carcaixent (Mestre Vert)">CPM Carcaixent</option>
-            <option value="CPM Cullera (Rafael Talens)">CPM Cullera</option>
-            <option value="CPM Utiel">CPM Utiel</option>
-            <option value="CPM Buñol (San Rafael)">CPM Buñol</option>
-            <option value="CPM Godella (Pintor Pinazo)">CPM Godella</option>
-            <option value="CPM Meliana">CPM Meliana</option>
-            <option value="CPM Moncada">CPM Moncada</option>
-            <option value="CPM Riba-roja de Túria">CPM Riba-roja de Túria</option>
-            <option value="CPM Alzira">CPM Alzira</option>
-          </optgroup>
-          <optgroup label="Provincia de Castellón">
-            <option value="CSM Salvador Seguí (Castellón)">CSM Salvador Seguí (Castellón)</option>
-            <option value="CPM Mestre Tàrrega (Castellón)">CPM Mestre Tàrrega (Castellón)</option>
-            <option value="CPM Francesc Peñarroja (La Vall d'Uixó)">CPM Francesc Peñarroja (La Vall d'Uixó)</option>
-            <option value="CPM Mestre Feliu (Benicarló)">CPM Mestre Feliu (Benicarló)</option>
-            <option value="CPM Mestre Goterris (Vila-real)">CPM Mestre Goterris (Vila-real)</option>
-            <option value="CPM Segorbe (Alto Palancia)">CPM Segorbe (Alto Palancia)</option>
-            <option value="CPM Calasancio (Castellón)">CPM Calasancio (Castellón)</option>
-          </optgroup>
-          <optgroup label="Provincia de Alicante">
-            <option value="CSM Óscar Esplá (Alicante)">CSM Óscar Esplá (Alicante)</option>
-            <option value="CPM Guitarrista José Tomás (Alicante)">CPM Guitarrista José Tomás (Alicante)</option>
-            <option value="CPM Elche">CPM Elche</option>
-            <option value="CPM Juan Cantó (Alcoy)">CPM Juan Cantó (Alcoy)</option>
-            <option value="CPM Tenor Cortis (Dénia)">CPM Tenor Cortis (Dénia)</option>
-            <option value="CPM José Pérez Barceló (Benidorm)">CPM José Pérez Barceló (Benidorm)</option>
-            <option value="CPM Torrevieja (Francisco Casanovas)">CPM Torrevieja</option>
-            <option value="CPM Orihuela (Barítono Pedro Terol)">CPM Orihuela</option>
-            <option value="CPM Villena">CPM Villena</option>
-            <option value="CPM Elda (Ana María Sánchez)">CPM Elda</option>
-            <option value="CPM Novelda (Mestre Gomis)">CPM Novelda</option>
-            <option value="CPM Altea">CPM Altea</option>
-            <option value="CPM Xàbia">CPM Xàbia</option>
-            <option value="CPM San Vicente del Raspeig">CPM San Vicente del Raspeig</option>
-          </optgroup>
-        </select>
-      </div>
-
-      <div class="filter-group">
-        <label for="filter-poblacion">Población donde buscas</label>
-        <input type="text" id="filter-poblacion" placeholder="Ej. València, Elx, Castelló, Alcoi..." oninput="renderMusicians()">
-      </div>
-
-      <div class="filter-group">
-        <label for="filter-nivel">Nivel académico</label>
-        <select id="filter-nivel" onchange="renderMusicians()">
-          <option value="">Cualquier nivel</option>
-          <option value="Enseñanzas Profesionales (5º-6º)">Enseñanzas Profesionales (5º-6º)</option>
-          <option value="Enseñanzas Superiores (Grado)">Enseñanzas Superiores (Grado)</option>
-          <option value="Titulado Superior / Máster">Titulado Superior / Máster</option>
-        </select>
-      </div>
-    </div>
-
-    <div id="musicians-grid" class="cards-grid"></div>
-  </section>
-
-  <!-- SECCIÓN 2: TABLÓN DE EVENTOS COMPLETO -->
-  <section id="sec-eventos" class="section">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-      <div>
-        <h3 style="color: var(--wood-dark); font-size: 1.5rem;">Tablón de Eventos Musicales</h3>
-        <p class="sans" style="color: var(--text-muted); font-size: 0.9rem;">Los detalles exactos, lugar, fecha y contacto solo son visibles para usuarios con cuenta verificada.</p>
-      </div>
-      <button class="btn sans" style="width: auto; margin-top: 0;" onclick="togglePublishEventForm()">+ Publicar nuevo evento</button>
-    </div>
-
-    <!-- Formulario para publicar evento (solo usuarios verificados) -->
-    <div id="publish-event-box" class="form-container" style="display: none; margin-bottom: 2rem;">
-      <h3>Publicar solicitud de músicos</h3>
-      <p class="subtitle sans">Tu anuncio aparecerá como vista previa en portada y completo para músicos verificados.</p>
-      <div class="form-row sans">
-        <label>Título corto del evento (visible en vista previa)</label>
-        <input type="text" id="ev-titulo" placeholder="Ej. Ceremonia civil en jardín o Concierto de cámara">
-      </div>
-      <div class="form-row sans">
-        <label>Población del evento</label>
-        <input type="text" id="ev-poblacion" placeholder="Ej. Dénia, Vila-real, Paterna...">
-      </div>
-      <div class="form-row sans">
-        <label>Formación o instrumento buscado</label>
-        <input type="text" id="ev-instrumento" placeholder="Ej. Violín y Violonchelo, Cuarteto de cuerda...">
-      </div>
-      <div class="form-row sans">
-        <label>Fecha exacta y horario (protegido hasta registro)</label>
-        <input type="text" id="ev-fecha" placeholder="Ej. Sábado 14 de junio de 2027, 18:30h">
-      </div>
-      <div class="form-row sans">
-        <label>Descripción detallada y repertorio deseado (protegido hasta registro)</label>
-        <textarea id="ev-detalle" rows="3" placeholder="Describe el tipo de acto, lugar exacto y estilo musical..."></textarea>
-      </div>
-      <button class="btn sans" onclick="publishEvent()">Publicar en el tablón</button>
-    </div>
-
-    <div id="events-full-list" class="cards-grid"></div>
-  </section>
-
-  <!-- SECCIÓN 3: REGISTRO Y VERIFICACIÓN DE IDENTIDAD -->
-  <section id="sec-registro" class="section">
-    <div class="form-container">
-      <h3>Registro y Verificación de Identidad</h3>
-      <p class="subtitle sans">Para proteger la privacidad de los intérpretes y garantizar la seriedad de las solicitudes, es imprescindible acreditar tu identidad real antes de visualizar fichas completas o eventos.</p>
-
-      <div id="reg-feedback"></div>
-
-      <div class="form-row sans">
-        <label>Tipo de perfil</label>
-        <select id="reg-rol" onchange="toggleMusicianFields()">
-          <option value="organizador">Busco músicos (Particular, Familia, Entidad o Empresa)</option>
-          <option value="musico">Soy músico de cuerda (Estudiante o Titulado de Conservatorio)</option>
-        </select>
-      </div>
-
-      <div class="form-row sans">
-        <label>Nombre y apellidos reales (según documento oficial)</label>
-        <input type="text" id="reg-nombre" placeholder="Nombre completo">
-      </div>
-
-      <div class="form-row sans">
-        <label>Correo electrónico de contacto</label>
-        <input type="email" id="reg-email" placeholder="correo@ejemplo.com">
-      </div>
-
-      <div class="form-row sans">
-        <label>Población de residencia</label>
-        <input type="text" id="reg-poblacion" placeholder="Ej. Alacant, Castelló de la Plana, Gandia...">
-      </div>
-
-      <div class="form-row sans">
-        <label>Edad actual (años cumplidos)</label>
-        <input type="number" id="reg-edad" min="1" max="110" placeholder="Ej. 22">
-      </div>
-
-      <div class="checkbox-row sans">
-        <input type="checkbox" id="reg-mayor18">
-        <label for="reg-mayor18" style="font-weight: normal; margin: 0;">
-          <strong>Declaro bajo mi responsabilidad que soy mayor de 18 años</strong> y que los datos introducidos son veraces.
-        </label>
-      </div>
-
-      <!-- Campos específicos si es músico -->
-      <div id="musician-extra-fields" style="display: none; border-top: 1px solid var(--border-light); padding-top: 1rem; margin-top: 1rem;">
-        <div class="form-row sans">
-          <label>Instrumento principal</label>
-          <select id="reg-instrumento">
-            <option value="Violín">Violín</option>
-            <option value="Viola">Viola</option>
-            <option value="Violonchelo">Violonchelo</option>
-            <option value="Contrabajo">Contrabajo</option>
-            <option value="Cuarteto de Cuerda">Cuarteto de Cuerda</option>
-          </select>
+        <!-- Caramelo de Eventos en Portada -->
+        <div class="teaser-box">
+            <div class="teaser-header">
+                <h3>🎼 Últimos eventos publicados buscando intérpretes</h3>
+                <button class="btn btn-outline sans" onclick="showSection('eventos')">Ver todos los eventos →</button>
+            </div>
+            <div class="teaser-grid" id="homeTeaserGrid"></div>
         </div>
 
-        <div class="form-row sans">
-          <label>Conservatorio (Valencia, Castellón o Alicante)</label>
-          <select id="reg-conservatorio">
-            <option value="CSM Joaquín Rodrigo (Valencia)">CSM Joaquín Rodrigo (Valencia)</option>
-            <option value="CPM de Valencia">CPM de Valencia</option>
-            <option value="CPM José Iturbi (Valencia)">CPM José Iturbi (Valencia)</option>
-            <option value="CPM Torrent">CPM Torrent</option>
-            <option value="CPM Catarroja">CPM Catarroja</option>
-            <option value="CPM Llíria">CPM Llíria</option>
-            <option value="CPM Ontinyent">CPM Ontinyent</option>
-            <option value="CPM Xàtiva (Lluís Milà)">CPM Xàtiva (Lluís Milà)</option>
-            <option value="CPM Gandia / Oliva">CPM Gandia / Oliva</option>
-            <option value="CPM Sagunto">CPM Sagunto</option>
-            <option value="CSM Salvador Seguí (Castellón)">CSM Salvador Seguí (Castellón)</option>
-            <option value="CPM Mestre Tàrrega (Castellón)">CPM Mestre Tàrrega (Castellón)</option>
-            <option value="CPM Francesc Peñarroja (La Vall d'Uixó)">CPM Francesc Peñarroja (La Vall d'Uixó)</option>
-            <option value="CPM Mestre Feliu (Benicarló)">CPM Mestre Feliu (Benicarló)</option>
-            <option value="CPM Mestre Goterris (Vila-real)">CPM Mestre Goterris (Vila-real)</option>
-            <option value="CSM Óscar Esplá (Alicante)">CSM Óscar Esplá (Alicante)</option>
-            <option value="CPM Guitarrista José Tomás (Alicante)">CPM Guitarrista José Tomás (Alicante)</option>
-            <option value="CPM Elche">CPM Elche</option>
-            <option value="CPM Juan Cantó (Alcoy)">CPM Juan Cantó (Alcoy)</option>
-            <option value="CPM Tenor Cortis (Dénia)">CPM Tenor Cortis (Dénia)</option>
-            <option value="CPM José Pérez Barceló (Benidorm)">CPM José Pérez Barceló (Benidorm)</option>
-            <option value="CPM Torrevieja">CPM Torrevieja</option>
-            <option value="CPM Orihuela">CPM Orihuela</option>
-          </select>
+        <div class="section-header">
+            <h2>Directorio de Intérpretes Verificados</h2>
+            <span class="sans" style="color: var(--text-muted); font-size: 0.9rem;" id="resultsCounter">Mostrando intérpretes</span>
         </div>
 
-        <div class="form-row sans">
-          <label>Nivel de estudios actual</label>
-          <select id="reg-nivel">
-            <option value="Enseñanzas Profesionales (5º-6º)">Enseñanzas Profesionales (5º-6º)</option>
-            <option value="Enseñanzas Superiores (Grado)">Enseñanzas Superiores (Grado)</option>
-            <option value="Titulado Superior / Máster">Titulado Superior / Máster</option>
-          </select>
+        <!-- Buscador limpio: Instrumento, Conservatorio (3 provincias), Nivel y Población -->
+        <div class="filter-bar sans">
+            <div class="form-group">
+                <label for="filterInstrument">Instrumento de Cuerda</label>
+                <select id="filterInstrument" onchange="renderMusicians()">
+                    <option value="">Todos los instrumentos</option>
+                    <option value="Violín">Violín</option>
+                    <option value="Viola">Viola</option>
+                    <option value="Violonchelo">Violonchelo</option>
+                    <option value="Contrabajo">Contrabajo</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="filterConservatory">Conservatorio (CV)</label>
+                <select id="filterConservatory" onchange="renderMusicians()">
+                    <option value="">Todos los conservatorios</option>
+                    <optgroup label="Provincia de Valencia">
+                        <option value="CSM Joaquín Rodrigo (Valencia)">CSM Joaquín Rodrigo (Valencia)</option>
+                        <option value="CPM Valencia (Velluters)">CPM Valencia (Velluters)</option>
+                        <option value="CPM José Iturbi (Valencia)">CPM José Iturbi (Valencia)</option>
+                        <option value="CPM Torrent">CPM Torrent</option>
+                        <option value="CPM Catarroja (José Manuel Izquierdo)">CPM Catarroja (José Manuel Izquierdo)</option>
+                        <option value="CPM Llíria">CPM Llíria</option>
+                        <option value="CPM Sagunto (Joaquín Rodrigo)">CPM Sagunto (Joaquín Rodrigo)</option>
+                        <option value="CPM Gandia (Josep Climent)">CPM Gandia (Josep Climent)</option>
+                        <option value="CPM Xàtiva (Lluís Milà)">CPM Xàtiva (Lluís Milà)</option>
+                        <option value="CPM Ontinyent (Gomis)">CPM Ontinyent (Gomis)</option>
+                        <option value="CPM Requena (Mariano Pérez Sánchez)">CPM Requena (Mariano Pérez Sánchez)</option>
+                        <option value="CPM Carcaixent (Mestre Vert)">CPM Carcaixent (Mestre Vert)</option>
+                        <option value="CPM Cullera (Rafael Talens Pelló)">CPM Cullera (Rafael Talens Pelló)</option>
+                        <option value="CPM Buñol (San Rafael)">CPM Buñol (San Rafael)</option>
+                        <option value="CPM Utiel">CPM Utiel</option>
+                        <option value="CPM Meliana">CPM Meliana</option>
+                        <option value="CPM Riba-roja de Túria">CPM Riba-roja de Túria</option>
+                        <option value="CPM Moncada (Ciutat de Moncada)">CPM Moncada (Ciutat de Moncada)</option>
+                        <option value="CPM Alberic (Leopoldo Magenti)">CPM Alberic (Leopoldo Magenti)</option>
+                        <option value="CPM Oliva (Josep Climent)">CPM Oliva (Josep Climent)</option>
+                        <option value="CPM Alaquàs">CPM Alaquàs</option>
+                    </optgroup>
+                    <optgroup label="Provincia de Castellón">
+                        <option value="CSM Salvador Seguí (Castellón)">CSM Salvador Seguí (Castellón)</option>
+                        <option value="CPM Mestre Tàrrega (Castellón)">CPM Mestre Tàrrega (Castellón)</option>
+                        <option value="CPM La Vall d'Uixó (Francesc Peñarroja)">CPM La Vall d'Uixó (Francesc Peñarroja)</option>
+                        <option value="CPM Benicarló (Mestre Feliu)">CPM Benicarló (Mestre Feliu)</option>
+                        <option value="CPM Vila-real (Mestre Goterris)">CPM Vila-real (Mestre Goterris)</option>
+                        <option value="CPM Segorbe (Alto Palancia)">CPM Segorbe (Alto Palancia)</option>
+                    </optgroup>
+                    <optgroup label="Provincia de Alicante">
+                        <option value="CSM Óscar Esplá (Alicante)">CSM Óscar Esplá (Alicante)</option>
+                        <option value="CPM Guitarrista José Tomás (Alicante)">CPM Guitarrista José Tomás (Alicante)</option>
+                        <option value="CPM Elche">CPM Elche</option>
+                        <option value="CPM Alcoy (Juan Cantó)">CPM Alcoy (Juan Cantó)</option>
+                        <option value="CPM Dénia (Tenor Cortis)">CPM Dénia (Tenor Cortis)</option>
+                        <option value="CPM Benidorm (José Pérez Barceló)">CPM Benidorm (José Pérez Barceló)</option>
+                        <option value="CPM Torrevieja (Francisco Casanovas)">CPM Torrevieja (Francisco Casanovas)</option>
+                        <option value="CPM Orihuela (Barítono Pedro Terol)">CPM Orihuela (Barítono Pedro Terol)</option>
+                        <option value="CPM Villena">CPM Villena</option>
+                        <option value="CPM Elda (Ana María Sánchez)">CPM Elda (Ana María Sánchez)</option>
+                        <option value="CPM Novelda (Mestre Gomis)">CPM Novelda (Mestre Gomis)</option>
+                        <option value="CPM Altea">CPM Altea</option>
+                        <option value="CPM Xàbia">CPM Xàbia</option>
+                        <option value="CPM Crevillent">CPM Crevillent</option>
+                        <option value="CPM San Vicente del Raspeig">CPM San Vicente del Raspeig</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="filterLevel">Nivel de Estudios</label>
+                <select id="filterLevel" onchange="renderMusicians()">
+                    <option value="">Todos los niveles</option>
+                    <option value="Enseñanzas Profesionales">Enseñanzas Profesionales</option>
+                    <option value="Enseñanzas Superiores">Enseñanzas Superiores</option>
+                    <option value="Titulado / Máster">Titulado / Máster</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="filterTown">Población donde buscas músicos</label>
+                <input type="text" id="filterTown" placeholder="Ej. Gandia, Elche, Vila-real, Xàtiva..." oninput="renderMusicians()">
+            </div>
         </div>
 
-        <div class="form-row sans">
-          <label>Presentación breve (sin incluir precios ni tarifas)</label>
-          <textarea id="reg-bio" rows="3" placeholder="Experiencia en música de cámara, orquesta joven o repertorio habitual..."></textarea>
+        <div class="cards-grid" id="musiciansGrid"></div>
+
+        <!-- Espacio Reservado para Patrocinador / Luthier Colaborador -->
+        <div class="sponsor-banner sans">
+            <div>
+                <span class="sponsor-label">Espacio Luthier Colaborador · Comunitat Valenciana</span>
+                <strong style="color: var(--wood-dark);">¿Tienes un taller de luthería o tienda de arcos y cuerdas?</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">Colabora con la comunidad de intérpretes de cuerda de Valencia, Castellón y Alicante a cambio de ventajas para los músicos registrados.</p>
+            </div>
+            <button class="btn btn-outline" onclick="openSponsorModal()">Proponer colaboración</button>
         </div>
-      </div>
-
-      <div class="form-row sans" style="background: var(--ivory-bg); padding: 1rem; border: 1px solid #cbbba6; border-radius: 4px;">
-        <label>Documento oficial de identidad (DNI / NIE / Pasaporte o Carnet Conservatorio)</label>
-        <input type="file" id="reg-dni" accept=".jpg,.jpeg,.png,.pdf">
-        <small style="display: block; color: var(--text-muted); margin-top: 0.35rem;">
-          Se utiliza exclusivamente para comprobar identidad y mayoría de edad (+18). Nunca se muestra públicamente.
-        </small>
-      </div>
-
-      <button class="btn sans" onclick="submitRegistration()">Completar registro y verificar identidad</button>
     </div>
-  </section>
 
-  <!-- SECCIÓN 4: MENSAJES Y COMPROMISO DE RESPUESTA EN 3 DÍAS -->
-  <section id="sec-mensajes" class="section">
-    <h3 style="color: var(--wood-dark); font-size: 1.5rem; margin-bottom: 0.4rem;">Mensajes y Solicitudes Activas</h3>
-    <p class="sans" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
-      Norma de funcionamiento: cada consulta dispone de un <strong>plazo máximo de 3 días naturales (72 horas)</strong> para recibir respuesta por parte del intérprete.
-    </p>
-    <div id="messages-list"></div>
-  </section>
+    <!-- SECCIÓN 2: TABLÓN DE EVENTOS PUBLICADOS -->
+    <div id="sec-eventos" class="section">
+        <div class="section-header">
+            <h2>Eventos Publicados en la Comunitat Valenciana</h2>
+            <button class="btn btn-primary sans" onclick="showSection('publicar')">+ Publicar nuevo evento</button>
+        </div>
+        <p class="sans" style="color: var(--text-muted); margin-bottom: 1.5rem;">
+            Por privacidad, los visitantes sin verificar solo visualizan la población, el instrumento solicitado y el tipo de acto. Verifica tu identidad para leer la descripción completa y postularte.
+        </p>
+        <div class="cards-grid" id="allEventsGrid"></div>
+    </div>
+
+    <!-- SECCIÓN 3: PUBLICAR UN EVENTO -->
+    <div id="sec-publicar" class="section">
+        <div class="section-header">
+            <h2>Publicar Solicitud de Músicos para Evento</h2>
+        </div>
+        <div class="form-card sans">
+            <form onsubmit="handlePublishEvent(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Título breve del evento *</label>
+                        <input type="text" id="evTitle" required placeholder="Ej. Ceremonia civil en jardín o Cóctel corporativo">
+                    </div>
+                    <div class="form-group">
+                        <label>Población del evento *</label>
+                        <input type="text" id="evTown" required placeholder="Escribe la localidad exacta">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Instrumento / Formación buscada *</label>
+                        <select id="evInstrument" required>
+                            <option value="Violín solista">Violín solista</option>
+                            <option value="Violonchelo solista">Violonchelo solista</option>
+                            <option value="Dúo Violín y Violonchelo">Dúo Violín y Violonchelo</option>
+                            <option value="Trío de Cuerda">Trío de Cuerda</option>
+                            <option value="Cuarteto de Cuerda">Cuarteto de Cuerda</option>
+                            <option value="Contrabajo">Contrabajo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha prevista (solo visible tras verificación) *</label>
+                        <input type="date" id="evDate" required>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Detalles del repertorio, duración y lugar exacto (oculto al público general) *</label>
+                    <textarea id="evDetails" rows="4" required placeholder="Indica el horario aproximado, estilo musical deseado y detalles del espacio. Recuerda no incluir tarifas cerradas; lo acordaréis directamente."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Publicar Evento en Portada</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 4: ALTA DE MÚSICO (+18 Y EDAD ACTUAL) -->
+    <div id="sec-registro-musico" class="section">
+        <div class="section-header">
+            <h2>Alta de Intérprete de Cuerda</h2>
+        </div>
+        <div class="form-card sans">
+            <p style="margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.92rem;">
+                Tu ficha permanecerá protegida: ningún visitante sin verificar podrá ver tus apellidos, conservatorio exacto ni datos de contacto. Al recibir una propuesta, dispondrás de un plazo máximo de <strong>3 días naturales</strong> para responder.
+            </p>
+            <form onsubmit="handleRegisterMusician(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombre y Apellidos *</label>
+                        <input type="text" id="mName" required placeholder="Nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label>Edad actual (mínimo 18 años) *</label>
+                        <input type="number" id="mAge" min="18" max="99" required placeholder="Ej. 21">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Instrumento principal *</label>
+                        <select id="mInstrument" required>
+                            <option value="Violín">Violín</option>
+                            <option value="Viola">Viola</option>
+                            <option value="Violonchelo">Violonchelo</option>
+                            <option value="Contrabajo">Contrabajo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Población de residencia / disponibilidad *</label>
+                        <input type="text" id="mTown" required placeholder="Ej. Valencia, Castellón de la Plana, Alicante...">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Conservatorio (Valencia, Castellón o Alicante) *</label>
+                        <select id="mConservatory" required>
+                            <option value="">Selecciona tu conservatorio</option>
+                            <optgroup label="Provincia de Valencia">
+                                <option value="CSM Joaquín Rodrigo (Valencia)">CSM Joaquín Rodrigo (Valencia)</option>
+                                <option value="CPM Valencia (Velluters)">CPM Valencia (Velluters)</option>
+                                <option value="CPM José Iturbi (Valencia)">CPM José Iturbi (Valencia)</option>
+                                <option value="CPM Torrent">CPM Torrent</option>
+                                <option value="CPM Catarroja (José Manuel Izquierdo)">CPM Catarroja (José Manuel Izquierdo)</option>
+                                <option value="CPM Llíria">CPM Llíria</option>
+                                <option value="CPM Sagunto (Joaquín Rodrigo)">CPM Sagunto (Joaquín Rodrigo)</option>
+                                <option value="CPM Gandia (Josep Climent)">CPM Gandia (Josep Climent)</option>
+                                <option value="CPM Xàtiva (Lluís Milà)">CPM Xàtiva (Lluís Milà)</option>
+                                <option value="CPM Ontinyent (Gomis)">CPM Ontinyent (Gomis)</option>
+                                <option value="CPM Requena (Mariano Pérez Sánchez)">CPM Requena (Mariano Pérez Sánchez)</option>
+                                <option value="CPM Carcaixent (Mestre Vert)">CPM Carcaixent (Mestre Vert)</option>
+                                <option value="CPM Cullera (Rafael Talens Pelló)">CPM Cullera (Rafael Talens Pelló)</option>
+                                <option value="CPM Buñol (San Rafael)">CPM Buñol (San Rafael)</option>
+                                <option value="CPM Utiel">CPM Utiel</option>
+                                <option value="CPM Meliana">CPM Meliana</option>
+                                <option value="CPM Riba-roja de Túria">CPM Riba-roja de Túria</option>
+                                <option value="CPM Moncada (Ciutat de Moncada)">CPM Moncada (Ciutat de Moncada)</option>
+                                <option value="CPM Alberic (Leopoldo Magenti)">CPM Alberic (Leopoldo Magenti)</option>
+                                <option value="CPM Oliva (Josep Climent)">CPM Oliva (Josep Climent)</option>
+                                <option value="CPM Alaquàs">CPM Alaquàs</option>
+                            </optgroup>
+                            <optgroup label="Provincia de Castellón">
+                                <option value="CSM Salvador Seguí (Castellón)">CSM Salvador Seguí (Castellón)</option>
+                                <option value="CPM Mestre Tàrrega (Castellón)">CPM Mestre Tàrrega (Castellón)</option>
+                                <option value="CPM La Vall d'Uixó (Francesc Peñarroja)">CPM La Vall d'Uixó (Francesc Peñarroja)</option>
+                                <option value="CPM Benicarló (Mestre Feliu)">CPM Benicarló (Mestre Feliu)</option>
+                                <option value="CPM Vila-real (Mestre Goterris)">CPM Vila-real (Mestre Goterris)</option>
+                                <option value="CPM Segorbe (Alto Palancia)">CPM Segorbe (Alto Palancia)</option>
+                            </optgroup>
+                            <optgroup label="Provincia de Alicante">
+                                <option value="CSM Óscar Esplá (Alicante)">CSM Óscar Esplá (Alicante)</option>
+                                <option value="CPM Guitarrista José Tomás (Alicante)">CPM Guitarrista José Tomás (Alicante)</option>
+                                <option value="CPM Elche">CPM Elche</option>
+                                <option value="CPM Alcoy (Juan Cantó)">CPM Alcoy (Juan Cantó)</option>
+                                <option value="CPM Dénia (Tenor Cortis)">CPM Dénia (Tenor Cortis)</option>
+                                <option value="CPM Benidorm (José Pérez Barceló)">CPM Benidorm (José Pérez Barceló)</option>
+                                <option value="CPM Torrevieja (Francisco Casanovas)">CPM Torrevieja (Francisco Casanovas)</option>
+                                <option value="CPM Orihuela (Barítono Pedro Terol)">CPM Orihuela (Barítono Pedro Terol)</option>
+                                <option value="CPM Villena">CPM Villena</option>
+                                <option value="CPM Elda (Ana María Sánchez)">CPM Elda (Ana María Sánchez)</option>
+                                <option value="CPM Novelda (Mestre Gomis)">CPM Novelda (Mestre Gomis)</option>
+                                <option value="CPM Altea">CPM Altea</option>
+                                <option value="CPM Xàbia">CPM Xàbia</option>
+                                <option value="CPM Crevillent">CPM Crevillent</option>
+                                <option value="CPM San Vicente del Raspeig">CPM San Vicente del Raspeig</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nivel de estudios actual *</label>
+                        <select id="mLevel" required>
+                            <option value="Enseñanzas Profesionales">Enseñanzas Profesionales</option>
+                            <option value="Enseñanzas Superiores">Enseñanzas Superiores</option>
+                            <option value="Titulado / Máster">Titulado / Máster</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Repertorio habitual y experiencia (sin tarifas ni precios) *</label>
+                    <textarea id="mBio" rows="3" required placeholder="Describe tu experiencia en música de cámara, bodas, actos institucionales o repertorio solista."></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Adjuntar DNI / NIE o Documento Oficial de Identidad *</label>
+                    <input type="file" id="mDoc" accept=".pdf,.jpg,.jpeg,.png" required>
+                </div>
+
+                <div class="checkbox-box">
+                    <input type="checkbox" id="mAdultCheck" required>
+                    <label for="mAdultCheck">
+                        <strong>Declaro expresamente que soy mayor de 18 años</strong> y que los datos sobre mi edad actual y formación en conservatorio son verídicos. Acepto responder a las solicitudes de contacto en un plazo máximo de 3 días.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Enviar Ficha y Documentación</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 5: MENSAJES Y ACUERDOS (REGLA 3 DÍAS) -->
+    <div id="sec-mensajes" class="section">
+        <div class="section-header">
+            <h2>Solicitudes Activas y Plazo de Respuesta (Máximo 3 Días)</h2>
+        </div>
+        <p class="sans" style="color: var(--text-muted); margin-bottom: 1.5rem;">
+            Cada consulta enviada a un intérprete inicia un contador de <strong>72 horas (3 días naturales)</strong> para garantizar agilidad en la organización de eventos.
+        </p>
+        <div id="agreementsList"></div>
+    </div>
 
 </main>
 
+<!-- FOOTER CON TITULARIDAD DISCRETA -->
 <footer>
-  <p><strong>Cuerda Viva Música</strong> · Comunidad de intérpretes de cuerda en Valencia, Castellón y Alicante</p>
-  <p style="font-size: 0.78rem; margin-top: 0.3rem; color: #a89886;">Plataforma gratuita de contacto directo sin intermediación económica.</p>
-  <div class="footer-links sans">
-    <button onclick="openLegalModal('titularidad')">Aviso Legal y Titularidad</button>
-    <button onclick="openLegalModal('privacidad')">Protección de Datos y Verificación DNI</button>
-    <button onclick="openLegalModal('normas')">Normas de Uso (Plazo 3 días y +18)</button>
-  </div>
+    <div class="footer-inner sans">
+        <div>
+            <strong>Cuerda Viva Música</strong> · Comunidad de intérpretes de cuerda en Valencia, Castellón y Alicante.
+        </div>
+        <div>
+            <button class="footer-link" onclick="openLegalModal()">Aviso Legal, Privacidad y Titularidad</button>
+        </div>
+    </div>
 </footer>
 
-<!-- MODAL DISCRETO PARA AVISO LEGAL Y TITULARIDAD -->
-<div id="legal-modal" class="modal-backdrop" onclick="closeLegalModal(event)">
-  <div class="modal-content sans" onclick="event.stopPropagation()">
-    <h3 id="modal-title">Información Legal</h3>
-    <div id="modal-body"></div>
-    <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="document.getElementById('legal-modal').classList.remove('open')">Cerrar ventana</button>
-  </div>
+<!-- MODAL VERIFICACIÓN IDENTIDAD -->
+<div class="modal-backdrop" id="verifyModal">
+    <div class="modal sans">
+        <div class="modal-header">
+            <h3>Verificación de Identidad Real</h3>
+            <button class="close-btn" onclick="closeModal('verifyModal')">&times;</button>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Para proteger la privacidad de los músicos de conservatorio y evitar consultas falsas, debes verificar tu identidad con tu DNI, NIE o Pasaporte antes de desbloquear fichas completas y detalles de eventos.
+        </p>
+        <form onsubmit="handleVerifyUser(event)">
+            <div class="form-group" style="margin-bottom: 0.85rem;">
+                <label>Nombre completo *</label>
+                <input type="text" id="vFullName" required placeholder="Tal como figura en tu documento">
+            </div>
+            <div class="form-group" style="margin-bottom: 0.85rem;">
+                <label>Número de DNI / NIE *</label>
+                <input type="text" id="vDniNumber" required placeholder="Ej. 12345678Z">
+            </div>
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label>Subir copia del documento oficial (JPG, PNG o PDF) *</label>
+                <input type="file" id="vDniFile" accept=".jpg,.jpeg,.png,.pdf" required>
+            </div>
+            <button type="submit" class="btn btn-gold btn-block">Verificar Identidad y Desbloquear Web</button>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL CONTACTAR MÚSICO -->
+<div class="modal-backdrop" id="contactModal">
+    <div class="modal sans">
+        <div class="modal-header">
+            <h3 id="contactModalTitle">Contactar con Intérprete</h3>
+            <button class="close-btn" onclick="closeModal('contactModal')">&times;</button>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Al enviar esta consulta se activará el <strong>plazo máximo de 3 días</strong> para que el intérprete responda. Acordaréis libremente las condiciones sin tarifas impuestas por la plataforma.
+        </p>
+        <form onsubmit="handleSendContact(event)">
+            <input type="hidden" id="targetMusicianId">
+            <div class="form-group" style="margin-bottom: 0.85rem;">
+                <label>Población y fecha del evento *</label>
+                <input type="text" id="cEventSummary" required placeholder="Ej. Boda en Alzira el 14 de junio">
+            </div>
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label>Mensaje para el músico *</label>
+                <textarea id="cMessage" rows="3" required placeholder="Explícale qué tipo de acto es, duración estimada y repertorio que tienes en mente..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Enviar Consulta (Activar Plazo 3 Días)</button>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL AVISO LEGAL Y TITULARIDAD (OCULTO HASTA CLIC) -->
+<div class="modal-backdrop" id="legalModal">
+    <div class="modal sans">
+        <div class="modal-header">
+            <h3>Aviso Legal y Titularidad del Sitio</h3>
+            <button class="close-btn" onclick="closeModal('legalModal')">&times;</button>
+        </div>
+        <div style="font-size: 0.88rem; color: var(--text-main); line-height: 1.6;">
+            <p style="margin-bottom: 0.75rem;"><strong>1. Identificación del Titular (LSSI-CE):</strong><br>
+            En cumplimiento con el deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico, se informa que este portal es gestionado a título particular por: <em>[Tu Nombre y Apellidos / NIF — rellenar antes de publicar]</em>, con domicilio de contacto en la Comunitat Valenciana y correo electrónico: <em>contacto@cuerdavivamusica.es</em>.</p>
+            <p style="margin-bottom: 0.75rem;"><strong>2. Naturaleza del servicio:</strong><br>
+            Cuerda Viva Música actúa exclusivamente como punto de encuentro informativo entre intérpretes mayores de edad y organizadores de eventos, sin intervenir en los acuerdos ni percibir comisiones sobre las actuaciones.</p>
+            <p><strong>3. Protección de Datos (RGPD):</strong><br>
+            Los documentos de identidad aportados se emplean únicamente para validar la autenticidad de los usuarios y proteger la privacidad de los estudiantes y titulados de conservatorio.</p>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PATROCINADOR LUTHIER -->
+<div class="modal-backdrop" id="sponsorModal">
+    <div class="modal sans">
+        <div class="modal-header">
+            <h3>Colaboración para Luthiers y Talleres</h3>
+            <button class="close-btn" onclick="closeModal('sponsorModal')">&times;</button>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+            ¿Tienes un taller de luthería en Valencia, Castellón o Alicante? Ofrecemos presencia destacada en la web a cambio de ventajas directas para los intérpretes registrados (revisión gratuita de puente/alma, descuento en encerdado de arcos o juego de cuerdas anual para sorteo entre músicos activos).
+        </p>
+        <form onsubmit="alert('Propuesta registrada. Nos pondremos en contacto con tu taller.'); closeModal('sponsorModal'); return false;">
+            <div class="form-group" style="margin-bottom: 0.85rem;">
+                <label>Nombre del taller o luthier *</label>
+                <input type="text" required placeholder="Ej. Taller de Luthería Turia">
+            </div>
+            <div class="form-group" style="margin-bottom: 0.85rem;">
+                <label>Población y teléfono / correo *</label>
+                <input type="text" required placeholder="Ej. Valencia · taller@ejemplo.es">
+            </div>
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label>¿Qué ventaja o colaboración propones a cambio del banner? *</label>
+                <textarea rows="3" required placeholder="Ej. 15% de descuento en encerdado de arcos y revisión gratuita anual para músicos verificados en la web."></textarea>
+            </div>
+            <button type="submit" class="btn btn-gold btn-block">Enviar Propuesta de Patrocinio</button>
+        </form>
+    </div>
 </div>
 
 <script>
-  // Estado de la aplicación
-  let currentUser = null;
+    let isVerified = false;
+    let verifiedUserName = "";
 
-  const musiciansData = [
-    {
-      id: 1,
-      nombre: "Elena Martínez Soler",
-      iniciales: "E. M.",
-      edad: 22,
-      mayor18: true,
-      instrumento: "Violín",
-      conservatorio: "CSM Joaquín Rodrigo (Valencia)",
-      poblacion: "València",
-      nivel: "Enseñanzas Superiores (Grado)",
-      bio: "Estudiante de 4º de Grado Superior en especialidad de Interpretación. Experiencia en cuarteto de cuerda y música para ceremonias civiles y recitales."
-    },
-    {
-      id: 2,
-      nombre: "Marc Beltrán Gil",
-      iniciales: "M. B.",
-      edad: 24,
-      mayor18: true,
-      instrumento: "Violonchelo",
-      conservatorio: "CSM Salvador Seguí (Castellón)",
-      poblacion: "Castelló de la Plana",
-      nivel: "Titulado Superior / Máster",
-      bio: "Titulado Superior por el Conservatorio de Castellón. Repertorio clásico, barroco y arreglos acústicos para actos culturales."
-    },
-    {
-      id: 3,
-      nombre: "Clara Navarro Gomis",
-      iniciales: "C. N.",
-      edad: 20,
-      mayor18: true,
-      instrumento: "Viola",
-      conservatorio: "CSM Óscar Esplá (Alicante)",
-      poblacion: "Alacant",
-      nivel: "Enseñanzas Superiores (Grado)",
-      bio: "Intérprete de viola en agrupaciones de cámara en Alicante y Elche. Disponible para colaboraciones en tríos y cuartetos."
-    },
-    {
-      id: 4,
-      nombre: "David Ferrandis Llopis",
-      iniciales: "D. F.",
-      edad: 19,
-      mayor18: true,
-      instrumento: "Contrabajo",
-      conservatorio: "CPM Guitarrista José Tomás (Alicante)",
-      poblacion: "Elx",
-      nivel: "Enseñanzas Profesionales (5º-6º)",
-      bio: "Último curso de Enseñanzas Profesionales. Experiencia en orquesta sinfónica joven y ensembles acústicos."
-    },
-    {
-      id: 5,
-      nombre: "Cuarteto Turia-Vinalopó",
-      iniciales: "C. T.",
-      edad: 23,
-      mayor18: true,
-      instrumento: "Cuarteto de Cuerda",
-      conservatorio: "CPM José Iturbi (Valencia)",
-      poblacion: "Torrent",
-      nivel: "Enseñanzas Superiores (Grado)",
-      bio: "Formación estable de dos violines, viola y violonchelo con todos sus integrantes mayores de edad."
-    }
-  ];
+    const musicians = [
+        {
+            id: 1,
+            fullName: "Elena Ferrer Navarro",
+            publicAlias: "Elena F. (Intérprete Verificada)",
+            age: 22,
+            instrument: "Violín",
+            conservatory: "CSM Joaquín Rodrigo (Valencia)",
+            level: "Enseñanzas Superiores",
+            town: "Valencia",
+            bio: "Especialidad en interpretación solista y cuarteto de cuerda. Amplia experiencia en ceremonias civiles, cócteles y repertorio clásico y bandas sonoras."
+        },
+        {
+            id: 2,
+            fullName: "Marc Soler Castelló",
+            publicAlias: "Marc S. (Intérprete Verificado)",
+            age: 24,
+            instrument: "Violonchelo",
+            conservatory: "CSM Salvador Seguí (Castellón)",
+            level: "Titulado / Máster",
+            town: "Castellón de la Plana",
+            bio: "Violonchelista titulado con experiencia en orquesta sinfónica y agrupaciones de cámara. Disponibilidad para desplazamientos por Castellón y Valencia."
+        },
+        {
+            id: 3,
+            fullName: "Carla Miralles Santonja",
+            publicAlias: "Carla M. (Intérprete Verificada)",
+            age: 20,
+            instrument: "Viola",
+            conservatory: "CSM Óscar Esplá (Alicante)",
+            level: "Enseñanzas Superiores",
+            town: "Alicante",
+            bio: "Estudiante de 3º de Enseñanzas Superiores. Miembro habitual de formaciones de cámara para actos culturales, exposiciones y eventos privados."
+        },
+        {
+            id: 4,
+            fullName: "Pau Llopis Bernabeu",
+            publicAlias: "Pau L. (Intérprete Verificado)",
+            age: 25,
+            instrument: "Contrabajo",
+            conservatory: "CPM Guitarrista José Tomás (Alicante)",
+            level: "Titulado / Máster",
+            town: "Elche",
+            bio: "Contrabajista versátil con repertorio clásico, acústico y jazz de cámara para recepciones y eventos culturales en la provincia de Alicante."
+        },
+        {
+            id: 5,
+            fullName: "Aina Peris Climent",
+            publicAlias: "Aina P. (Intérprete Verificada)",
+            age: 19,
+            instrument: "Violín",
+            conservatory: "CPM Gandia (Josep Climent)",
+            level: "Enseñanzas Profesionales",
+            town: "Gandia",
+            bio: "Último curso de Enseñanzas Profesionales. Experiencia en dúos de violín y violonchelo para ceremonias y actos institucionales."
+        }
+    ];
 
-  const eventsData = [
-    {
-      id: 101,
-      titulo: "Ceremonia civil al aire libre · Dúo o Trío de cuerda",
-      poblacion: "València",
-      instrumento: "Violín y Violonchelo",
-      fechaExacta: "Sábado 16 de mayo de 2027 · 12:30h en Jardines de Monforte",
-      detalleCompleto: "Buscamos violín y violonchelo para acompañamiento durante 45 minutos en ceremonia civil. Se facilitarán partituras con antelación.",
-      autor: "Laura G. (Verificada)"
-    },
-    {
-      id: 102,
-      titulo: "Inauguración de exposición pictórica · Violín solista",
-      poblacion: "Castelló de la Plana",
-      instrumento: "Violín",
-      fechaExacta: "Viernes 29 de mayo de 2027 · 19:30h en Sala Cultural Centro",
-      detalleCompleto: "Intervención musical de 30 minutos durante la apertura de exposición artística. Repertorio clásico ligero.",
-      autor: "Asociación Cultural Plana Alta (Verificada)"
-    },
-    {
-      id: 103,
-      titulo: "Recepción institucional y cóctel · Cuarteto de cuerda",
-      poblacion: "Alacant",
-      instrumento: "Cuarteto de Cuerda",
-      fechaExacta: "Jueves 11 de junio de 2027 · 20:00h en Finca Santa Faz",
-      detalleCompleto: "Amenización acústica en patio exterior. Acuerdos directos con la formación seleccionada.",
-      autor: "Carlos M. (Verificado)"
-    }
-  ];
+    const events = [
+        {
+            id: 101,
+            title: "Ceremonia civil en masía",
+            town: "Xàtiva",
+            instrument: "Dúo Violín y Violonchelo",
+            date: "14/06/2027 · 12:30 h",
+            details: "Ceremonia al aire libre de 45 minutos + 30 minutos de aperitivo. Repertorio clásico ligero y adaptaciones modernas."
+        },
+        {
+            id: 102,
+            title: "Inauguración exposición de arte",
+            town: "Vila-real",
+            instrument: "Violonchelo solista",
+            date: "22/05/2027 · 19:30 h",
+            details: "Amenización acústica en galería cultural durante 1 hora y media. Suites de Bach y piezas contemporáneas."
+        },
+        {
+            id: 103,
+            title: "Cóctel de empresa frente al mar",
+            town: "Altea",
+            instrument: "Cuarteto de Cuerda",
+            date: "03/07/2027 · 20:00 h",
+            details: "Recepción de invitados en terraza privada. Repertorio variado de 90 minutos con descanso."
+        }
+    ];
 
-  let activeMessages = [
-    {
-      id: 1,
-      destinatario: "Elena Martínez Soler (Violín)",
-      asunto: "Consulta disponibilidad recital primavera",
-      enviadoHaceHoras: 14,
-      estado: "Pendiente de respuesta"
-    }
-  ];
+    const agreements = [
+        {
+            id: 501,
+            musicianName: "Elena F.",
+            eventSummary: "Ejemplo: Ceremonia en Torrent",
+            status: "Pendiente de respuesta del intérprete",
+            hoursLeft: 64
+        }
+    ];
 
-  function showSection(secName) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    document.getElementById('sec-' + secName).classList.add('active');
-    document.getElementById('nav-' + secName).classList.add('active');
-
-    if (secName === 'explorar') {
-      renderHomeTeaser();
-      renderMusicians();
-    } else if (secName === 'eventos') {
-      renderEventsFull();
-    } else if (secName === 'mensajes') {
-      renderMessages();
-    }
-  }
-
-  function renderHomeTeaser() {
-    const container = document.getElementById('home-events-teaser');
-    container.innerHTML = '';
-
-    eventsData.slice(0, 3).forEach(ev => {
-      const card = document.createElement('div');
-      card.className = 'teaser-card';
-
-      if (currentUser && currentUser.verified) {
-        card.innerHTML = `
-          <span class="teaser-tag sans">${ev.poblacion} · ${ev.instrumento}</span>
-          <h4 style="font-size: 1rem; color: var(--wood-dark); margin-bottom: 0.3rem;">${ev.titulo}</h4>
-          <p class="sans" style="font-size: 0.84rem; color: var(--success-green); font-weight: bold;">${ev.fechaExacta}</p>
-          <p class="sans" style="font-size: 0.84rem; color: var(--text-main); margin-top: 0.3rem;">${ev.detalleCompleto}</p>
-        `;
-      } else {
-        card.innerHTML = `
-          <span class="teaser-tag sans">${ev.poblacion} · ${ev.instrumento}</span>
-          <h4 style="font-size: 1rem; color: var(--wood-dark);">${ev.titulo}</h4>
-          <p class="blurred-text sans">Fecha: Sábado 16 de mayo · 18:30h · Lugar exacto protegido para registrados</p>
-          <div class="teaser-lock sans" onclick="showSection('registro')">
-            &#128274; Regístrate y verifica tu identidad para leer el evento completo
-          </div>
-        `;
-      }
-      container.appendChild(card);
-    });
-  }
-
-  function renderMusicians() {
-    const instFilter = document.getElementById('filter-instrumento').value;
-    const consFilter = document.getElementById('filter-conservatorio').value;
-    const pobFilter = document.getElementById('filter-poblacion').value.trim().toLowerCase();
-    const nivFilter = document.getElementById('filter-nivel').value;
-
-    const grid = document.getElementById('musicians-grid');
-    grid.innerHTML = '';
-
-    const filtered = musiciansData.filter(m => {
-      if (!m.mayor18 || m.edad < 18) return false;
-      if (instFilter && m.instrumento !== instFilter) return false;
-      if (consFilter && m.conservatorio !== consFilter) return false;
-      if (pobFilter && !m.poblacion.toLowerCase().includes(pobFilter)) return false;
-      if (nivFilter && m.nivel !== nivFilter) return false;
-      return true;
-    });
-
-    if (filtered.length === 0) {
-      grid.innerHTML = '<p class="sans" style="color: var(--text-muted);">No hay músicos que coincidan con esa población o filtros en este momento.</p>';
-      return;
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('sec-' + sectionId).classList.add('active');
+        const navBtn = document.getElementById('nav-' + sectionId);
+        if (navBtn) navBtn.classList.add('active');
     }
 
-    const isVerified = currentUser && currentUser.verified;
+    function renderTeaserEvents() {
+        const homeGrid = document.getElementById('homeTeaserGrid');
+        const allGrid = document.getElementById('allEventsGrid');
+        homeGrid.innerHTML = '';
+        allGrid.innerHTML = '';
 
-    filtered.forEach(m => {
-      const card = document.createElement('div');
-      card.className = 'card';
-
-      if (isVerified) {
-        card.innerHTML = `
-          <div>
-            <div class="card-top sans">
-              <span class="instrument-badge">${m.instrumento}</span>
-              <span class="age-badge"><strong>${m.edad} años</strong> · +18 Verificado</span>
-            </div>
-            <h4>${m.nombre}</h4>
-            <div class="card-meta sans">
-              <p><strong>Conservatorio:</strong> ${m.conservatorio}</p>
-              <p><strong>Población:</strong> ${m.poblacion}</p>
-              <p><strong>Nivel:</strong> ${m.nivel}</p>
-            </div>
-            <p style="font-size: 0.9rem; color: var(--text-main);">${m.bio}</p>
-          </div>
-          <button class="btn sans" onclick="contactMusician(${m.id})">Contactar (Respuesta máx. 3 días)</button>
-        `;
-      } else {
-        card.innerHTML = `
-          <div>
-            <div class="card-top sans">
-              <span class="instrument-badge">${m.instrumento}</span>
-              <span class="age-badge"><strong>${m.edad} años</strong> · +18</span>
-            </div>
-            <h4>Intérprete ${m.iniciales} (Ficha protegida)</h4>
-            <div class="card-meta sans">
-              <p><strong>Población:</strong> ${m.poblacion}</p>
-              <p><strong>Nivel:</strong> ${m.nivel}</p>
-              <p><strong>Conservatorio:</strong> <span class="blurred-text">Conservatorio Superior CV</span></p>
-            </div>
-            <div class="protected-overlay sans">
-              Identidad, conservatorio exacto y contacto ocultos. Regístrate con tu documento oficial para desbloquear.
-            </div>
-          </div>
-          <button class="btn btn-secondary sans" onclick="showSection('registro')">Verificar identidad para ver ficha</button>
-        `;
-      }
-
-      grid.appendChild(card);
-    });
-  }
-
-  function renderEventsFull() {
-    const list = document.getElementById('events-full-list');
-    list.innerHTML = '';
-    const isVerified = currentUser && currentUser.verified;
-
-    eventsData.forEach(ev => {
-      const card = document.createElement('div');
-      card.className = 'card';
-
-      if (isVerified) {
-        card.innerHTML = `
-          <div>
-            <div class="card-top sans">
-              <span class="instrument-badge">${ev.instrumento}</span>
-              <span class="age-badge">${ev.poblacion}</span>
-            </div>
-            <h4>${ev.titulo}</h4>
-            <div class="card-meta sans">
-              <p><strong>Fecha y lugar:</strong> ${ev.fechaExacta}</p>
-              <p><strong>Publicado por:</strong> ${ev.autor}</p>
-            </div>
-            <p style="font-size: 0.9rem;">${ev.detalleCompleto}</p>
-          </div>
-          <button class="btn sans" onclick="alert('Solicitud enviada al organizador. Recibirás respuesta en un plazo máximo de 3 días.')">Postularme a este evento</button>
-        `;
-      } else {
-        card.innerHTML = `
-          <div>
-            <div class="card-top sans">
-              <span class="instrument-badge">${ev.instrumento}</span>
-              <span class="age-badge">${ev.poblacion}</span>
-            </div>
-            <h4>${ev.titulo}</h4>
-            <p class="blurred-text sans">Fecha exacta: Sábado 16 de mayo de 2027 · Lugar: Jardines del centro histórico. Detalles completos del repertorio y contacto del organizador.</p>
-            <div class="protected-overlay sans">
-              Contenido restringido a usuarios verificados. Regístrate para leer la fecha exacta, detalles y postularte.
-            </div>
-          </div>
-          <button class="btn btn-secondary sans" onclick="showSection('registro')">Registrarme para leer evento</button>
-        `;
-      }
-      list.appendChild(card);
-    });
-  }
-
-  function togglePublishEventForm() {
-    if (!currentUser || !currentUser.verified) {
-      alert('Debes registrarte y verificar tu identidad antes de publicar un evento.');
-      showSection('registro');
-      return;
-    }
-    const box = document.getElementById('publish-event-box');
-    box.style.display = box.style.display === 'none' ? 'block' : 'none';
-  }
-
-  function publishEvent() {
-    const titulo = document.getElementById('ev-titulo').value.trim();
-    const poblacion = document.getElementById('ev-poblacion').value.trim();
-    const instrumento = document.getElementById('ev-instrumento').value.trim();
-    const fechaExacta = document.getElementById('ev-fecha').value.trim();
-    const detalleCompleto = document.getElementById('ev-detalle').value.trim();
-
-    if (!titulo || !poblacion || !instrumento || !fechaExacta || !detalleCompleto) {
-      alert('Por favor, completa todos los campos del evento.');
-      return;
+        events.forEach(ev => {
+            const cardHtml = `
+                <div class="teaser-card sans">
+                    <span class="teaser-tag">${ev.instrument}</span>
+                    <h4 style="color: var(--wood-dark); font-size: 1.05rem;">${ev.title}</h4>
+                    <p style="font-size: 0.85rem; color: var(--wood-medium); margin-top: 0.25rem;">
+                        📍 Población: <strong>${ev.town}</strong>
+                    </p>
+                    ${isVerified ? `
+                        <div style="margin-top: 0.65rem; padding-top: 0.65rem; border-top: 1px solid var(--border-subtle); font-size: 0.86rem;">
+                            <p><strong>Fecha y hora:</strong> ${ev.date}</p>
+                            <p style="margin-top: 0.3rem; color: var(--text-muted);">${ev.details}</p>
+                            <button class="btn btn-primary" style="margin-top: 0.75rem; padding: 0.45rem 0.85rem; font-size: 0.82rem;" onclick="alert('Postulación enviada al organizador. Recibirás respuesta en un máximo de 3 días.')">Postularme a este evento</button>
+                        </div>
+                    ` : `
+                        <div class="blurred-text">
+                            Fecha: 00/00/2027 · Lugar exacto y contacto del organizador ocultos para usuarios no verificados.
+                        </div>
+                        <button class="btn btn-gold" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; width: 100%;" onclick="openVerifyModal()">
+                            🔒 Regístrate y verifica DNI para leer detalles
+                        </button>
+                    `}
+                </div>
+            `;
+            homeGrid.innerHTML += cardHtml;
+            allGrid.innerHTML += cardHtml;
+        });
     }
 
-    eventsData.unshift({
-      id: Date.now(),
-      titulo,
-      poblacion,
-      instrumento,
-      fechaExacta,
-      detalleCompleto,
-      autor: currentUser.nombre + ' (Verificado)'
-    });
+    function renderMusicians() {
+        const inst = document.getElementById('filterInstrument').value;
+        const cons = document.getElementById('filterConservatory').value;
+        const lvl = document.getElementById('filterLevel').value;
+        const townQuery = document.getElementById('filterTown').value.trim().toLowerCase();
 
-    document.getElementById('publish-event-box').style.display = 'none';
-    renderEventsFull();
-    renderHomeTeaser();
-    alert('Evento publicado. Ya aparece como vista previa en portada y completo para usuarios verificados.');
-  }
+        const filtered = musicians.filter(m => {
+            const matchInst = !inst || m.instrument === inst;
+            const matchCons = !cons || m.conservatory === cons;
+            const matchLvl = !lvl || m.level === lvl;
+            const matchTown = !townQuery || m.town.toLowerCase().includes(townQuery);
+            return matchInst && matchCons && matchLvl && matchTown;
+        });
 
-  function toggleMusicianFields() {
-    const rol = document.getElementById('reg-rol').value;
-    document.getElementById('musician-extra-fields').style.display = rol === 'musico' ? 'block' : 'none';
-  }
+        document.getElementById('resultsCounter').textContent = `Mostrando ${filtered.length} intérprete(s) de cuerda`;
 
-  function submitRegistration() {
-    const rol = document.getElementById('reg-rol').value;
-    const nombre = document.getElementById('reg-nombre').value.trim();
-    const email = document.getElementById('reg-email').value.trim();
-    const poblacion = document.getElementById('reg-poblacion').value.trim();
-    const edad = parseInt(document.getElementById('reg-edad').value, 10);
-    const mayor18 = document.getElementById('reg-mayor18').checked;
-    const dniFile = document.getElementById('reg-dni').files.length;
-    const feedback = document.getElementById('reg-feedback');
+        const grid = document.getElementById('musiciansGrid');
+        grid.innerHTML = '';
 
-    if (!nombre || !email || !poblacion) {
-      feedback.innerHTML = '<div class="alert-box alert-warn sans">Completa tu nombre real, correo electrónico y población.</div>';
-      return;
+        if (filtered.length === 0) {
+            grid.innerHTML = `<p class="sans" style="color: var(--text-muted);">No hay intérpretes que coincidan exactamente con esa población o filtro. Prueba ampliando la búsqueda.</p>`;
+            return;
+        }
+
+        filtered.forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'musician-card';
+            card.innerHTML = `
+                <div>
+                    <div class="card-top sans">
+                        <span class="instrument-badge">🎻 ${m.instrument}</span>
+                        <span class="age-badge">✓ +18 (${m.age} años)</span>
+                    </div>
+                    <h3 class="musician-name">${isVerified ? m.fullName : m.publicAlias}</h3>
+
+                    ${isVerified ? `
+                        <ul class="meta-list sans">
+                            <li><strong>Conservatorio:</strong> ${m.conservatory}</li>
+                            <li><strong>Nivel:</strong> ${m.level}</li>
+                            <li><strong>Población:</strong> ${m.town}</li>
+                        </ul>
+                        <p class="sans" style="font-size: 0.88rem; color: var(--text-main); margin-top: 0.5rem;">${m.bio}</p>
+                    ` : `
+                        <ul class="meta-list sans">
+                            <li><strong>Nivel:</strong> ${m.level}</li>
+                            <li><strong>Población:</strong> ${m.town}</li>
+                        </ul>
+                        <div class="masked-info sans">
+                            🔒 <strong>Ficha protegida:</strong> Nombre completo, conservatorio exacto, repertorio y contacto ocultos hasta verificar tu identidad con DNI/NIE.
+                        </div>
+                    `}
+                </div>
+
+                <div style="margin-top: 1.25rem;" class="sans">
+                    ${isVerified ? `
+                        <button class="btn btn-primary btn-block" onclick="openContactModal(${m.id}, '${m.fullName}')">
+                            Contactar (Respuesta máx. 3 días)
+                        </button>
+                    ` : `
+                        <button class="btn btn-outline btn-block" onclick="openVerifyModal()">
+                            Verificar DNI para ver ficha y contactar
+                        </button>
+                    `}
+                </div>
+            `;
+            grid.appendChild(card);
+        });
     }
 
-    if (!mayor18 || isNaN(edad) || edad < 18) {
-      feedback.innerHTML = '<div class="alert-box alert-warn sans">Debes confirmar la casilla de mayoría de edad e indicar tu edad actual (mínimo 18 años).</div>';
-      return;
+    function renderAgreements() {
+        const list = document.getElementById('agreementsList');
+        list.innerHTML = '';
+        agreements.forEach(a => {
+            const days = Math.floor(a.hoursLeft / 24);
+            const hrs = a.hoursLeft % 24;
+            list.innerHTML += `
+                <div class="agreement-card sans">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                        <strong>Intérprete: ${a.musicianName} — ${a.eventSummary}</strong>
+                        <span class="countdown-pill">⏳ Tiempo restante: ${days}d ${hrs}h (Plazo máx. 3 días)</span>
+                    </div>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.4rem;">Estado: ${a.status}. Trato directo sin tarifas fijas.</p>
+                </div>
+            `;
+        });
     }
 
-    if (dniFile === 0) {
-      feedback.innerHTML = '<div class="alert-box alert-warn sans">Es obligatorio adjuntar tu documento de identidad real (DNI/NIE o acreditación oficial) para desbloquear la plataforma.</div>';
-      return;
+    function openVerifyModal() {
+        document.getElementById('verifyModal').classList.add('open');
     }
 
-    currentUser = {
-      nombre,
-      email,
-      poblacion,
-      edad,
-      rol,
-      verified: true
-    };
-
-    if (rol === 'musico') {
-      const parts = nombre.split(' ');
-      const iniciales = parts.map(p => p[0].toUpperCase() + '.').slice(0, 2).join(' ');
-      musiciansData.unshift({
-        id: Date.now(),
-        nombre,
-        iniciales,
-        edad,
-        mayor18: true,
-        instrumento: document.getElementById('reg-instrumento').value,
-        conservatorio: document.getElementById('reg-conservatorio').value,
-        poblacion,
-        nivel: document.getElementById('reg-nivel').value,
-        bio: document.getElementById('reg-bio').value.trim() || 'Intérprete verificado de la Comunitat Valenciana.'
-      });
+    function openLegalModal() {
+        document.getElementById('legalModal').classList.add('open');
     }
 
-    document.getElementById('auth-indicator').textContent = `Verificado: ${nombre} (${edad} años)`;
-    feedback.innerHTML = '<div class="alert-box alert-info sans"><strong>Identidad verificada correctamente.</strong> Ya tienes acceso completo a las fichas de músicos y a los eventos publicados.</div>';
+    function openSponsorModal() {
+        document.getElementById('sponsorModal').classList.add('open');
+    }
 
-    renderHomeTeaser();
+    function openContactModal(id, name) {
+        document.getElementById('targetMusicianId').value = id;
+        document.getElementById('contactModalTitle').textContent = `Contactar con ${name}`;
+        document.getElementById('contactModal').classList.add('open');
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('open');
+    }
+
+    function handleVerifyUser(e) {
+        e.preventDefault();
+        verifiedUserName = document.getElementById('vFullName').value;
+        isVerified = true;
+        const badge = document.getElementById('authStatusBtn');
+        badge.className = 'verify-badge verified sans';
+        badge.textContent = `✓ Verificado: ${verifiedUserName.split(' ')[0]}`;
+        closeModal('verifyModal');
+        renderMusicians();
+        renderTeaserEvents();
+    }
+
+    function handleSendContact(e) {
+        e.preventDefault();
+        const id = parseInt(document.getElementById('targetMusicianId').value);
+        const m = musicians.find(x => x.id === id);
+        const summary = document.getElementById('cEventSummary').value;
+
+        agreements.unshift({
+            id: Date.now(),
+            musicianName: m.fullName,
+            eventSummary: summary,
+            status: "Enviada · Esperando respuesta del intérprete",
+            hoursLeft: 72
+        });
+
+        closeModal('contactModal');
+        renderAgreements();
+        showSection('mensajes');
+    }
+
+    function handlePublishEvent(e) {
+        e.preventDefault();
+        events.unshift({
+            id: Date.now(),
+            title: document.getElementById('evTitle').value,
+            town: document.getElementById('evTown').value,
+            instrument: document.getElementById('evInstrument').value,
+            date: document.getElementById('evDate').value,
+            details: document.getElementById('evDetails').value
+        });
+        e.target.reset();
+        renderTeaserEvents();
+        showSection('inicio');
+    }
+
+    function handleRegisterMusician(e) {
+        e.preventDefault();
+        const age = parseInt(document.getElementById('mAge').value);
+        if (age < 18) {
+            alert("Debes ser mayor de 18 años para registrarte.");
+            return;
+        }
+        const fullName = document.getElementById('mName').value;
+        musicians.unshift({
+            id: Date.now(),
+            fullName: fullName,
+            publicAlias: fullName.split(' ')[0] + " (Intérprete Verificado)",
+            age: age,
+            instrument: document.getElementById('mInstrument').value,
+            conservatory: document.getElementById('mConservatory').value,
+            level: document.getElementById('mLevel').value,
+            town: document.getElementById('mTown').value,
+            bio: document.getElementById('mBio').value
+        });
+        e.target.reset();
+        renderMusicians();
+        showSection('inicio');
+    }
+
+    renderTeaserEvents();
     renderMusicians();
-    renderEventsFull();
-  }
-
-  function contactMusician(id) {
-    const musician = musiciansData.find(m => m.id === id);
-    if (!musician) return;
-
-    const asunto = prompt(`Escribe tu consulta para ${musician.nombre} (recuerda: no se fijan tarifas en la plataforma, podéis hablar libremente):`);
-    if (!asunto || !asunto.trim()) return;
-
-    activeMessages.unshift({
-      id: Date.now(),
-      destinatario: `${musician.nombre} (${musician.instrumento})`,
-      asunto: asunto.trim(),
-      enviadoHaceHoras: 0,
-      estado: "Esperando respuesta (Plazo máximo 3 días)"
-    });
-
-    alert(`Consulta enviada a ${musician.nombre}. Se ha activado el plazo máximo de 3 días (72 horas) para su respuesta.`);
-    showSection('mensajes');
-  }
-
-  function renderMessages() {
-    const container = document.getElementById('messages-list');
-    container.innerHTML = '';
-
-    if (!currentUser || !currentUser.verified) {
-      container.innerHTML = `
-        <div class="alert-box alert-warn sans">
-          Debes verificar tu identidad en la pestaña <strong>Registro y Verificación</strong> para enviar o gestionar solicitudes con plazo de respuesta de 3 días.
-        </div>
-      `;
-      return;
-    }
-
-    activeMessages.forEach(msg => {
-      const horasRestantes = Math.max(0, 72 - msg.enviadoHaceHoras);
-      const diasRestantes = Math.floor(horasRestantes / 24);
-      const horasSueltas = horasRestantes % 24;
-
-      const div = document.createElement('div');
-      div.className = 'msg-card sans';
-      div.innerHTML = `
-        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
-          <strong>Para: ${msg.destinatario}</strong>
-          <span style="font-size: 0.82rem; color: var(--success-green); font-weight: bold;">${msg.estado}</span>
-        </div>
-        <p style="margin: 0.45rem 0; font-size: 0.92rem;">"${msg.asunto}"</p>
-        <div class="countdown-badge">
-          &#9203; Tiempo restante para respuesta obligatoria: ${diasRestantes} días y ${horasSueltas} horas (máx. 3 días)
-        </div>
-      `;
-      container.appendChild(div);
-    });
-  }
-
-  function openLegalModal(type) {
-    const title = document.getElementById('modal-title');
-    const body = document.getElementById('modal-body');
-
-    if (type === 'titularidad') {
-      title.textContent = 'Aviso Legal y Titularidad del Portal';
-      body.innerHTML = `
-        <p>De conformidad con el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa que este espacio web es una iniciativa cultural independiente sin ánimo de lucro ni intermediación mercantil.</p>
-        <p><strong>Titular responsable:</strong> [Indicar aquí tu Nombre y Apellidos / NIF]</p>
-        <p><strong>Domicilio de contacto:</strong> [Indicar Municipio, Provincia - Comunitat Valenciana]</p>
-        <p><strong>Correo electrónico de contacto legal:</strong> [tu-correo@ejemplo.es]</p>
-        <p>Este portal actúa exclusivamente como tablón de encuentro directo entre músicos mayores de edad y solicitantes, sin intervenir en los acuerdos privados ni percibir comisiones.</p>
-      `;
-    } else if (type === 'privacidad') {
-      title.textContent = 'Protección de Datos y Verificación de Identidad';
-      body.innerHTML = `
-        <p>En cumplimiento del Reglamento General de Protección de Datos (RGPD - UE 2016/679) y la LOPDGDD, los datos y documentos identificativos aportados en el registro se emplean únicamente para comprobar la identidad real y la mayoría de edad (+18) de los participantes.</p>
-        <p>Ningún documento de identidad se publica ni se cede a terceros. Los perfiles completos solo son accesibles para otros usuarios previamente verificados.</p>
-      `;
-    } else if (type === 'normas') {
-      title.textContent = 'Normas de Funcionamiento de la Comunidad';
-      body.innerHTML = `
-        <p><strong>1. Ausencia de tarifas:</strong> No está permitido publicar precios, cachés ni tarifas por hora en las fichas o anuncios. Las condiciones se acuerdan directamente entre las partes.</p>
-        <p><strong>2. Mayoría de edad:</strong> Todos los músicos registrados deben haber cumplido 18 años y declararlo expresamente junto con su edad actual.</p>
-        <p><strong>3. Plazo de 3 días:</strong> Toda consulta recibida por un intérprete debe ser respondida en un máximo de 3 días naturales (72 horas) para mantener activo su perfil.</p>
-      `;
-    }
-
-    document.getElementById('legal-modal').classList.add('open');
-  }
-
-  function closeLegalModal(e) {
-    if (e.target.id === 'legal-modal') {
-      document.getElementById('legal-modal').classList.remove('open');
-    }
-  }
-
-  // Inicialización
-  renderHomeTeaser();
-  renderMusicians();
+    renderAgreements();
 </script>
 
 </body>
