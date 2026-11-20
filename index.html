@@ -1,839 +1,868 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuerda Viva Música | Comunidad 100% Verificada de Cuerda Frotada y Eventos</title>
-    <style>
-        :root {
-            --bg: #faf8f5;
-            --surface: #ffffff;
-            --primary: #5c2c16;
-            --primary-light: #7c3f23;
-            --accent: #c58b38;
-            --text: #241c18;
-            --muted: #6b5e57;
-            --border: #e6dfd5;
-            --verified-bg: #eef7f1;
-            --verified-text: #1b5e35;
-            --verified-border: #b7dec4;
-            --warn-bg: #fff8eb;
-            --warn-text: #854d0e;
-            --warn-border: #fde08d;
-            --error-bg: #fef2f2;
-            --error-text: #991b1b;
-            --error-border: #fecaca;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuerda Viva Música | Directorio Verificado de Músicos y Eventos</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --surface: #181b22;
+      --surface-alt: #202530;
+      --border: #2c3342;
+      --primary: #e09f3e;
+      --primary-hover: #f0b254;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning-bg: rgba(224, 159, 62, 0.12);
+    }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        /* Banner superior de verificación */
-        .top-trust-bar {
-            background: #1b4332;
-            color: #ffffff;
-            text-align: center;
-            padding: 10px 16px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-        .top-trust-bar span {
-            background: #2d6a4f;
-            padding: 3px 10px;
-            border-radius: 99px;
-            margin-right: 8px;
-            font-size: 0.78rem;
-            text-transform: uppercase;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-        /* Navegación */
-        header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 14px 24px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        }
-        .logo { font-size: 1.35rem; font-weight: 800; color: var(--primary); text-decoration: none; }
-        .logo small { display: block; font-size: 0.75rem; font-weight: 500; color: var(--muted); }
-        nav { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-        nav a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.9rem; padding: 6px 10px; border-radius: 6px; }
-        nav a:hover { background: var(--bg); color: var(--primary); }
-        .btn {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.92rem;
-            text-decoration: none;
-            display: inline-block;
-            transition: background 0.2s;
-        }
-        .btn:hover { background: var(--primary-light); }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid var(--primary);
-            color: var(--primary);
-        }
-        .btn-outline:hover { background: var(--primary); color: #fff; }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
 
-        /* Hero */
-        .hero {
-            max-width: 1120px;
-            margin: 36px auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-        .hero h1 { font-size: 2.3rem; color: var(--primary); margin-bottom: 14px; line-height: 1.2; }
-        .hero p { font-size: 1.1rem; color: var(--muted); max-width: 760px; margin: 0 auto 24px; }
-        .trust-pillars {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 16px;
-            margin-top: 28px;
-            text-align: left;
-        }
-        .pillar {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--verified-text);
-            padding: 16px;
-            border-radius: 10px;
-        }
-        .pillar h3 { font-size: 1rem; color: var(--verified-text); margin-bottom: 6px; }
-        .pillar p { font-size: 0.88rem; color: var(--muted); margin: 0; }
+    a:hover {
+      text-decoration: underline;
+    }
 
-        /* Secciones */
-        section { max-width: 1120px; margin: 48px auto; padding: 0 20px; }
-        .section-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; gap: 12px; }
-        .section-header h2 { font-size: 1.65rem; color: var(--primary); }
+    header {
+      background: linear-gradient(135deg, #14171f 0%, #1e222d 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
 
-        /* Filtros */
-        .filters {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: 12px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-        .filters label { font-size: 0.8rem; font-weight: 700; color: var(--muted); display: block; margin-bottom: 4px; }
-        .filters input, .filters select {
-            width: 100%;
-            padding: 9px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.92rem;
-            background: var(--bg);
-        }
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
 
-        /* Tarjetas */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-            gap: 20px;
-        }
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-        }
-        .badge-verified {
-            display: inline-block;
-            background: var(--verified-bg);
-            color: var(--verified-text);
-            border: 1px solid var(--verified-border);
-            font-size: 0.76rem;
-            font-weight: 700;
-            padding: 3px 9px;
-            border-radius: 99px;
-            margin-bottom: 10px;
-        }
-        .card h3 { font-size: 1.15rem; margin-bottom: 6px; color: var(--text); }
-        .card-meta { font-size: 0.86rem; color: var(--muted); margin-bottom: 12px; }
-        .card p { font-size: 0.92rem; margin-bottom: 16px; }
-        .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-        .tag { background: var(--bg); border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; }
+    .brand {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.3px;
+    }
 
-        /* Formularios y cajas de verificación */
-        .form-box {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 28px;
-            margin-top: 20px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-        }
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            background: var(--bg);
-        }
-        .hidden { display: none !important; }
+    .brand span {
+      color: var(--text);
+      font-weight: 400;
+    }
 
-        /* Alertas y estados */
-        .alert-box {
-            padding: 14px 16px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            margin: 14px 0;
-        }
-        .alert-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
-        .alert-error { background: var(--error-bg); color: var(--error-text); border: 1px solid var(--error-border); }
-        .alert-success { background: var(--verified-bg); color: var(--verified-text); border: 1px solid var(--verified-border); }
+    nav {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
 
-        .rgpd-note {
-            font-size: 0.8rem;
-            color: var(--muted);
-            background: var(--bg);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            margin-top: 12px;
-        }
+    nav a {
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
 
-        /* Guía de activación correo */
-        .mail-notice {
-            background: #f0f4f8;
-            border: 1px solid #bcd0e5;
-            color: #1e3a5f;
-            padding: 16px;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            margin-bottom: 20px;
-        }
+    nav a:hover {
+      color: var(--primary);
+      text-decoration: none;
+    }
 
-        footer {
-            background: #241c18;
-            color: #e6dfd5;
-            padding: 36px 20px;
-            margin-top: 60px;
-            font-size: 0.88rem;
-        }
-        .footer-inner {
-            max-width: 1120px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-        }
-        footer h4 { color: #fff; margin-bottom: 10px; }
-        footer a { color: #c58b38; text-decoration: none; }
-    </style>
+    .hero {
+      max-width: 1100px;
+      margin: 2.5rem auto 1.5rem;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 auto 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .badge-verified {
+      display: inline-block;
+      background: var(--warning-bg);
+      color: var(--primary);
+      border: 1px solid rgba(224, 159, 62, 0.35);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.35rem;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      background: var(--surface-alt);
+      color: var(--primary);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .form-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.1rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.7rem 0.85rem;
+      color: var(--text);
+      font-size: 0.95rem;
+      width: 100%;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    input[type="file"] {
+      background: var(--surface-alt);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 0.65rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .verification-panel {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.35rem;
+      margin: 1.5rem 0;
+    }
+
+    .verification-panel h3 {
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .camera-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    video,
+    .selfie-preview {
+      width: 100%;
+      max-width: 340px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #090a0d;
+      display: none;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #111318;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: #2b3242;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #374054;
+    }
+
+    .notice-destruction {
+      background: var(--warning-bg);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.15rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin: 1.25rem 0;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      margin: 0.85rem 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      margin-top: 0.25rem;
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .status-msg {
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+      font-weight: 500;
+    }
+
+    .status-ok {
+      color: var(--success);
+    }
+
+    .status-err {
+      color: var(--danger);
+    }
+
+    footer {
+      background: #0b0d10;
+      border-top: 1px solid var(--border);
+      padding: 2.25rem 1.5rem;
+      margin-top: 3rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .privacy-summary-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.15rem 1.35rem;
+      font-size: 0.84rem;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .privacy-summary-box strong {
+      color: var(--text);
+    }
+
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Modal Política de Privacidad */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 1.75rem;
+      color: var(--text);
+    }
+
+    .modal-card h2 {
+      color: var(--primary);
+      font-size: 1.3rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .modal-card h4 {
+      margin-top: 1rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .modal-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="top-trust-bar">
-        <span>Entorno 100% Verificado</span>
-        Todos los músicos (+18 y conservatorio) y organizadores pasan revisión manual de identidad real antes de aparecer aquí.
+  <header>
+    <div class="nav-container">
+      <div class="brand">Cuerda Viva <span>Música</span></div>
+      <nav>
+        <a href="#directorio">Músicos y Eventos</a>
+        <a href="#registro">Solicitar Alta Verificada</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#privacidad">Privacidad</a>
+      </nav>
     </div>
+  </header>
 
-    <header>
-        <a href="#" class="logo">
-            Cuerda Viva Música
-            <small>Violín · Viola · Violonchelo · Contrabajo (Comunitat Valenciana)</small>
-        </a>
-        <nav>
-            <a href="#musicos">Músicos Verificados</a>
-            <a href="#eventos">Eventos y Bolos</a>
-            <a href="#luthiers">Luthiers</a>
-            <a href="#registro" class="btn">Solicitar Alta Verificada</a>
-        </nav>
-    </header>
+  <section class="hero">
+    <div class="badge-verified">Comunidad 100% Verificada · Revisión Humana Previa</div>
+    <h1>Conecta con músicos reales y eventos en directo</h1>
+    <p>
+      Directorio independiente de artistas, bandas y salas. Cada perfil se revisa manualmente antes de su publicación para garantizar autenticidad y evitar suplantaciones.
+    </p>
+  </section>
 
-    <div class="hero">
-        <h1>Conecta con músicos de cuerda y organizadores reales, sin perfiles falsos</h1>
-        <p>Comunidad exclusiva en Valencia, Castellón y Alicante para instrumentistas mayores de 18 años con estudios de conservatorio y organizadores con identidad comprobada.</p>
-        <div>
-            <a href="#registro" class="btn">Verificar mi perfil de músico</a>
-            <a href="#publicar-evento" class="btn btn-outline" style="margin-left: 8px;">+ Publicar Evento Real</a>
+  <main class="container">
+    <!-- Directorio aprobado manualmente -->
+    <section id="directorio">
+      <h2 class="section-title">Perfiles y Eventos Destacados</h2>
+      <p class="section-subtitle">Publicados únicamente tras superar nuestra verificación de identidad.</p>
+
+      <div class="grid-cards">
+        <article class="card">
+          <span class="card-tag">Músico Verificado</span>
+          <h3>Trío Acústico del Turia</h3>
+          <p>Jazz manouche, boleros y repertorio acústico para eventos privados y salas culturales en València.</p>
+        </article>
+
+        <article class="card">
+          <span class="card-tag">Músico Verificado</span>
+          <h3>Elena Navarro · Violonchelo</h3>
+          <p>Solista clásica y contemporánea. Disponible para grabaciones de estudio, ceremonias y recitales.</p>
+        </article>
+
+        <article class="card">
+          <span class="card-tag">Evento Verificado</span>
+          <h3>Ciclo Noches de Cuerda</h3>
+          <p>Encuentro mensual de cantautores y formato acústico íntimo. Entrada libre hasta completar aforo.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Formulario de Alta con Revisión Humana y Verificación Separada -->
+    <section id="registro" class="form-box">
+      <h2 class="section-title">Solicitar Alta de Músico o Evento</h2>
+      <p class="section-subtitle">
+        Ningún dato se publica automáticamente. Tu solicitud llegará a nuestro equipo para revisión manual.
+      </p>
+
+      <form id="registroForm" action="https://formsubmit.co/cuerdavivamusica@gmail.com" method="POST" enctype="multipart/form-data">
+        <!-- Configuración FormSubmit -->
+        <input type="hidden" name="_subject" value="Nueva Solicitud de Verificación - Cuerda Viva Música" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="tipoPerfil">Tipo de solicitud *</label>
+            <select id="tipoPerfil" name="Tipo_Solicitud" required>
+              <option value="Músico / Banda">Músico / Banda</option>
+              <option value="Evento / Sala">Evento / Sala de conciertos</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="nombreArtistico">Nombre artístico o del evento *</label>
+            <input type="text" id="nombreArtistico" name="Nombre_Artistico_o_Evento" placeholder="Ej. Cuarteto Mediterráneo" required />
+          </div>
         </div>
 
-        <div class="trust-pillars">
-            <div class="pillar">
-                <h3>1. Músicos +18 y Conservatorio</h3>
-                <p>Revisamos manualmente la mayoría de edad y el expediente o matrícula de conservatorio profesional o superior antes de activar cualquier ficha.</p>
-            </div>
-            <div class="pillar">
-                <h3>2. Organizadores y Particulares Reales</h3>
-                <p>Las entidades acreditan su CIF y cargo; los particulares envían un selfie tomado en el momento sosteniendo su DNI/NIE.</p>
-            </div>
-            <div class="pillar">
-                <h3>3. Tolerancia Cero y Borrado RGPD</h3>
-                <p>Ningún perfil ni anuncio se publica automáticamente. Tras validar tu identidad, borramos la imagen del documento de identidad.</p>
-            </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nombreLegal">Nombre y apellidos del titular *</label>
+            <input type="text" id="nombreLegal" name="Nombre_Titular" placeholder="Tal como figura en el DNI/NIE" required />
+          </div>
+
+          <div class="form-group">
+            <label for="dniInput">Número de DNI o NIE *</label>
+            <input type="text" id="dniInput" name="Numero_DNI_NIE" placeholder="Ej. 12345678Z o X1234567L" maxlength="9" required />
+            <span id="dniStatus" class="status-msg"></span>
+          </div>
         </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="emailRegistro">Correo electrónico de contacto *</label>
+            <input type="email" id="emailRegistro" name="Email_Contacto" placeholder="tu@correo.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="ciudad">Ciudad / Provincia *</label>
+            <input type="text" id="ciudad" name="Ciudad_Provincia" placeholder="Ej. València" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion">Descripción artística o detalles del evento *</label>
+          <textarea id="descripcion" name="Descripcion" rows="3" placeholder="Estilo musical, enlaces a muestras de audio/vídeo, fecha o disponibilidad..." required></textarea>
+        </div>
+
+        <!-- Bloque de Verificación de Identidad en 2 Pasos -->
+        <div class="verification-panel">
+          <h3>Verificación de Identidad (2 pasos obligatorios)</h3>
+          <p style="font-size: 0.88rem; color: var(--muted); margin-bottom: 1rem;">
+            Para evitar perfiles falsos, realiza un selfie en directo desde tu cámara y adjunta por separado tu documento de identidad.
+          </p>
+
+          <!-- Paso 1: Selfie en directo -->
+          <div class="form-group">
+            <label>1. Selfie en directo con la cámara del dispositivo *</label>
+            <div class="camera-box">
+              <video id="cameraStream" autoplay playsinline></video>
+              <canvas id="selfieCanvas" style="display:none;"></canvas>
+              <img id="selfiePreview" class="selfie-preview" alt="Vista previa del selfie capturado" />
+
+              <div class="btn-row">
+                <button type="button" id="btnStartCamera" class="btn btn-secondary">Activar Cámara</button>
+                <button type="button" id="btnCaptureSelfie" class="btn btn-primary" style="display:none;">Capturar Selfie</button>
+                <button type="button" id="btnRetakeSelfie" class="btn btn-secondary" style="display:none;">Repetir Selfie</button>
+              </div>
+              <span id="selfieStatus" class="status-msg">Cámara pendiente de activación.</span>
+            </div>
+            <!-- Input real oculto donde se inyecta el archivo generado por la cámara -->
+            <input type="file" id="selfieFileInput" name="Selfie_En_Directo" accept="image/jpeg" style="display:none;" required />
+          </div>
+
+          <!-- Paso 2: Documento DNI / NIE por separado -->
+          <div class="form-group" style="margin-top: 1.25rem;">
+            <label for="dniFileInput">2. Documento DNI o NIE (cara frontal legible, sin capturas de pantalla) *</label>
+            <input type="file" id="dniFileInput" name="Documento_DNI_NIE" accept="image/jpeg,image/png,application/pdf" required />
+            <span id="dniFileStatus" class="status-msg"></span>
+          </div>
+
+          <!-- Aviso de eliminación inmediata -->
+          <div class="notice-destruction">
+            <strong>Compromiso de Eliminación Inmediata:</strong> Tanto el selfie capturado como el documento DNI/NIE se emplean exclusivamente para comprobar tu identidad una única vez. Inmediatamente después de realizar la verificación, <strong>ambos archivos se eliminan de forma definitiva</strong> del servidor y del correo de recepción, sin conservar copia alguna ni asumir responsabilidad derivada de su almacenamiento posterior.
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="checkDestruccion" required />
+            <label for="checkDestruccion" style="font-weight: 400; color: var(--text);">
+              Confirmo que soy el titular de los datos y acepto el envío del selfie y DNI/NIE sabiendo que ambos documentos serán eliminados inmediatamente tras verificar mi identidad.
+            </label>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="checkPrivacidadRegistro" required />
+            <label for="checkPrivacidadRegistro" style="font-weight: 400; color: var(--text);">
+              He leído y acepto la <a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a> de Cuerda Viva Música.
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar Solicitud para Revisión</button>
+      </form>
+    </section>
+
+    <!-- Canal de Contacto Seguro -->
+    <section id="contacto" class="form-box">
+      <h2 class="section-title">Canal de Contacto Seguro</h2>
+      <p class="section-subtitle">
+        Para consultas generales, modificaciones de perfil o solicitudes de baja (sin necesidad de adjuntar DNI ni cámara).
+      </p>
+
+      <form action="https://formsubmit.co/cuerdavivamusica@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Consulta Web - Cuerda Viva Música" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="contactName">Tu nombre *</label>
+            <input type="text" id="contactName" name="Nombre" required />
+          </div>
+          <div class="form-group">
+            <label for="contactEmail">Tu correo electrónico *</label>
+            <input type="email" id="contactEmail" name="Email" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="contactMessage">Mensaje *</label>
+          <textarea id="contactMessage" name="Mensaje" rows="3" required></textarea>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="checkPrivacidadContacto" required />
+          <label for="checkPrivacidadContacto" style="font-weight: 400; color: var(--text);">
+            Acepto el tratamiento de mis datos de contacto conforme a la <a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a>.
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-secondary">Enviar Mensaje</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Pie de página con Texto Legal Corto de Política de Privacidad -->
+  <footer id="privacidad">
+    <div class="footer-inner">
+      <div class="privacy-summary-box">
+        <strong>Información Básica sobre Protección de Datos (Política de Privacidad):</strong><br />
+        <strong>Responsable:</strong> Cuerda Viva Música (<a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>).<br />
+        <strong>Finalidad:</strong> Gestionar solicitudes de alta en el directorio, verificar puntualmente la identidad del solicitante para evitar suplantaciones y responder a consultas.<br />
+        <strong>Legitimación:</strong> Consentimiento expreso del interesado al marcar las casillas de aceptación y enviar el formulario (art. 6.1.a RGPD).<br />
+        <strong>Conservación y borrado:</strong> Los archivos de verificación (selfie en directo y documento DNI/NIE) se <strong>eliminan de forma definitiva inmediatamente después</strong> de comprobar la identidad. Los datos de perfiles aprobados se conservan mientras permanezcan publicados o hasta que solicites su baja.<br />
+        <strong>Destinatarios:</strong> No se ceden datos a terceros salvo obligación legal. Los formularios utilizan FormSubmit únicamente como canal técnico de envío hacia el correo del responsable.<br />
+        <strong>Derechos:</strong> Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición y limitación escribiendo a <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>, o presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD).
+        <a href="#privacidad" onclick="openPrivacyModal(event)" style="margin-left: 0.35rem;">Ver texto legal completo</a>.
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Cuerda Viva Música · Comunidad Cultural Independiente</span>
+        <span>
+          <a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a> ·
+          <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>
+        </span>
+      </div>
     </div>
+  </footer>
 
-    <!-- SECCIÓN MÚSICOS -->
-    <section id="musicos">
-        <div class="section-header">
-            <div>
-                <h2>Músicos Verificados</h2>
-                <p style="color: var(--muted); font-size: 0.92rem;">Perfiles revisados y aprobados manualmente por la administración.</p>
-            </div>
-        </div>
+  <!-- Modal Texto Legal Completo -->
+  <div id="privacyModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <h2 id="modalTitle">Política de Privacidad — Cuerda Viva Música</h2>
 
-        <div class="filters">
-            <div>
-                <label for="filtro-instrumento">Instrumento</label>
-                <select id="filtro-instrumento" onchange="filtrarMusicos()">
-                    <option value="">Todos los instrumentos</option>
-                    <option value="Violín">Violín</option>
-                    <option value="Viola">Viola</option>
-                    <option value="Violonchelo">Violonchelo</option>
-                    <option value="Contrabajo">Contrabajo</option>
-                </select>
-            </div>
-            <div>
-                <label for="filtro-provincia">Provincia</label>
-                <select id="filtro-provincia" onchange="filtrarMusicos()">
-                    <option value="">Toda la Comunitat Valenciana</option>
-                    <option value="Valencia">Valencia</option>
-                    <option value="Castellón">Castellón</option>
-                    <option value="Alicante">Alicante</option>
-                </select>
-            </div>
-            <div>
-                <label for="filtro-poblacion">Población (búsqueda libre)</label>
-                <input type="text" id="filtro-poblacion" placeholder="Ej. Torrent, Elche, Vila-real..." oninput="filtrarMusicos()">
-            </div>
-            <div>
-                <label for="filtro-conservatorio">Conservatorio</label>
-                <select id="filtro-conservatorio" onchange="filtrarMusicos()">
-                    <option value="">Cualquier conservatorio</option>
-                    <option value="CSM Joaquín Rodrigo (Valencia)">CSM Joaquín Rodrigo (Valencia)</option>
-                    <option value="CPM Valencia">CPM Valencia</option>
-                    <option value="CPM Torrent">CPM Torrent</option>
-                    <option value="CSM Salvador Seguí (Castellón)">CSM Salvador Seguí (Castellón)</option>
-                    <option value="CPM Mestre Tàrrega (Castellón)">CPM Mestre Tàrrega (Castellón)</option>
-                    <option value="CSM Óscar Esplá (Alicante)">CSM Óscar Esplá (Alicante)</option>
-                    <option value="CPM Guitarrista José Tomás (Alicante)">CPM Guitarrista José Tomás (Alicante)</option>
-                    <option value="CPM Elche">CPM Elche</option>
-                </select>
-            </div>
-        </div>
+      <h4>1. Responsable del tratamiento</h4>
+      <p>
+        El responsable del tratamiento de los datos personales recogidos a través de este sitio web es <strong>Cuerda Viva Música</strong>, con correo electrónico de contacto <strong>cuerdavivamusica@gmail.com</strong>.
+      </p>
 
-        <div class="grid" id="lista-musicos">
-            <div class="card musico-card" data-inst="Violín" data-prov="Valencia" data-pob="Torrent" data-cons="CPM Torrent">
-                <div>
-                    <span class="badge-verified">✔ Identidad y Conservatorio Verificados</span>
-                    <h3>Clara M. (22 años)</h3>
-                    <div class="card-meta">Violín · Torrent (Valencia) · CPM Torrent (6º EE.PP.)</div>
-                    <p>Disponible para cuartetos de cuerda en ceremonias, refuerzos de orquesta sinfónica y música de cámara.</p>
-                    <div class="tags">
-                        <span class="tag">Clásico</span>
-                        <span class="tag">Bodas y Eventos</span>
-                        <span class="tag">Vehículo propio</span>
-                    </div>
-                </div>
-                <a href="#contacto-rapido" class="btn btn-outline" onclick="prepararContacto('Clara M. - Violín')">Solicitar contacto</a>
-            </div>
+      <h4>2. Datos tratados y finalidad</h4>
+      <p>
+        Tratamos únicamente los datos que nos facilitas voluntariamente a través de nuestros formularios: datos identificativos y artísticos para publicar tu ficha de músico o evento previa revisión, datos de contacto para atender tus consultas, y documentación puntual de verificación (número de DNI/NIE, fotografía del documento y selfie en directo) con la exclusiva finalidad de confirmar tu identidad y prevenir fraudes o suplantaciones.
+      </p>
 
-            <div class="card musico-card" data-inst="Violonchelo" data-prov="Alicante" data-pob="Elche" data-cons="CSM Óscar Esplá (Alicante)">
-                <div>
-                    <span class="badge-verified">✔ Identidad y Conservatorio Verificados</span>
-                    <h3>Marc V. (24 años)</h3>
-                    <div class="card-meta">Violonchelo · Elche (Alicante) · CSM Óscar Esplá</div>
-                    <p>Experiencia en orquestas jóvenes, grabaciones de estudio y dúos acústicos para eventos culturales.</p>
-                    <div class="tags">
-                        <span class="tag">Sinfónico</span>
-                        <span class="tag">Cámara</span>
-                        <span class="tag">Grabación</span>
-                    </div>
-                </div>
-                <a href="#contacto-rapido" class="btn btn-outline" onclick="prepararContacto('Marc V. - Violonchelo')">Solicitar contacto</a>
-            </div>
+      <h4>3. Base jurídica</h4>
+      <p>
+        La base legal para el tratamiento es tu consentimiento expreso (artículo 6.1.a del Reglamento General de Protección de Datos - RGPD), otorgado mediante la marcación de las casillas correspondientes antes del envío de cada formulario.
+      </p>
 
-            <div class="card musico-card" data-inst="Viola" data-prov="Castellón" data-pob="Vila-real" data-cons="CSM Salvador Seguí (Castellón)">
-                <div>
-                    <span class="badge-verified">✔ Identidad y Conservatorio Verificados</span>
-                    <h3>Elena R. (21 años)</h3>
-                    <div class="card-meta">Viola · Vila-real (Castellón) · CSM Salvador Seguí</div>
-                    <p>Busco formar cuarteto estable en Castellón o Valencia y colaborar en proyectos barrocos y contemporáneos.</p>
-                    <div class="tags">
-                        <span class="tag">Cuarteto</span>
-                        <span class="tag">Barroco</span>
-                        <span class="tag">Disponibilidad fines de semana</span>
-                    </div>
-                </div>
-                <a href="#contacto-rapido" class="btn btn-outline" onclick="prepararContacto('Elena R. - Viola')">Solicitar contacto</a>
-            </div>
-        </div>
-    </section>
+      <h4>4. Plazo de conservación y eliminación inmediata de documentos</h4>
+      <p>
+        Tanto el selfie capturado mediante cámara como la copia del DNI/NIE se destruyen y eliminan de forma irreversible inmediatamente después de realizar la comprobación manual de identidad. No creamos bases de datos de documentos de identidad. Los datos de contacto y descripción artística de los perfiles aprobados se conservarán únicamente mientras el interesado desee mantener activa su publicación.
+      </p>
 
-    <!-- SECCIÓN EVENTOS -->
-    <section id="eventos">
-        <div class="section-header">
-            <div>
-                <h2>Eventos y Bolos Verificados</h2>
-                <p style="color: var(--muted); font-size: 0.92rem;">Solo se muestran ofertas cuya entidad o particular solicitante ha sido validado.</p>
-            </div>
-            <a href="#publicar-evento" class="btn">+ Publicar Evento</a>
-        </div>
+      <h4>5. Destinatarios y transferencias</h4>
+      <p>
+        No cedemos ni vendemos tus datos personales a terceros. Para la transmisión técnica de los formularios web al correo electrónico del responsable se emplea la pasarela FormSubmit exclusivamente como medio de entrega.
+      </p>
 
-        <div class="grid">
-            <div class="card">
-                <div>
-                    <span class="badge-verified">✔ Entidad Verificada (CIF comprobado)</span>
-                    <h3>Refuerzo Violines y Violas — Concierto de Primavera</h3>
-                    <div class="card-meta">Valencia capital · Sábado 16 de Mayo · Remunerado</div>
-                    <p>Asociación Sinfónica del Turia busca 2 violines y 1 viola con nivel mínimo de 5º de Enseñanzas Profesionales para programa Beethoven/Mozart.</p>
-                </div>
-                <a href="#contacto-rapido" class="btn btn-outline" onclick="prepararContacto('Evento: Concierto de Primavera Valencia')">Postularme al evento</a>
-            </div>
+      <h4>6. Derechos de las personas interesadas</h4>
+      <p>
+        Puedes retirar tu consentimiento en cualquier momento, así como solicitar el acceso, rectificación, supresión, oposición, limitación del tratamiento o portabilidad de tus datos enviando un correo a <strong>cuerdavivamusica@gmail.com</strong>. Asimismo, tienes derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).
+      </p>
 
-            <div class="card">
-                <div>
-                    <span class="badge-verified">✔ Particular Verificado (Selfie + DNI)</span>
-                    <h3>Dúo Violín y Violonchelo para Ceremonia Civil</h3>
-                    <div class="card-meta">Altea (Alicante) · Domingo 14 de Junio · Remunerado</div>
-                    <p>Buscamos dúo de cuerda para ceremonia de 45 minutos y cóctel de bienvenida. Repertorio clásico y bandas sonoras.</p>
-                </div>
-                <a href="#contacto-rapido" class="btn btn-outline" onclick="prepararContacto('Evento: Ceremonia Civil Altea')">Postularme al evento</a>
-            </div>
-        </div>
-    </section>
+      <div style="margin-top: 1.25rem; text-align: right;">
+        <button type="button" class="btn btn-primary" onclick="closePrivacyModal()">Entendido, cerrar</button>
+      </div>
+    </div>
+  </div>
 
-    <!-- FORMULARIO DE REGISTRO Y VERIFICACIÓN -->
-    <section id="registro">
-        <h2>Registro y Solicitud de Verificación</h2>
-        <p style="color: var(--muted);">Tu perfil no aparecerá en la web hasta que revisemos manualmente tu documentación y confirmemos tu identidad real.</p>
+  <script>
+    // 1. Validación matemática oficial de DNI / NIE español
+    function validarDniNie(valor) {
+      const str = valor.trim().toUpperCase();
+      const regex = /^[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$/;
+      if (!regex.test(str)) return false;
 
-        <div class="form-box">
-            <div class="mail-notice">
-                <strong>Aviso importante sobre el envío por correo:</strong> Al enviar este formulario, los datos y archivos se remiten directamente a <strong>cuerdavivamusica@gmail.com</strong> mediante FormSubmit. Si abres este archivo desde tu ordenador local (<code>file:///</code>) en lugar de un servidor web (<code>https://</code>), algunos navegadores bloquean el envío externo por seguridad.
-            </div>
+      let numeroStr = str.slice(0, 8);
+      numeroStr = numeroStr.replace(/^X/, '0').replace(/^Y/, '1').replace(/^Z/, '2');
+      const numero = parseInt(numeroStr, 10);
+      const letraEsperada = 'TRWAGMYFPDXBNJZSQVHLCKE'[numero % 23];
+      return str.charAt(8) === letraEsperada;
+    }
 
-            <form id="form-verificacion" action="https://formsubmit.co/cuerdavivamusica@gmail.com" method="POST" enctype="multipart/form-data" onsubmit="return validarFormularioRegistro(event)">
-                <!-- Configuración FormSubmit -->
-                <input type="hidden" name="_subject" value="Nueva Solicitud de Verificación - Cuerda Viva Música">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
+    const dniInput = document.getElementById('dniInput');
+    const dniStatus = document.getElementById('dniStatus');
 
-                <div class="form-group">
-                    <label for="tipo-usuario">¿Qué tipo de perfil deseas verificar? *</label>
-                    <select id="tipo-usuario" name="Tipo_de_Perfil" required onchange="cambiarCamposRegistro()">
-                        <option value="">Selecciona una opción...</option>
-                        <option value="Musico">Músico de cuerda (+18 y estudiante/titulado de conservatorio)</option>
-                        <option value="Entidad">Organizador: Entidad / Orquesta / Asociación / Empresa</option>
-                        <option value="Particular">Organizador: Particular (bodas o eventos privados)</option>
-                    </select>
-                </div>
+    dniInput.addEventListener('input', () => {
+      const val = dniInput.value.trim();
+      if (!val) {
+        dniStatus.textContent = '';
+        return;
+      }
+      if (validarDniNie(val)) {
+        dniStatus.textContent = 'DNI/NIE válido.';
+        dniStatus.className = 'status-msg status-ok';
+      } else {
+        dniStatus.textContent = 'Formato o letra de control de DNI/NIE incorrecta.';
+        dniStatus.className = 'status-msg status-err';
+      }
+    });
 
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="reg-nombre">Nombre y Apellidos reales (según DNI/NIE) *</label>
-                        <input type="text" id="reg-nombre" name="Nombre_Completo" required placeholder="Ej. Laura García Martínez">
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-dni">DNI o NIE (con letra) *</label>
-                        <input type="text" id="reg-dni" name="DNI_NIE" required placeholder="Ej. 12345678Z o X1234567L" maxlength="9" style="text-transform: uppercase;">
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-email">Correo electrónico de contacto *</label>
-                        <input type="email" id="reg-email" name="Email_Solicitante" required placeholder="tuemail@ejemplo.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-telefono">Teléfono / WhatsApp *</label>
-                        <input type="tel" id="reg-telefono" name="Telefono" required placeholder="Ej. 600 123 456">
-                    </div>
-                </div>
+    // 2. Bloqueo de capturas de pantalla en la subida del documento DNI/NIE
+    const dniFileInput = document.getElementById('dniFileInput');
+    const dniFileStatus = document.getElementById('dniFileStatus');
+    const screenshotKeywords = ['screenshot', 'captura', 'pantallazo', 'screen_shot', 'screen-shot', 'snip'];
 
-                <!-- Campos específicos MÚSICO -->
-                <div id="bloque-musico" class="hidden">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="mus-nacimiento">Fecha de nacimiento (debes ser mayor de 18 años) *</label>
-                            <input type="date" id="mus-nacimiento" name="Fecha_Nacimiento">
-                        </div>
-                        <div class="form-group">
-                            <label for="mus-instrumento">Instrumento principal *</label>
-                            <select id="mus-instrumento" name="Instrumento">
-                                <option value="Violín">Violín</option>
-                                <option value="Viola">Viola</option>
-                                <option value="Violonchelo">Violonchelo</option>
-                                <option value="Contrabajo">Contrabajo</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="mus-conservatorio">Conservatorio (Valencia, Castellón o Alicante) *</label>
-                            <input type="text" id="mus-conservatorio" name="Conservatorio" placeholder="Ej. CPM Torrent / CSM Valencia">
-                        </div>
-                        <div class="form-group">
-                            <label for="mus-poblacion">Población y provincia de residencia *</label>
-                            <input type="text" id="mus-poblacion" name="Poblacion_Provincia" placeholder="Ej. Paterna (Valencia)">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="mus-doc">Acreditación de estudios de conservatorio (matrícula, expediente o título) *</label>
-                        <input type="file" id="mus-doc" name="Documento_Conservatorio" accept=".pdf,.jpg,.jpeg,.png">
-                    </div>
-                </div>
+    dniFileInput.addEventListener('change', () => {
+      const file = dniFileInput.files[0];
+      if (!file) return;
+      const lowerName = file.name.toLowerCase();
+      const isScreenshot = screenshotKeywords.some(kw => lowerName.includes(kw));
 
-                <!-- Campos específicos ENTIDAD -->
-                <div id="bloque-entidad" class="hidden">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="ent-nombre">Nombre oficial de la Entidad / Orquesta / Empresa *</label>
-                            <input type="text" id="ent-nombre" name="Nombre_Entidad" placeholder="Ej. Orquesta Filarmónica...">
-                        </div>
-                        <div class="form-group">
-                            <label for="ent-cif">CIF de la entidad *</label>
-                            <input type="text" id="ent-cif" name="CIF_Entidad" placeholder="Ej. G12345678">
-                        </div>
-                        <div class="form-group">
-                            <label for="ent-cargo">Tu cargo exacto en la entidad *</label>
-                            <input type="text" id="ent-cargo" name="Cargo_Responsable" placeholder="Ej. Presidente / Director Artístico">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="ent-doc">Documento acreditativo (CIF, estatutos o nombramiento) *</label>
-                        <input type="file" id="ent-doc" name="Acreditacion_Entidad" accept=".pdf,.jpg,.jpeg,.png">
-                    </div>
-                </div>
+      if (isScreenshot) {
+        dniFileInput.value = '';
+        dniFileStatus.textContent = 'No se admiten capturas de pantalla. Adjunta una foto original o PDF del documento.';
+        dniFileStatus.className = 'status-msg status-err';
+      } else {
+        dniFileStatus.textContent = 'Documento adjuntado: ' + file.name;
+        dniFileStatus.className = 'status-msg status-ok';
+      }
+    });
 
-                <!-- Selfie en vivo obligatorio para particulares y músicos -->
-                <div id="bloque-selfie" class="hidden">
-                    <div class="alert-box alert-warn">
-                        <strong>Control de identidad en vivo:</strong> Para evitar suplantaciones y capturas falsas, debes tomar una fotografía <strong>en este mismo momento con tu cámara</strong> sosteniendo tu DNI/NIE junto a tu rostro (puedes tapar el número de soporte si lo deseas, pero deben verse tu foto y nombre completo).
-                    </div>
-                    <div class="form-group">
-                        <label for="selfie-dni">Tomar selfie en vivo con DNI/NIE (Cámara obligatoria) *</label>
-                        <input type="file" id="selfie-dni" name="Selfie_Con_DNI" accept="image/*" capture="user" onchange="validarArchivoCamara(this)">
-                    </div>
-                </div>
+    // 3. Captura de Selfie en directo mediante cámara (getUserMedia)
+    const btnStartCamera = document.getElementById('btnStartCamera');
+    const btnCaptureSelfie = document.getElementById('btnCaptureSelfie');
+    const btnRetakeSelfie = document.getElementById('btnRetakeSelfie');
+    const videoEl = document.getElementById('cameraStream');
+    const canvasEl = document.getElementById('selfieCanvas');
+    const previewEl = document.getElementById('selfiePreview');
+    const selfieStatus = document.getElementById('selfieStatus');
+    const selfieFileInput = document.getElementById('selfieFileInput');
 
-                <div id="mensaje-validacion" class="alert-box alert-error hidden"></div>
+    let mediaStream = null;
 
-                <div class="rgpd-note">
-                    <label style="display: flex; gap: 8px; align-items: flex-start; cursor: pointer;">
-                        <input type="checkbox" id="acepto-rgpd" required style="width: auto; margin-top: 4px;">
-                        <span>He leído y acepto la Política de Privacidad. Entiendo que mi solicitud quedará en estado <strong>Pendiente de Revisión Manual</strong> y que la imagen de mi DNI/NIE será eliminada inmediatamente tras comprobar mi identidad.</span>
-                    </label>
-                </div>
+    function stopCameraStream() {
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+        mediaStream = null;
+      }
+    }
 
-                <div style="margin-top: 18px;">
-                    <button type="submit" class="btn">Enviar solicitud para revisión manual</button>
-                </div>
-            </form>
-        </div>
-    </section>
+    async function startCamera() {
+      try {
+        selfieStatus.textContent = 'Solicitando permiso de cámara...';
+        selfieStatus.className = 'status-msg';
+        mediaStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user', width: { ideal: 720 }, height: { ideal: 540 } },
+          audio: false
+        });
+        videoEl.srcObject = mediaStream;
+        videoEl.style.display = 'block';
+        previewEl.style.display = 'none';
+        btnStartCamera.style.display = 'none';
+        btnCaptureSelfie.style.display = 'inline-flex';
+        btnRetakeSelfie.style.display = 'none';
+        selfieStatus.textContent = 'Cámara activa. Mira al frente y pulsa "Capturar Selfie".';
+        selfieStatus.className = 'status-msg status-ok';
+      } catch (err) {
+        selfieStatus.textContent = 'No se pudo acceder a la cámara. Revisa los permisos del navegador o abre la web en HTTPS.';
+        selfieStatus.className = 'status-msg status-err';
+      }
+    }
 
-    <!-- PUBLICAR EVENTO -->
-    <section id="publicar-evento">
-        <h2>Publicar un Evento o Bolo</h2>
-        <p style="color: var(--muted);">Los anuncios pasan a revisión manual antes de hacerse visibles en el tablón público.</p>
+    btnStartCamera.addEventListener('click', startCamera);
 
-        <div class="form-box">
-            <form id="form-evento" action="https://formsubmit.co/cuerdavivamusica@gmail.com" method="POST" enctype="multipart/form-data" onsubmit="return validarFormularioEvento(event)">
-                <input type="hidden" name="_subject" value="Nuevo Evento Pendiente de Revisión - Cuerda Viva Música">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
+    btnCaptureSelfie.addEventListener('click', () => {
+      if (!mediaStream) return;
+      const width = videoEl.videoWidth || 640;
+      const height = videoEl.videoHeight || 480;
+      canvasEl.width = width;
+      canvasEl.height = height;
 
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="ev-tipo">Tipo de organizador *</label>
-                        <select id="ev-tipo" name="Tipo_Organizador" required onchange="cambiarCamposEvento()">
-                            <option value="Entidad">Entidad / Orquesta / Empresa</option>
-                            <option value="Particular">Particular (Boda / Evento privado)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="ev-responsable">Nombre completo del responsable *</label>
-                        <input type="text" id="ev-responsable" name="Nombre_Responsable" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ev-dni">DNI o NIE del responsable (con letra) *</label>
-                        <input type="text" id="ev-dni" name="DNI_Responsable" required maxlength="9" style="text-transform: uppercase;">
-                    </div>
-                    <div class="form-group">
-                        <label for="ev-email">Correo electrónico *</label>
-                        <input type="email" id="ev-email" name="Email_Organizador" required>
-                    </div>
-                </div>
+      const ctx = canvasEl.getContext('2d');
+      ctx.drawImage(videoEl, 0, 0, width, height);
 
-                <div id="ev-bloque-entidad" class="form-grid">
-                    <div class="form-group">
-                        <label for="ev-entidad">Nombre de la entidad y CIF *</label>
-                        <input type="text" id="ev-entidad" name="Entidad_y_CIF" placeholder="Ej. Asociación Musical... - G12345678">
-                    </div>
-                    <div class="form-group">
-                        <label for="ev-cargo">Cargo en la entidad *</label>
-                        <input type="text" id="ev-cargo" name="Cargo" placeholder="Ej. Director / Coordinador">
-                    </div>
-                </div>
+      canvasEl.toBlob((blob) => {
+        if (!blob) return;
+        const fileName = 'selfie-directo-' + Date.now() + '.jpg';
+        const file = new File([blob], fileName, { type: 'image/jpeg', lastModified: Date.now() });
 
-                <div id="ev-bloque-selfie" class="hidden">
-                    <div class="form-group">
-                        <label for="ev-selfie">Selfie en vivo con DNI/NIE (obligatorio para particulares no verificados previamente) *</label>
-                        <input type="file" id="ev-selfie" name="Selfie_DNI_Evento" accept="image/*" capture="user" onchange="validarArchivoCamara(this)">
-                    </div>
-                </div>
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        selfieFileInput.files = dataTransfer.files;
 
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="ev-titulo">Título del evento *</label>
-                        <input type="text" id="ev-titulo" name="Titulo_Evento" required placeholder="Ej. Cuarteto de cuerda para boda en Altea">
-                    </div>
-                    <div class="form-group">
-                        <label for="ev-lugar">Población y fecha del evento *</label>
-                        <input type="text" id="ev-lugar" name="Poblacion_y_Fecha" required placeholder="Ej. Gandía (Valencia) - 20/07/2026">
-                    </div>
-                </div>
+        previewEl.src = URL.createObjectURL(blob);
+        previewEl.style.display = 'block';
+        videoEl.style.display = 'none';
+        stopCameraStream();
 
-                <div class="form-group">
-                    <label for="ev-detalles">Instrumentos buscados, repertorio y condiciones económicas *</label>
-                    <textarea id="ev-detalles" name="Detalles_Evento" rows="3" required placeholder="Indica instrumentos necesarios, ensayos y remuneración..."></textarea>
-                </div>
+        btnCaptureSelfie.style.display = 'none';
+        btnRetakeSelfie.style.display = 'inline-flex';
+        selfieStatus.textContent = 'Selfie en directo capturado correctamente.';
+        selfieStatus.className = 'status-msg status-ok';
+      }, 'image/jpeg', 0.88);
+    });
 
-                <div id="mensaje-validacion-evento" class="alert-box alert-error hidden"></div>
+    btnRetakeSelfie.addEventListener('click', () => {
+      selfieFileInput.value = '';
+      startCamera();
+    });
 
-                <button type="submit" class="btn">Enviar evento para verificación</button>
-            </form>
-        </div>
-    </section>
+    // Validación final antes de enviar el formulario de registro
+    document.getElementById('registroForm').addEventListener('submit', (e) => {
+      if (!validarDniNie(dniInput.value)) {
+        e.preventDefault();
+        dniInput.focus();
+        alert('Por favor, introduce un número de DNI o NIE válido antes de enviar.');
+        return;
+      }
+      if (!selfieFileInput.files || selfieFileInput.files.length === 0) {
+        e.preventDefault();
+        alert('Debes activar la cámara y capturar tu selfie en directo antes de enviar la solicitud.');
+      }
+    });
 
-    <!-- LUTHIERS Y CONTACTO -->
-    <section id="luthiers">
-        <h2>Directorio de Luthiers y Talleres</h2>
-        <div class="grid">
-            <div class="card">
-                <div>
-                    <span class="badge-verified">✔ Taller Verificado</span>
-                    <h3>Taller de Luthería Valencia Centro</h3>
-                    <div class="card-meta">Valencia · Encerdado de arcos, ajuste de alma y restauración</div>
-                    <p>Atención especializada para estudiantes de conservatorio y profesionales de cuerda frotada.</p>
-                </div>
-                <a href="#contacto-rapido" class="btn btn-outline" onclick="prepararContacto('Consulta Luthier Valencia')">Contactar taller</a>
-            </div>
-        </div>
-    </section>
+    // 4. Control del Modal de Política de Privacidad
+    const privacyModal = document.getElementById('privacyModal');
 
-    <section id="contacto-rapido">
-        <h2>Canal de Contacto Seguro</h2>
-        <div class="form-box">
-            <form action="https://formsubmit.co/cuerdavivamusica@gmail.com" method="POST">
-                <input type="hidden" name="_subject" value="Consulta desde Cuerda Viva Música">
-                <input type="hidden" name="_captcha" value="false">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="cont-asunto">Destinatario / Asunto *</label>
-                        <input type="text" id="cont-asunto" name="Asunto" required placeholder="Ej. Consulta sobre músico o evento">
-                    </div>
-                    <div class="form-group">
-                        <label for="cont-email">Tu correo electrónico *</label>
-                        <input type="email" id="cont-email" name="Email_Remitente" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="cont-mensaje">Mensaje *</label>
-                    <textarea id="cont-mensaje" name="Mensaje" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn">Enviar mensaje</button>
-            </form>
-        </div>
-    </section>
+    function openPrivacyModal(e) {
+      if (e) e.preventDefault();
+      privacyModal.classList.add('open');
+    }
 
-    <footer>
-        <div class="footer-inner">
-            <div>
-                <h4>Cuerda Viva Música</h4>
-                <p>Plataforma de conexión verificada para músicos de cuerda frotada (+18) y organizadores reales en Valencia, Castellón y Alicante.</p>
-            </div>
-            <div>
-                <h4>Garantía de Autenticidad</h4>
-                <p>Ningún usuario ni evento se publica sin revisión humana previa. Contacto directo de administración: <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a></p>
-            </div>
-            <div>
-                <h4>Protección de Datos (RGPD)</h4>
-                <p>Las fotografías de DNI/NIE se emplean exclusivamente para comprobar la identidad real y se eliminan tras la verificación.</p>
-            </div>
-        </div>
-    </footer>
+    function closePrivacyModal() {
+      privacyModal.classList.remove('open');
+    }
 
-    <script>
-        // 1. Validación matemática oficial de DNI y NIE español
-        function validarDNINIE(valor) {
-            const str = valor.trim().toUpperCase();
-            const regex = /^[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$/;
-            if (!regex.test(str)) return false;
-
-            let numero = str.substr(0, 8)
-                .replace(/^X/, '0')
-                .replace(/^Y/, '1')
-                .replace(/^Z/, '2');
-            const letra = str.substr(8, 1);
-            const letrasValidas = 'TRWAGMYFPDXBNJZSQVHLCKE';
-            const letraCalculada = letrasValidas.charAt(parseInt(numero, 10) % 23);
-
-            return letra === letraCalculada;
-        }
-
-        // 2. Comprobación de que el archivo es una imagen reciente (bloqueo de capturas antiguas/descargas)
-        function validarArchivoCamara(input) {
-            const file = input.files[0];
-            if (!file) return true;
-
-            const nombre = file.name.toLowerCase();
-            if (nombre.includes('screenshot') || nombre.includes('captura') || nombre.includes('pantalla')) {
-                alert('No se permiten capturas de pantalla. Por favor, haz una foto en directo con tu cámara sosteniendo tu DNI/NIE.');
-                input.value = '';
-                return false;
-            }
-
-            // Comprobar si la fecha de modificación del archivo es de hace más de 10 minutos
-            const ahora = Date.now();
-            const diferenciaMinutos = (ahora - file.lastModified) / (1000 * 60);
-            if (diferenciaMinutos > 10) {
-                alert('La imagen seleccionada no parece haberse tomado en este momento. Usa la cámara en directo para hacer el selfie.');
-                input.value = '';
-                return false;
-            }
-            return true;
-        }
-
-        // Mostrar u ocultar bloques según tipo de usuario
-        function cambiarCamposRegistro() {
-            const tipo = document.getElementById('tipo-usuario').value;
-            document.getElementById('bloque-musico').classList.toggle('hidden', tipo !== 'Musico');
-            document.getElementById('bloque-entidad').classList.toggle('hidden', tipo !== 'Entidad');
-            document.getElementById('bloque-selfie').classList.toggle('hidden', tipo === '' || tipo === 'Entidad');
-        }
-
-        function cambiarCamposEvento() {
-            const tipo = document.getElementById('ev-tipo').value;
-            document.getElementById('ev-bloque-entidad').classList.toggle('hidden', tipo !== 'Entidad');
-            document.getElementById('ev-bloque-selfie').classList.toggle('hidden', tipo !== 'Particular');
-        }
-
-        // Validación completa antes de enviar registro
-        function validarFormularioRegistro(e) {
-            const errorBox = document.getElementById('mensaje-validacion');
-            errorBox.classList.add('hidden');
-
-            const dni = document.getElementById('reg-dni').value;
-            if (!validarDNINIE(dni)) {
-                e.preventDefault();
-                errorBox.textContent = 'El DNI o NIE introducido no es válido (revisa los 8 números y la letra de control oficial).';
-                errorBox.classList.remove('hidden');
-                return false;
-            }
-
-            const tipo = document.getElementById('tipo-usuario').value;
-            if (tipo === 'Musico') {
-                const fnac = document.getElementById('mus-nacimiento').value;
-                if (!fnac) {
-                    e.preventDefault();
-                    errorBox.textContent = 'Debes indicar tu fecha de nacimiento para verificar que eres mayor de 18 años.';
-                    errorBox.classList.remove('hidden');
-                    return false;
-                }
-                const hoy = new Date();
-                const cumple = new Date(fnac);
-                let edad = hoy.getFullYear() - cumple.getFullYear();
-                const m = hoy.getMonth() - cumple.getMonth();
-                if (m < 0 || (m === 0 && hoy.getDate() < cumple.getDate())) edad--;
-
-                if (edad < 18) {
-                    e.preventDefault();
-                    errorBox.textContent = 'Acceso denegado: debes tener al menos 18 años cumplidos para registrarte.';
-                    errorBox.classList.remove('hidden');
-                    return false;
-                }
-            }
-
-            if (tipo === 'Musico' || tipo === 'Particular') {
-                const selfieInput = document.getElementById('selfie-dni');
-                if (!selfieInput.files.length || !validarArchivoCamara(selfieInput)) {
-                    e.preventDefault();
-                    errorBox.textContent = 'Debes tomar un selfie en directo con tu cámara sosteniendo tu DNI/NIE.';
-                    errorBox.classList.remove('hidden');
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        // Validación completa antes de enviar evento
-        function validarFormularioEvento(e) {
-            const errorBox = document.getElementById('mensaje-validacion-evento');
-            errorBox.classList.add('hidden');
-
-            const dni = document.getElementById('ev-dni').value;
-            if (!validarDNINIE(dni)) {
-                e.preventDefault();
-                errorBox.textContent = 'El DNI o NIE del responsable no es válido. Comprueba la letra oficial.';
-                errorBox.classList.remove('hidden');
-                return false;
-            }
-
-            const tipo = document.getElementById('ev-tipo').value;
-            if (tipo === 'Particular') {
-                const selfieInput = document.getElementById('ev-selfie');
-                if (!selfieInput.files.length || !validarArchivoCamara(selfieInput)) {
-                    e.preventDefault();
-                    errorBox.textContent = 'Como particular, debes adjuntar un selfie tomado ahora mismo con tu DNI/NIE.';
-                    errorBox.classList.remove('hidden');
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        // Filtrado de músicos
-        function filtrarMusicos() {
-            const inst = document.getElementById('filtro-instrumento').value.toLowerCase();
-            const prov = document.getElementById('filtro-provincia').value.toLowerCase();
-            const pob = document.getElementById('filtro-poblacion').value.toLowerCase().trim();
-            const cons = document.getElementById('filtro-conservatorio').value.toLowerCase();
-
-            document.querySelectorAll('.musico-card').forEach(card => {
-                const cInst = card.dataset.inst.toLowerCase();
-                const cProv = card.dataset.prov.toLowerCase();
-                const cPob = card.dataset.pob.toLowerCase();
-                const cCons = card.dataset.cons.toLowerCase();
-
-                const ok = (!inst || cInst === inst) &&
-                           (!prov || cProv === prov) &&
-                           (!pob || cPob.includes(pob)) &&
-                           (!cons || cCons === cons);
-
-                card.style.display = ok ? 'flex' : 'none';
-            });
-        }
-
-        function prepararContacto(asunto) {
-            document.getElementById('cont-asunto').value = asunto;
-        }
-    </script>
+    privacyModal.addEventListener('click', (e) => {
+      if (e.target === privacyModal) closePrivacyModal();
+    });
+  </script>
 </body>
 </html>
