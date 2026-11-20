@@ -108,11 +108,15 @@
       transition: all 0.2s;
       text-decoration: none;
     }
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
     .btn-primary {
       background: var(--primary);
       color: #fff;
     }
-    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
     .btn-outline {
       background: var(--surface);
       color: var(--text);
@@ -708,7 +712,7 @@
       <span class="modal-tag">Alta de Intérprete · Revisión Manual</span>
       <h2>Únete a Cuerda Viva Música</h2>
       <p class="modal-sub">Exclusivo para músicos de cuerda mayores de 18 años que cursen o hayan cursado estudios en conservatorio.</p>
-      <form id="form-musico" onsubmit="submitMusician(event)">
+      <form id="form-musico" onsubmit="submitMusician(event)" enctype="multipart/form-data">
         <div class="form-grid">
           <div class="form-group">
             <label>Nombre y Apellidos *</label>
@@ -727,8 +731,22 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Conservatorio y Curso / Titulación *</label>
-            <input type="text" id="m-conservatory" required placeholder="Ej. CSM Joaquín Rodrigo · 3º Superior" />
+            <label>Conservatorio *</label>
+            <input type="text" id="m-conservatory" required placeholder="Ej. CSM Joaquín Rodrigo de València" />
+          </div>
+          <div class="form-group">
+            <label>Nivel / Curso de Conservatorio *</label>
+            <select id="m-level" required>
+              <option value="">Selecciona curso o titulación...</option>
+              <option value="5º Enseñanzas Profesionales">5º Enseñanzas Profesionales</option>
+              <option value="6º Enseñanzas Profesionales">6º Enseñanzas Profesionales</option>
+              <option value="Título Profesional Finalizado">Título Profesional Finalizado</option>
+              <option value="1º Enseñanzas Superiores">1º Enseñanzas Superiores</option>
+              <option value="2º Enseñanzas Superiores">2º Enseñanzas Superiores</option>
+              <option value="3º Enseñanzas Superiores">3º Enseñanzas Superiores</option>
+              <option value="4º Enseñanzas Superiores">4º Enseñanzas Superiores</option>
+              <option value="Titulado/a Superior / Máster">Titulado/a Superior / Máster</option>
+            </select>
           </div>
           <div class="form-group">
             <label>Ciudad / Provincia Base *</label>
@@ -750,7 +768,7 @@
               <option value="Grabación / Estudio">Grabación / Estudio</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="form-group form-full">
             <label>Caché Orientativo (€/evento) *</label>
             <input type="number" id="m-price" required min="50" placeholder="Ej. 180" />
           </div>
@@ -768,7 +786,7 @@
           </div>
           <div class="form-group form-full">
             <label>Currículum Vitae o Acreditación de Conservatorio (PDF)</label>
-            <input type="file" id="m-cv" accept=".pdf" />
+            <input type="file" id="m-cv" name="attachment" accept=".pdf" />
           </div>
           <div class="form-group form-full">
             <label>Repertorio y Experiencia en Orquestas o Cámara *</label>
@@ -783,10 +801,10 @@
           <input type="checkbox" id="m-rgpd" required />
           <label for="m-rgpd">Acepto la Política de Privacidad (RGPD) y autorizo a Cuerda Viva Música a custodiar mis datos de forma confidencial.</label>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem;">Enviar perfil a verificación</button>
+        <button type="submit" id="btn-submit-musico" class="btn btn-primary" style="width:100%; margin-top:1rem;">Enviar perfil a verificación</button>
       </form>
       <div class="alert-success" id="musico-success">
-        <strong>¡Solicitud recibida correctamente!</strong> Revisaremos tu acreditación de conservatorio y vídeo antes de publicar tu ficha en el catálogo.
+        <strong>¡Solicitud enviada correctamente!</strong> Hemos recibido tus datos y acreditación en <em>cuerdavivamusica@gmail.com</em>. Revisaremos tu perfil antes de publicarlo en el catálogo.
       </div>
     </div>
   </div>
@@ -846,10 +864,10 @@
           <input type="checkbox" id="e-terms" required />
           <label for="e-terms">Confirmo que los datos del evento son reales y acepto las condiciones de intermediación de Cuerda Viva Música.</label>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem;">Enviar solicitud de disponibilidad</button>
+        <button type="submit" id="btn-submit-evento" class="btn btn-primary" style="width:100%; margin-top:1rem;">Enviar solicitud de disponibilidad</button>
       </form>
       <div class="alert-success" id="evento-success">
-        <strong>¡Solicitud enviada!</strong> Hemos registrado tu propuesta y nos pondremos en contacto contigo tras confirmar disponibilidad con el músico.
+        <strong>¡Solicitud enviada!</strong> Hemos remitido tu propuesta a <em>cuerdavivamusica@gmail.com</em> y nos pondremos en contacto contigo tras confirmar disponibilidad con el músico.
       </div>
     </div>
   </div>
@@ -879,8 +897,9 @@
 
   <script>
     // =========================================================================
-    // CONFIGURACIÓN SUPABASE (Pega aquí tus credenciales reales de Supabase)
+    // CONFIGURACIÓN DE CORREO Y SUPABASE
     // =========================================================================
+    const ADMIN_EMAIL = "cuerdavivamusica@gmail.com";
     const SUPABASE_URL = "";      // Ej: "https://tuproyecto.supabase.co"
     const SUPABASE_ANON_KEY = ""; // Ej: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
     const ADMIN_PASSWORD = "cuerdaviva2026"; // Cámbiala por tu contraseña segura
@@ -895,7 +914,7 @@
         id: 1,
         name: "Elena Navarro",
         instrument: "Violín",
-        conservatory: "CSM Joaquín Rodrigo de València · Grado Superior",
+        conservatory: "CSM Joaquín Rodrigo de València · 3º Enseñanzas Superiores",
         city: "València",
         specialty: "Boda / Ceremonia",
         price: 180,
@@ -907,7 +926,7 @@
         id: 2,
         name: "Sofía & Alba (Dúo Cuerda Viva)",
         instrument: "Violonchelo",
-        conservatory: "Conservatorio Profesional de Música de València · 6º EE.PP.",
+        conservatory: "Conservatorio Profesional de Música de València · 6º Enseñanzas Profesionales",
         city: "València",
         specialty: "Evento Corporativo / Gala",
         price: 320,
@@ -919,7 +938,7 @@
         id: 3,
         name: "Marc Soler",
         instrument: "Contrabajo",
-        conservatory: "ESMUC Barcelona · Grado Superior",
+        conservatory: "ESMUC Barcelona · 4º Enseñanzas Superiores",
         city: "Barcelona",
         specialty: "Concierto Privado",
         price: 210,
@@ -931,7 +950,7 @@
         id: 4,
         name: "Cuarteto Turia",
         instrument: "Cuarteto de Cuerda",
-        conservatory: "CSM València · Estudiantes de Superior (+18)",
+        conservatory: "CSM València · Enseñanzas Superiores (+18)",
         city: "València",
         specialty: "Boda / Ceremonia",
         price: 580,
@@ -1023,10 +1042,15 @@
 
     async function submitMusician(e) {
       e.preventDefault();
+      const btn = document.getElementById('btn-submit-musico');
+      btn.disabled = true;
+      btn.textContent = 'Enviando perfil...';
+
+      const conservatoryText = `${document.getElementById('m-conservatory').value} · ${document.getElementById('m-level').value}`;
       const newM = {
         name: document.getElementById('m-name').value,
         instrument: document.getElementById('m-instrument').value,
-        conservatory: document.getElementById('m-conservatory').value,
+        conservatory: conservatoryText,
         city: document.getElementById('m-city').value,
         specialty: document.getElementById('m-specialty').value,
         price: Number(document.getElementById('m-price').value),
@@ -1037,6 +1061,37 @@
         status: 'pendiente'
       };
 
+      // 1. Envío directo a cuerdavivamusica@gmail.com (con adjunto PDF si existe)
+      try {
+        const formData = new FormData();
+        formData.append("_subject", `🎻 Nuevo Músico (+18): ${newM.name} - ${newM.instrument}`);
+        formData.append("_captcha", "false");
+        formData.append("_template", "table");
+        formData.append("Nombre y Apellidos", newM.name);
+        formData.append("Instrumento", newM.instrument);
+        formData.append("Conservatorio y Nivel", newM.conservatory);
+        formData.append("Ciudad Base", newM.city);
+        formData.append("Especialidad", newM.specialty);
+        formData.append("Caché Orientativo (€)", `${newM.price} €`);
+        formData.append("Teléfono (Privado)", newM.phone);
+        formData.append("Email (Privado)", newM.email);
+        formData.append("Enlace Vídeo Audición", newM.video);
+        formData.append("Experiencia y Repertorio", newM.bio);
+
+        const cvInput = document.getElementById('m-cv');
+        if (cvInput.files && cvInput.files) {
+          formData.append("attachment", cvInput.files);
+        }
+
+        await fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+          method: "POST",
+          body: formData
+        });
+      } catch (err) {
+        console.error("Error enviando email:", err);
+      }
+
+      // 2. Guardado opcional en Supabase o memoria local
       if (supabaseClient) {
         await supabaseClient.from('musicos').insert([newM]);
       } else {
@@ -1046,10 +1101,16 @@
 
       document.getElementById('form-musico').reset();
       document.getElementById('musico-success').style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Enviar perfil a verificación';
     }
 
     async function submitEvent(e) {
       e.preventDefault();
+      const btn = document.getElementById('btn-submit-evento');
+      btn.disabled = true;
+      btn.textContent = 'Enviando solicitud...';
+
       const newE = {
         musician: document.getElementById('e-musician').value,
         client: document.getElementById('e-client').value,
@@ -1062,6 +1123,31 @@
         details: document.getElementById('e-details').value
       };
 
+      // 1. Envío directo a cuerdavivamusica@gmail.com
+      try {
+        const formData = new FormData();
+        formData.append("_subject", `📅 Nueva Solicitud de Evento: ${newE.type} en ${newE.city}`);
+        formData.append("_captcha", "false");
+        formData.append("_template", "table");
+        formData.append("Músico / Formación Solicitada", newE.musician);
+        formData.append("Organizador / Cliente", newE.client);
+        formData.append("Email del Cliente", newE.email);
+        formData.append("Teléfono del Cliente", newE.phone);
+        formData.append("Tipo de Evento", newE.type);
+        formData.append("Fecha del Evento", newE.date);
+        formData.append("Ciudad / Lugar", newE.city);
+        formData.append("Presupuesto Estimado (€)", `${newE.budget} €`);
+        formData.append("Detalles y Repertorio", newE.details);
+
+        await fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+          method: "POST",
+          body: formData
+        });
+      } catch (err) {
+        console.error("Error enviando email:", err);
+      }
+
+      // 2. Guardado opcional en Supabase o memoria local
       if (supabaseClient) {
         await supabaseClient.from('solicitudes').insert([newE]);
       } else {
@@ -1071,6 +1157,8 @@
 
       document.getElementById('form-evento').reset();
       document.getElementById('evento-success').style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Enviar solicitud de disponibilidad';
     }
 
     function openAdminModal() {
