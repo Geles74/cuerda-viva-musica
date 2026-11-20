@@ -456,7 +456,7 @@
   </section>
 
   <main class="container">
-    <!-- Directorio aprobado manualmente + cargado desde Google Sheets -->
+    <!-- Directorio aprobado manualmente + cargado desde Google Sheets CSV -->
     <section id="directorio">
       <h2 class="section-title">Perfiles y Eventos Destacados</h2>
       <p class="section-subtitle">Publicados únicamente tras superar nuestra verificación de identidad.</p>
@@ -732,41 +732,48 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script>
-    // URL de tu aplicación web de Google Apps Script (sustituye el texto entre comillas por tu URL real)
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxn6gKITwjQqWw28YK2qcKkl-0JMc9qxePXxkO0R7vGtMDnorigjy8t3A9p3fvXOJd/exec';
+    // URL CSV de tu hoja de Google Sheets (sustituye el texto entre comillas por tu URL .../export?format=csv)
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTcmJwQQULPJL2eTkahzEowGHpEv4BziHtl_csksQ47EkHJ1taQOnWDCmZdbllkNuxhcECJHw1lTwWS/pub?gid=0&single=true&output=csv';
 
-    // Cargar automáticamente las fichas aprobadas desde Google Sheets
-    async function cargarPerfilesAprobados() {
-      if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('PEGA_AQUI')) return;
-      try {
-        const res = await fetch(GOOGLE_SCRIPT_URL);
-        const lista = await res.json();
-        const grid = document.getElementById('gridCards');
-        if (!Array.isArray(lista) || lista.length === 0) return;
+    // Cargar automáticamente las fichas aprobadas desde Google Sheets (CSV)
+    function cargarPerfilesAprobados() {
+      if (!GOOGLE_SHEETS_CSV_URL || GOOGLE_SHEETS_CSV_URL.includes('PEGA_AQUI')) return;
 
-        lista.forEach(item => {
-          const card = document.createElement('article');
-          card.className = 'card';
+      Papa.parse(GOOGLE_SHEETS_CSV_URL, {
+        download: true,
+        header: true,
+        complete: function(resultados) {
+          const grid = document.getElementById('gridCards');
+          if (!resultados || !Array.isArray(resultados.data)) return;
 
-          const tag = document.createElement('span');
-          tag.className = 'card-tag';
-          tag.textContent = (item.tipo || 'Verificado') + ' · ' + (item.instrumento || 'Cuerda');
+          resultados.data.forEach(item => {
+            if (!item.Estado || item.Estado.trim().toLowerCase() !== 'aprobado') return;
 
-          const h3 = document.createElement('h3');
-          h3.textContent = (item.nombre || '') + (item.ciudad ? ' (' + item.ciudad + ')' : '');
+            const card = document.createElement('article');
+            card.className = 'card';
 
-          const p = document.createElement('p');
-          p.textContent = item.descripcion || '';
+            const tag = document.createElement('span');
+            tag.className = 'card-tag';
+            tag.textContent = (item.Tipo || 'Verificado') + ' · ' + (item.Instrumento || 'Cuerda');
 
-          card.appendChild(tag);
-          card.appendChild(h3);
-          card.appendChild(p);
-          grid.appendChild(card);
-        });
-      } catch (err) {
-        console.warn('No se pudieron cargar los perfiles desde Google Sheets:', err);
-      }
+            const h3 = document.createElement('h3');
+            h3.textContent = (item.Nombre || '') + (item.Ciudad ? ' (' + item.Ciudad + ')' : '');
+
+            const p = document.createElement('p');
+            p.textContent = item.Descripcion || '';
+
+            card.appendChild(tag);
+            card.appendChild(h3);
+            card.appendChild(p);
+            grid.appendChild(card);
+          });
+        },
+        error: function(err) {
+          console.warn('No se pudieron cargar los perfiles desde el CSV de Google Sheets:', err);
+        }
+      });
     }
 
     document.addEventListener('DOMContentLoaded', cargarPerfilesAprobados);
@@ -902,7 +909,7 @@
       startCamera();
     });
 
-    // Validación final + envío silencioso de datos artísticos a Google Sheets antes de enviar el correo
+    // Validación final antes de enviar el formulario por correo
     document.getElementById('registroForm').addEventListener('submit', (e) => {
       if (!validarDniNie(dniInput.value)) {
         e.preventDefault();
@@ -914,22 +921,6 @@
         e.preventDefault();
         alert('Debes activar la cámara y capturar tu selfie en directo antes de enviar la solicitud.');
         return;
-      }
-
-      if (GOOGLE_SCRIPT_URL && !GOOGLE_SCRIPT_URL.includes('PEGA_AQUI')) {
-        const payload = JSON.stringify({
-          tipo: document.getElementById('tipoPerfil').value,
-          instrumento: document.getElementById('instrumentoCuerda').value,
-          nombre: document.getElementById('nombreArtistico').value,
-          ciudad: document.getElementById('ciudad').value,
-          descripcion: document.getElementById('descripcion').value
-        });
-        fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: payload
-        }).catch(() => {});
       }
     });
 
