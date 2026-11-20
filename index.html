@@ -4,606 +4,151 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cuerda Viva Música | Intérpretes de Cuerda Sinfónica en Valencia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
-      /* Paleta inspirada en maderas de luthería (abeto, arce flameado, ébano) y salones de concierto clásicos */
-      --bg-crema: #faf6f0;
-      --bg-pergamino: #f2ebe1;
-      --bg-blanco: #fffdf9;
-      --madera-oscuro: #241914;      /* Ébano y palisandro */
-      --madera-barniz: #5c3a21;      /* Barniz clásico de violín/violonchelo */
-      --madera-calida: #7c4d2b;      /* Arce tostado / nogal */
-      --oro-laton: #b8863b;          /* Latón envejecido / pan de oro de teatro */
-      --oro-suave: #e6d5b8;          /* Resplandor cálido de sala */
-      --texto-principal: #2b211b;
-      --texto-secundario: #5e5047;
-      --borde-suave: #dfd3c3;
-      --exito: #3b6346;
-      --sombra: 0 10px 28px rgba(36, 25, 20, 0.08);
-      --radio: 10px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      --ebony: #231712;
+      --rosewood: #3a2318;
+      --varnish: #5c3a21;
+      --maple: #855432;
+      --brass: #b8863b;
+      --brass-light: #d4a857;
+      --spruce: #faf6f0;
+      --parchment: #f2ebe1;
+      --ink: #2b211a;
+      --muted: #6b5b4e;
     }
 
     body {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      background-color: var(--bg-crema);
-      color: var(--texto-principal);
-      line-height: 1.6;
+      background-color: var(--spruce);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    .sans {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    h1, h2, h3, .font-serif-classical {
+      font-family: Georgia, "Times New Roman", Times, serif;
     }
 
-    /* Cabecera estilo sala de conciertos y madera noble */
-    header {
-      background: linear-gradient(135deg, var(--madera-oscuro) 0%, var(--madera-barniz) 100%);
-      color: #fdf9f2;
-      padding: 1.25rem 2rem;
-      border-bottom: 3px solid var(--oro-laton);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 16px rgba(36, 25, 20, 0.25);
-    }
+    .bg-ebony { background-color: var(--ebony); }
+    .bg-rosewood { background-color: var(--rosewood); }
+    .bg-varnish { background-color: var(--varnish); }
+    .hover\:bg-varnish-dark:hover { background-color: #462b17; }
+    .bg-spruce { background-color: var(--spruce); }
+    .bg-parchment { background-color: var(--parchment); }
+    .text-ebony { color: var(--ebony); }
+    .text-varnish { color: var(--varnish); }
+    .text-brass { color: var(--brass); }
+    .border-wood { border-color: #dfd3c3; }
+    .border-brass { border-color: var(--brass); }
 
-    .header-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-    }
-
-    .brand-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(184, 134, 59, 0.18);
-      border: 1.5px solid var(--oro-laton);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      color: var(--oro-suave);
-    }
-
-    .brand h1 {
-      font-size: 1.55rem;
-      font-weight: normal;
-      letter-spacing: 0.5px;
-      color: #fffaf0;
-    }
-
-    .brand p {
-      font-size: 0.82rem;
-      color: var(--oro-suave);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    nav {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-
-    .nav-btn {
-      background: transparent;
-      color: #f5ece0;
-      border: 1px solid rgba(230, 213, 184, 0.35);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      transition: all 0.2s ease;
-    }
-
-    .nav-btn:hover, .nav-btn.active {
-      background: var(--oro-laton);
-      color: var(--madera-oscuro);
-      border-color: var(--oro-laton);
-      font-weight: 600;
-    }
-
-    /* Hero / Banner clásico */
-    .hero {
-      background: radial-gradient(circle at top right, #4a2e1b 0%, var(--madera-oscuro) 80%);
-      color: #fbf6ee;
-      padding: 3.2rem 2rem;
-      text-align: center;
-      border-bottom: 1px solid var(--borde-suave);
-    }
-
-    .hero-inner {
-      max-width: 820px;
-      margin: 0 auto;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--oro-suave);
-      border: 1px solid rgba(184, 134, 59, 0.55);
-      padding: 0.3rem 0.9rem;
-      border-radius: 20px;
-      margin-bottom: 1rem;
-    }
-
-    .hero h2 {
-      font-size: 2.15rem;
-      font-weight: normal;
-      margin-bottom: 0.85rem;
-      line-height: 1.25;
-    }
-
-    .hero p {
-      font-size: 1.05rem;
-      color: #e8dccb;
-      max-width: 680px;
-      margin: 0 auto 1.6rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    /* Botones principales */
-    .btn-primary {
-      background: var(--madera-barniz);
-      color: #fffaf2;
-      border: 1px solid var(--oro-laton);
-      padding: 0.72rem 1.4rem;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-weight: 600;
-      transition: background 0.2s;
-    }
-
-    .btn-primary:hover {
-      background: var(--madera-calida);
-    }
-
-    .btn-gold {
-      background: var(--oro-laton);
-      color: var(--madera-oscuro);
-      border: none;
-      padding: 0.72rem 1.4rem;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-weight: 700;
-      transition: filter 0.2s;
-    }
-
-    .btn-gold:hover {
-      filter: brightness(1.08);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--madera-barniz);
-      border: 1.5px solid var(--madera-barniz);
-      padding: 0.65rem 1.2rem;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-
-    .btn-outline:hover {
-      background: var(--madera-barniz);
-      color: #fffaf2;
-    }
-
-    /* Contenedor general */
-    .container {
-      max-width: 1180px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
-    }
-
-    .section {
-      display: none;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    /* Panel de filtros */
-    .filters-card {
-      background: var(--bg-blanco);
-      border: 1px solid var(--borde-suave);
-      border-top: 3px solid var(--madera-barniz);
-      border-radius: var(--radio);
-      padding: 1.4rem;
-      margin-bottom: 2rem;
-      box-shadow: var(--sombra);
-    }
-
-    .filters-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1rem;
-      align-items: end;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
-    label {
-      font-size: 0.83rem;
-      font-weight: 600;
-      color: var(--madera-barniz);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    input, select, textarea {
-      padding: 0.62rem 0.8rem;
-      border: 1px solid #cbbba8;
-      border-radius: 6px;
-      background: #fffefb;
-      color: var(--texto-principal);
-      font-size: 0.92rem;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--oro-laton);
-      box-shadow: 0 0 0 3px rgba(184, 134, 59, 0.18);
-    }
-
-    /* Tarjetas de músicos */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .musician-card {
-      background: var(--bg-blanco);
-      border: 1px solid var(--borde-suave);
-      border-radius: var(--radio);
-      overflow: hidden;
-      box-shadow: var(--sombra);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .musician-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--oro-laton);
-    }
-
-    .card-top {
-      background: linear-gradient(90deg, var(--bg-pergamino), #ebe0d0);
-      padding: 1.15rem 1.3rem;
-      border-bottom: 1px solid var(--borde-suave);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.5rem;
-    }
-
-    .instrument-tag {
-      background: var(--madera-oscuro);
-      color: var(--oro-suave);
-      font-size: 0.76rem;
-      padding: 0.28rem 0.7rem;
-      border-radius: 4px;
-      letter-spacing: 0.4px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-weight: 600;
-    }
-
-    .card-body {
-      padding: 1.3rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .musician-name {
-      font-size: 1.25rem;
-      color: var(--madera-oscuro);
-      font-weight: bold;
-    }
-
-    .meta-list {
-      list-style: none;
-      font-size: 0.88rem;
-      color: var(--texto-secundario);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .bio-text {
-      font-size: 0.93rem;
-      color: var(--texto-principal);
-      border-left: 2.5px solid var(--oro-laton);
-      padding-left: 0.75rem;
-      margin: 0.25rem 0;
-    }
-
-    .card-footer {
-      padding: 1rem 1.3rem;
-      background: var(--bg-pergamino);
-      border-top: 1px solid var(--borde-suave);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .price-hint {
-      font-size: 0.85rem;
-      color: var(--madera-barniz);
-      font-weight: 700;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    /* Formularios y paneles */
-    .panel-box {
-      background: var(--bg-blanco);
-      border: 1px solid var(--borde-suave);
-      border-top: 4px solid var(--madera-barniz);
-      border-radius: var(--radio);
-      padding: 2rem;
-      max-width: 780px;
-      margin: 0 auto;
-      box-shadow: var(--sombra);
-    }
-
-    .panel-box h3 {
-      font-size: 1.55rem;
-      color: var(--madera-oscuro);
-      margin-bottom: 0.5rem;
-    }
-
-    .form-grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 1.2rem;
-    }
-
-    @media (max-width: 680px) {
-      .form-grid-2 {
-        grid-template-columns: 1fr;
+    @media print {
+      body * { visibility: hidden; }
+      #printable-agreement, #printable-agreement * { visibility: visible; }
+      #printable-agreement {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white !important;
+        color: black !important;
+        padding: 20px;
       }
-    }
-
-    /* Modal Chat & Acuerdo PDF */
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(26, 18, 14, 0.72);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
-    .modal-window {
-      background: var(--bg-blanco);
-      border: 1px solid var(--oro-laton);
-      border-radius: var(--radio);
-      width: 100%;
-      max-width: 760px;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-    }
-
-    .modal-header {
-      background: var(--madera-oscuro);
-      color: #fffaf2;
-      padding: 1.1rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid var(--oro-laton);
-    }
-
-    .close-btn {
-      background: none;
-      border: none;
-      color: var(--oro-suave);
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .modal-body {
-      padding: 1.5rem;
-    }
-
-    .chat-box {
-      background: var(--bg-pergamino);
-      border: 1px solid var(--borde-suave);
-      border-radius: 8px;
-      height: 210px;
-      overflow-y: auto;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-      margin-bottom: 0.9rem;
-    }
-
-    .msg {
-      padding: 0.6rem 0.9rem;
-      border-radius: 8px;
-      max-width: 82%;
-      font-size: 0.9rem;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    .msg.client {
-      background: var(--madera-barniz);
-      color: #fffaf2;
-      align-self: flex-end;
-    }
-
-    .msg.musician {
-      background: #fffdf9;
-      border: 1px solid #d4c5b2;
-      color: var(--texto-principal);
-      align-self: flex-start;
-    }
-
-    .agreement-step {
-      margin-top: 1.4rem;
-      padding-top: 1.2rem;
-      border-top: 1px dashed #cbbba8;
-    }
-
-    .status-badge {
-      display: inline-block;
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    .status-pending {
-      background: #f3e5c8;
-      color: #6e4b14;
-    }
-
-    .status-verified {
-      background: #dcebdd;
-      color: var(--exito);
-    }
-
-    /* Pie de página y aviso legal */
-    footer {
-      background: var(--madera-oscuro);
-      color: #d8cbba;
-      padding: 2.5rem 2rem;
-      margin-top: 4rem;
-      border-top: 3px solid var(--oro-laton);
-      font-size: 0.88rem;
-    }
-
-    .footer-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-    }
-
-    footer h4 {
-      color: var(--oro-suave);
-      margin-bottom: 0.6rem;
-      font-weight: normal;
-      font-size: 1.1rem;
-    }
-
-    .legal-notice {
-      background: var(--bg-pergamino);
-      border-left: 4px solid var(--madera-barniz);
-      padding: 1rem 1.2rem;
-      margin-bottom: 1.2rem;
-      font-size: 0.9rem;
-      color: var(--texto-principal);
+      .no-print { display: none !important; }
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 
-  <header>
-    <div class="header-inner">
-      <div class="brand">
-        <div class="brand-icon" aria-hidden="true">&#119070;</div>
+  <!-- CONFIGURACIÓN BACKEND (SUPABASE UE - OPCIONAL PARA PRODUCCIÓN) -->
+  <script>
+    const SUPABASE_URL = "";
+    const SUPABASE_ANON_KEY = "";
+  </script>
+
+  <!-- CABECERA -->
+  <header class="bg-ebony text-[#f7f1e8] border-b-2 border-brass sticky top-0 z-40 shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="navigate('catalogo')">
+        <div class="w-10 h-10 rounded-full bg-varnish border border-brass flex items-center justify-center text-brass font-serif-classical text-xl font-bold shadow-inner">
+          𝄞
+        </div>
         <div>
-          <h1>Cuerda Viva Música</h1>
-          <p>Intérpretes de cuerda sinfónica · Conservatorios de la Provincia de Valencia</p>
+          <span class="font-serif-classical text-xl md:text-2xl tracking-wide text-[#faf6f0] block leading-none">
+            Cuerda Viva Música
+          </span>
+          <span class="text-xs text-[#cbbba8] tracking-widest uppercase">
+            Cuerda Sinfónica · Provincia de Valencia
+          </span>
         </div>
       </div>
-      <nav>
-        <button class="nav-btn active" onclick="showSection('explorar', this)">Explorar Músicos</button>
-        <button class="nav-btn" onclick="showSection('registro', this)">Alta de Músico</button>
-        <button class="nav-btn" onclick="showSection('legal', this)">Aviso Legal y Privacidad</button>
+
+      <nav class="flex flex-wrap items-center gap-2 md:gap-4 text-sm">
+        <button onclick="navigate('catalogo')" id="nav-catalogo" class="px-3 py-1.5 rounded hover:bg-rosewood transition text-[#f7f1e8]">
+          Intérpretes
+        </button>
+        <button onclick="navigate('solicitudes')" id="nav-solicitudes" class="px-3 py-1.5 rounded hover:bg-rosewood transition text-[#f7f1e8] relative">
+          Mensajes y Acuerdos
+          <span id="badge-pendientes" class="hidden ml-1.5 px-1.5 py-0.5 text-xs rounded-full bg-brass text-ebony font-bold">0</span>
+        </button>
+        <button onclick="navigate('registro')" id="nav-registro" class="px-3 py-1.5 rounded border border-brass text-brass hover:bg-varnish hover:text-white transition">
+          Alta / Verificación
+        </button>
+        <div id="user-session-badge" class="flex items-center gap-2 pl-2 border-l border-[#4e382b]"></div>
       </nav>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <span class="hero-badge">Provincia de Valencia · Cuerda Sinfónica</span>
-      <h2>La calidez de la madera y el rigor del conservatorio para tus eventos</h2>
-      <p>
-        Espacio dedicado exclusivamente a estudiantes de Enseñanzas Profesionales, Enseñanzas Superiores y titulados de instrumentos de cuerda frotada y pulsada de orquesta sinfónica en toda la provincia de Valencia.
-      </p>
-      <div class="hero-actions">
-        <button class="btn-gold" onclick="showSection('explorar', document.querySelectorAll('.nav-btn')[0])">Buscar Intérpretes</button>
-        <button class="nav-btn" onclick="showSection('registro', document.querySelectorAll('.nav-btn')[1])">Publicar mi Perfil de Cuerda</button>
-      </div>
-    </div>
-  </section>
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-8">
 
-  <main class="container">
-    <!-- SECCIÓN 1: EXPLORAR -->
-    <section id="explorar" class="section active">
-      <div class="filters-card">
-        <div class="filters-grid">
-          <div class="form-group">
-            <label for="filtro-instrumento">Instrumento / Agrupación</label>
-            <select id="filtro-instrumento" onchange="renderMusicians()">
-              <option value="">Todos los instrumentos de cuerda</option>
+    <!-- BANNER HERO -->
+    <section class="bg-rosewood text-[#faf6f0] rounded-xl p-6 md:p-8 mb-8 border border-[#5c3a21] shadow-sm">
+      <div class="max-w-3xl">
+        <p class="text-brass text-xs uppercase tracking-widest font-semibold mb-2">
+          Conservatorios Profesionales y Superiores de Valencia
+        </p>
+        <h1 class="text-2xl md:text-4xl font-normal leading-tight mb-3">
+          El encuentro directo entre el estudio del conservatorio y los escenarios de Valencia.
+        </h1>
+        <p class="text-[#dfd3c3] text-sm md:text-base leading-relaxed mb-4">
+          Espacio dedicado exclusivamente a intérpretes de cuerda sinfónica (violín, viola, violonchelo, contrabajo, arpa y música de cámara). Sin intermediarios ni tarifas públicas prefijadas: filtra por instrumento, contacta tras verificar tu identidad y acuerda directamente las condiciones.
+        </p>
+        <div class="flex flex-wrap gap-3 text-xs text-[#e8dccb]">
+          <span class="bg-ebony/70 border border-[#6e492e] px-3 py-1.5 rounded-md">
+            🔒 Fichas protegidas: solo visibles para usuarios registrados y verificados
+          </span>
+          <span class="bg-ebony/70 border border-[#6e492e] px-3 py-1.5 rounded-md">
+            ⏳ Compromiso de respuesta del músico en un máximo de 3 días
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA 1: CATÁLOGO DE INTÉRPRETES -->
+    <section id="view-catalogo">
+      <!-- FILTROS -->
+      <div class="bg-parchment border border-wood rounded-xl p-5 mb-6 shadow-sm">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-varnish mb-1.5">
+              Instrumento de Cuerda
+            </label>
+            <select id="filter-instrumento" onchange="renderMusicians()" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brass">
+              <option value="">Todos los instrumentos</option>
               <option value="Violín">Violín</option>
               <option value="Viola">Viola</option>
               <option value="Violonchelo">Violonchelo</option>
               <option value="Contrabajo">Contrabajo</option>
               <option value="Arpa">Arpa</option>
-              <option value="Dúo de Cuerda">Dúo de Cuerda</option>
-              <option value="Trío de Cuerda">Trío de Cuerda</option>
-              <option value="Cuarteto de Cuerda">Cuarteto de Cuerda</option>
+              <option value="Agrupación de Cámara">Agrupación de Cámara (Dúo / Trío / Cuarteto)</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="filtro-conservatorio">Conservatorio (Prov. Valencia)</label>
-            <select id="filtro-conservatorio" onchange="renderMusicians()">
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-varnish mb-1.5">
+              Conservatorio (Valencia)
+            </label>
+            <select id="filter-conservatorio" onchange="renderMusicians()" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brass">
               <option value="">Todos los conservatorios</option>
               <option value="CSM Joaquín Rodrigo (Valencia)">CSM Joaquín Rodrigo (Valencia)</option>
               <option value="CPM Valencia (Velluters)">CPM Valencia (Velluters)</option>
@@ -623,24 +168,30 @@
               <option value="CPM Buñol (San Rafael)">CPM Buñol (San Rafael)</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="filtro-nivel">Nivel Académico</label>
-            <select id="filtro-nivel" onchange="renderMusicians()">
-              <option value="">Cualquier nivel</option>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-varnish mb-1.5">
+              Nivel de Estudios
+            </label>
+            <select id="filter-nivel" onchange="renderMusicians()" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brass">
+              <option value="">Todos los niveles</option>
               <option value="Enseñanzas Profesionales">Enseñanzas Profesionales</option>
               <option value="Enseñanzas Superiores">Enseñanzas Superiores</option>
               <option value="Titulado/a Superior">Titulado/a Superior</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="filtro-comarca">Comarca de actuación</label>
-            <select id="filtro-comarca" onchange="renderMusicians()">
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-varnish mb-1.5">
+              Comarca / Zona
+            </label>
+            <select id="filter-comarca" onchange="renderMusicians()" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brass">
               <option value="">Toda la provincia de Valencia</option>
-              <option value="València ciudad">València ciudad</option>
+              <option value="Valencia Ciudad">Valencia Ciudad</option>
               <option value="L'Horta Nord / Sud / Oest">L'Horta Nord / Sud / Oest</option>
               <option value="Camp de Túria">Camp de Túria</option>
               <option value="Camp de Morvedre">Camp de Morvedre</option>
-              <option value="Ribera Alta / Baixa">Ribera Alta / Baixa</option>
+              <option value="La Ribera Alta / Baixa">La Ribera Alta / Baixa</option>
               <option value="La Safor">La Safor</option>
               <option value="La Costera / Vall d'Albaida">La Costera / Vall d'Albaida</option>
               <option value="La Hoya de Buñol / Requena-Utiel">La Hoya de Buñol / Requena-Utiel</option>
@@ -649,465 +200,846 @@
         </div>
       </div>
 
-      <div id="musicians-grid" class="cards-grid"></div>
+      <!-- AVISO DE ACCESO RESTRINGIDO SI NO ESTÁ VERIFICADO -->
+      <div id="gatekeeper-banner" class="hidden bg-[#f4ece1] border-2 border-brass rounded-xl p-6 mb-6 text-center shadow-sm">
+        <div class="text-2xl mb-2">🎻</div>
+        <h2 class="text-xl text-ebony font-semibold mb-2">
+          Fichas completas reservadas a usuarios registrados y verificados
+        </h2>
+        <p class="text-sm text-[#4e3f35] max-w-2xl mx-auto mb-4">
+          Para proteger la privacidad y seguridad de los estudiantes e intérpretes de conservatorio, sus datos personales, nombre completo, conservatorio exacto, repertorio detallado y contacto directo permanecen ocultos hasta que te registres y verifiques tu identidad como persona real.
+        </p>
+        <button onclick="navigate('registro')" class="bg-varnish hover:bg-varnish-dark text-white px-5 py-2.5 rounded-lg text-sm font-medium transition shadow-sm">
+          Registrarme y verificar mi identidad ahora
+        </button>
+      </div>
+
+      <!-- LISTADO DE MÚSICOS -->
+      <div id="musicians-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </section>
 
-    <!-- SECCIÓN 2: REGISTRO DE MÚSICO -->
-    <section id="registro" class="section">
-      <div class="panel-box">
-        <h3>Publicar perfil en Cuerda Viva Música</h3>
-        <p class="sans" style="color: var(--texto-secundario); font-size: 0.92rem;">
-          Exclusivo para intérpretes de cuerda sinfónica vinculados a conservatorios de la provincia de Valencia. El contacto y acuerdo económico se realiza directamente entre las partes sin comisiones.
+    <!-- VISTA 2: REGISTRO Y VERIFICACIÓN DE IDENTIDAD REAL -->
+    <section id="view-registro" class="hidden max-w-2xl mx-auto">
+      <div class="bg-parchment border border-wood rounded-xl p-6 md:p-8 shadow-sm">
+        <h2 class="text-2xl text-ebony mb-2">Registro y Verificación de Persona Real</h2>
+        <p class="text-sm text-[#5c4d42] mb-6">
+          Tanto si buscas intérpretes para un evento como si eres músico de cuerda en la provincia de Valencia, es imprescindible verificar tu identidad real para acceder a las fichas y comunicarte.
         </p>
 
-        <form id="musician-form" onsubmit="addMusician(event)">
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="nombre">Nombre artístico o completo *</label>
-              <input type="text" id="nombre" required placeholder="Ej. Clara Ferrer / Cuarteto Turia" />
+        <!-- Selector de Rol -->
+        <div class="flex gap-3 mb-6">
+          <button type="button" id="btn-rol-organizador" onclick="setRegRole('organizador')" class="flex-1 py-2.5 px-4 rounded-lg border-2 border-varnish bg-varnish text-white text-sm font-medium transition">
+            Busco Músicos (Organizador / Particular)
+          </button>
+          <button type="button" id="btn-rol-musico" onclick="setRegRole('musico')" class="flex-1 py-2.5 px-4 rounded-lg border-2 border-wood bg-spruce text-ebony text-sm font-medium transition">
+            Soy Intérprete de Cuerda
+          </button>
+        </div>
+
+        <form id="form-registro" onsubmit="handleRegister(event)" class="space-y-4">
+          <input type="hidden" id="reg-role" value="organizador" />
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase text-varnish mb-1">Nombre y Apellidos Reales *</label>
+              <input type="text" id="reg-nombre" required placeholder="Ej. Elena Martínez Ferrer" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm" />
             </div>
-            <div class="form-group">
-              <label for="instrumento">Instrumento o agrupación de cuerda *</label>
-              <select id="instrumento" required>
-                <option value="Violín">Violín</option>
-                <option value="Viola">Viola</option>
-                <option value="Violonchelo">Violonchelo</option>
-                <option value="Contrabajo">Contrabajo</option>
-                <option value="Arpa">Arpa</option>
-                <option value="Dúo de Cuerda">Dúo de Cuerda</option>
-                <option value="Trío de Cuerda">Trío de Cuerda</option>
-                <option value="Cuarteto de Cuerda">Cuarteto de Cuerda</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="conservatorio">Conservatorio (Provincia de Valencia) *</label>
-              <select id="conservatorio" required>
-                <option value="CSM Joaquín Rodrigo (Valencia)">CSM Joaquín Rodrigo (Valencia)</option>
-                <option value="CPM Valencia (Velluters)">CPM Valencia (Velluters)</option>
-                <option value="CPM José Iturbi (Valencia)">CPM José Iturbi (Valencia)</option>
-                <option value="CPM Torrent">CPM Torrent</option>
-                <option value="CPM Catarroja (José Manuel Izquierdo)">CPM Catarroja (José Manuel Izquierdo)</option>
-                <option value="CPM Paterna">CPM Paterna</option>
-                <option value="CPM Llíria">CPM Llíria</option>
-                <option value="CPM Sagunto (Joaquín Rodrigo)">CPM Sagunto (Joaquín Rodrigo)</option>
-                <option value="CPM Cullera (Rafael Talens)">CPM Cullera (Rafael Talens)</option>
-                <option value="CPM Carcaixent (Mestre Vert)">CPM Carcaixent (Mestre Vert)</option>
-                <option value="CPM Gandia (Josep Climent)">CPM Gandia (Josep Climent)</option>
-                <option value="CPM Oliva (Josep Climent)">CPM Oliva (Josep Climent)</option>
-                <option value="CPM Xàtiva (Lluís Milan)">CPM Xàtiva (Lluís Milan)</option>
-                <option value="CPM Ontinyent (Gomis)">CPM Ontinyent (Gomis)</option>
-                <option value="CPM Requena (Mariano Pérez Sánchez)">CPM Requena (Mariano Pérez Sánchez)</option>
-                <option value="CPM Buñol (San Rafael)">CPM Buñol (San Rafael)</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="nivel">Nivel de estudios *</label>
-              <select id="nivel" required>
-                <option value="Enseñanzas Profesionales">Enseñanzas Profesionales</option>
-                <option value="Enseñanzas Superiores">Enseñanzas Superiores</option>
-                <option value="Titulado/a Superior">Titulado/a Superior</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="comarca">Comarca principal *</label>
-              <select id="comarca" required>
-                <option value="València ciudad">València ciudad</option>
-                <option value="L'Horta Nord / Sud / Oest">L'Horta Nord / Sud / Oest</option>
-                <option value="Camp de Túria">Camp de Túria</option>
-                <option value="Camp de Morvedre">Camp de Morvedre</option>
-                <option value="Ribera Alta / Baixa">Ribera Alta / Baixa</option>
-                <option value="La Safor">La Safor</option>
-                <option value="La Costera / Vall d'Albaida">La Costera / Vall d'Albaida</option>
-                <option value="La Hoya de Buñol / Requena-Utiel">La Hoya de Buñol / Requena-Utiel</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="tarifa">Caché orientativo (opcional)</label>
-              <input type="text" id="tarifa" placeholder="Ej. Desde 120 € / ceremonia" />
+            <div>
+              <label class="block text-xs font-semibold uppercase text-varnish mb-1">DNI / NIE / Pasaporte *</label>
+              <input type="text" id="reg-dni" required placeholder="Ej. 20458912K" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm" />
             </div>
           </div>
 
-          <div class="form-group" style="margin-top: 1rem;">
-            <label for="repertorio">Repertorio, experiencia orquestal y descripción *</label>
-            <textarea id="repertorio" rows="3" required placeholder="Indica tu especialidad (ceremonias, cócteles, recitales de cámara), repertorio clásico o bandas sonoras y experiencia en orquestas jóvenes..."></textarea>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase text-varnish mb-1">Correo Electrónico *</label>
+              <input type="email" id="reg-email" required placeholder="tu.correo@ejemplo.es" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase text-varnish mb-1">Teléfono Móvil (España) *</label>
+              <input type="tel" id="reg-telefono" required placeholder="Ej. 612 345 678" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm" />
+            </div>
           </div>
 
-          <div style="margin-top: 1rem;" class="sans">
-            <label style="display: flex; align-items: flex-start; gap: 0.5rem; font-weight: normal; cursor: pointer;">
-              <input type="checkbox" required style="margin-top: 0.25rem;" />
-              <span>He leído y acepto el Aviso Legal y Política de Privacidad de <strong>Cuerda Viva Música</strong>, declarando que toco un instrumento de cuerda sinfónica y que los acuerdos son directos entre particulares sin intermediación de la titular del sitio web.</span>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-varnish mb-1">
+              Documento acreditativo de identidad real (DNI/NIE o Carnet de Conservatorio) *
+            </label>
+            <input type="file" id="reg-doc-verificacion" accept=".pdf,.jpg,.jpeg,.png" required class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm" />
+            <p class="text-xs text-[#6b5b4e] mt-1">
+              Este documento se utiliza únicamente para comprobar que eres una persona real y evitar perfiles falsos o consultas anónimas.
+            </p>
+          </div>
+
+          <!-- CAMPOS ESPECÍFICOS PARA MÚSICOS -->
+          <div id="campos-musico" class="hidden space-y-4 pt-4 border-t border-wood">
+            <h3 class="text-lg text-ebony">Datos Artísticos y de Conservatorio</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold uppercase text-varnish mb-1">Instrumento Principal *</label>
+                <select id="reg-instrumento" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm">
+                  <option value="Violín">Violín</option>
+                  <option value="Viola">Viola</option>
+                  <option value="Violonchelo">Violonchelo</option>
+                  <option value="Contrabajo">Contrabajo</option>
+                  <option value="Arpa">Arpa</option>
+                  <option value="Agrupación de Cámara">Agrupación de Cámara</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase text-varnish mb-1">Nivel Académico *</label>
+                <select id="reg-nivel" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm">
+                  <option value="Enseñanzas Profesionales">Enseñanzas Profesionales</option>
+                  <option value="Enseñanzas Superiores">Enseñanzas Superiores</option>
+                  <option value="Titulado/a Superior">Titulado/a Superior</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold uppercase text-varnish mb-1">Conservatorio en Valencia *</label>
+                <select id="reg-conservatorio" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm">
+                  <option value="CSM Joaquín Rodrigo (Valencia)">CSM Joaquín Rodrigo (Valencia)</option>
+                  <option value="CPM Valencia (Velluters)">CPM Valencia (Velluters)</option>
+                  <option value="CPM José Iturbi (Valencia)">CPM José Iturbi (Valencia)</option>
+                  <option value="CPM Torrent">CPM Torrent</option>
+                  <option value="CPM Catarroja (José Manuel Izquierdo)">CPM Catarroja (José Manuel Izquierdo)</option>
+                  <option value="CPM Paterna">CPM Paterna</option>
+                  <option value="CPM Llíria">CPM Llíria</option>
+                  <option value="CPM Sagunto (Joaquín Rodrigo)">CPM Sagunto (Joaquín Rodrigo)</option>
+                  <option value="CPM Cullera (Rafael Talens)">CPM Cullera (Rafael Talens)</option>
+                  <option value="CPM Carcaixent (Mestre Vert)">CPM Carcaixent (Mestre Vert)</option>
+                  <option value="CPM Gandia (Josep Climent)">CPM Gandia (Josep Climent)</option>
+                  <option value="CPM Oliva (Josep Climent)">CPM Oliva (Josep Climent)</option>
+                  <option value="CPM Xàtiva (Lluís Milan)">CPM Xàtiva (Lluís Milan)</option>
+                  <option value="CPM Ontinyent (Gomis)">CPM Ontinyent (Gomis)</option>
+                  <option value="CPM Requena (Mariano Pérez Sánchez)">CPM Requena (Mariano Pérez Sánchez)</option>
+                  <option value="CPM Buñol (San Rafael)">CPM Buñol (San Rafael)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase text-varnish mb-1">Comarca Base *</label>
+                <select id="reg-comarca" class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm">
+                  <option value="Valencia Ciudad">Valencia Ciudad</option>
+                  <option value="L'Horta Nord / Sud / Oest">L'Horta Nord / Sud / Oest</option>
+                  <option value="Camp de Túria">Camp de Túria</option>
+                  <option value="Camp de Morvedre">Camp de Morvedre</option>
+                  <option value="La Ribera Alta / Baixa">La Ribera Alta / Baixa</option>
+                  <option value="La Safor">La Safor</option>
+                  <option value="La Costera / Vall d'Albaida">La Costera / Vall d'Albaida</option>
+                  <option value="La Hoya de Buñol / Requena-Utiel">La Hoya de Buñol / Requena-Utiel</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase text-varnish mb-1">Presentación, Repertorio y Experiencia Orquestal *</label>
+              <textarea id="reg-bio" rows="3" placeholder="Describe tu recorrido en orquesta joven/sinfónica, repertorio clásico o contemporáneo y disponibilidad..." class="w-full bg-spruce border border-wood rounded-lg px-3 py-2 text-sm"></textarea>
+            </div>
+
+            <div class="bg-[#eae0d2] border border-brass/50 rounded-lg p-3 text-xs text-ebony">
+              <strong>Compromiso de respuesta:</strong> Al publicar tu ficha en Cuerda Viva Música, te comprometes a responder a cualquier solicitud de evento en un <strong>plazo máximo de 3 días naturales (72 horas)</strong>.
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <label class="flex items-start gap-2 text-xs text-[#4e3f35] cursor-pointer">
+              <input type="checkbox" required class="mt-0.5" />
+              <span>
+                He leído y acepto el <button type="button" onclick="openLegalModal()" class="underline text-varnish font-semibold">Aviso Legal y Política de Privacidad</button>. Entiendo que Cuerda Viva Música es una iniciativa cultural sin ánimo de lucro de Ángeles Muñoz de Sande y que los acuerdos se pactan libremente entre las partes.
+              </span>
             </label>
           </div>
 
-          <div style="margin-top: 1.4rem;">
-            <button type="submit" class="btn-primary">Publicar Perfil</button>
-          </div>
+          <button type="submit" class="w-full bg-varnish hover:bg-varnish-dark text-white font-medium py-3 rounded-lg transition shadow-sm">
+            Completar Verificación y Entrar
+          </button>
         </form>
       </div>
     </section>
 
-    <!-- SECCIÓN 3: AVISO LEGAL Y PRIVACIDAD -->
-    <section id="legal" class="section">
-      <div class="panel-box">
-        <h3>Aviso Legal, Condiciones de Uso y Protección de Datos</h3>
-        <div class="legal-notice sans" style="margin-top: 1rem;">
-          <strong>Titular del sitio web:</strong> Ángeles Muñoz de Sande (Particular, persona física residente en la provincia de Valencia, España).<br />
-          <strong>Finalidad del portal:</strong> Tablón informativo gratuito de difusión cultural para facilitar el contacto directo entre estudiantes/intérpretes de cuerda sinfónica de conservatorios de la provincia de Valencia y personas interesadas en música en directo.
-        </div>
-        <div class="sans" style="font-size: 0.92rem; color: var(--texto-secundario); display: flex; flex-direction: column; gap: 0.9rem;">
-          <p><strong>1. Ausencia de intermediación y exención de responsabilidad:</strong> Cuerda Viva Música no es una agencia de representación artística ni empresa de contratación. La titular del portal no percibe comisiones, no gestiona pagos, no verifica certificados académicos ni forma parte de los acuerdos privados que puedan alcanzar los usuarios. Cualquier relación contractual, fiscal o laboral derivada del contacto corresponde exclusivamente a las partes intervinientes.</p>
-          <p><strong>2. Documentos de acuerdo descargables:</strong> La herramienta de generación de borrador de acuerdo en PDF se ofrece únicamente como plantilla orientativa para que las partes la descarguen, revisen y firmen fuera de la plataforma por sus propios medios.</p>
-          <p><strong>3. Protección de datos (RGPD y LOPDGDD):</strong> Los datos introducidos en esta versión se almacenan localmente en el navegador del usuario y, en caso de habilitar base de datos en la Unión Europea, serán tratados exclusivamente para mostrar el perfil público solicitado por el propio músico, pudiendo ejercer los derechos de acceso, rectificación o supresión en cualquier momento.</p>
+    <!-- VISTA 3: MENSAJES, PLAZO DE 3 DÍAS Y ACUERDOS -->
+    <section id="view-solicitudes" class="hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl text-ebony">Solicitudes, Chat y Acuerdos entre Partes</h2>
+          <p class="text-sm text-[#5c4d42]">
+            El músico dispone de un <strong>máximo de 3 días</strong> desde el primer contacto para responder. Aquí podéis dialogar y generar vuestro documento de acuerdo.
+          </p>
         </div>
       </div>
+
+      <div id="solicitudes-container" class="space-y-6"></div>
     </section>
+
   </main>
 
-  <!-- MODAL DE CONTACTO, CHAT Y ACUERDO PDF -->
-  <div id="contact-modal" class="modal-backdrop">
-    <div class="modal-window">
-      <div class="modal-header">
+  <!-- MODAL: DETALLE COMPLETO DE FICHA Y CONTACTO -->
+  <div id="modal-musico" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-spruce border-2 border-brass rounded-xl max-w-xl w-full p-6 shadow-xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-start mb-4">
         <div>
-          <h4 id="modal-title" style="font-weight: normal; font-size: 1.2rem;">Contacto Directo</h4>
-          <span id="modal-subtitle" class="sans" style="font-size: 0.82rem; color: var(--oro-suave);"></span>
+          <span id="m-instrumento" class="text-xs uppercase tracking-widest font-bold text-brass"></span>
+          <h3 id="m-nombre" class="text-2xl text-ebony mt-0.5"></h3>
+          <p id="m-conservatorio" class="text-sm text-varnish font-medium"></p>
         </div>
-        <button class="close-btn" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+        <button onclick="closeMusicianModal()" class="text-ebony hover:text-brass text-2xl leading-none">&times;</button>
       </div>
 
-      <div class="modal-body">
-        <div id="chat-messages" class="chat-box"></div>
+      <div class="bg-parchment border border-wood rounded-lg p-4 mb-4 space-y-2 text-sm">
+        <p><strong>Nivel académico:</strong> <span id="m-nivel"></span></p>
+        <p><strong>Zona / Comarca:</strong> <span id="m-comarca"></span></p>
+        <p><strong>Estado de verificación:</strong> <span class="text-emerald-800 font-semibold">✔ Persona real verificada</span></p>
+        <p><strong>Plazo máximo de respuesta:</strong> <span class="text-varnish font-semibold">Máximo 3 días (72 h)</span></p>
+        <div class="pt-2 border-t border-wood">
+          <p class="font-semibold mb-1">Trayectoria y Repertorio:</p>
+          <p id="m-bio" class="text-[#4e3f35] leading-relaxed"></p>
+        </div>
+      </div>
 
-        <form onsubmit="sendMessage(event)" style="display: flex; gap: 0.5rem;">
-          <input type="text" id="chat-input" placeholder="Escribe fecha, municipio de Valencia y tipo de evento..." required style="flex: 1;" />
-          <button type="submit" class="btn-primary">Enviar</button>
-        </form>
-
-        <!-- Paso de Acuerdo fuera de la web -->
-        <div class="agreement-step">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
-            <strong style="color: var(--madera-oscuro);">Acuerdo Privado y Reseña Verificada</strong>
-            <span id="agreement-status" class="status-badge status-pending">Pendiente de acuerdo firmado</span>
+      <!-- FORMULARIO DE PRIMER CONTACTO -->
+      <form id="form-contacto-musico" onsubmit="sendInitialRequest(event)" class="space-y-3">
+        <input type="hidden" id="contact-musician-id" />
+        <h4 class="font-serif-classical text-base text-ebony">Enviar propuesta de evento / audición</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-varnish mb-1">Fecha prevista del evento *</label>
+            <input type="date" id="req-fecha-evento" required class="w-full bg-white border border-wood rounded-lg px-3 py-2 text-sm" />
           </div>
-
-          <div class="form-grid-2" style="margin-top: 0.5rem;">
-            <div class="form-group">
-              <label for="acuerdo-fecha">Fecha del evento</label>
-              <input type="date" id="acuerdo-fecha" />
-            </div>
-            <div class="form-group">
-              <label for="acuerdo-lugar">Municipio (Prov. Valencia)</label>
-              <input type="text" id="acuerdo-lugar" placeholder="Ej. València, Torrent, Gandia..." />
-            </div>
-          </div>
-          <div class="form-group" style="margin-top: 0.75rem;">
-            <label for="acuerdo-condiciones">Repertorio, duración y caché acordado</label>
-            <input type="text" id="acuerdo-condiciones" placeholder="Ej. Ceremonia civil (45 min), repertorio clásico, 150 €" />
-          </div>
-
-          <div style="display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1rem;">
-            <button type="button" class="btn-outline" onclick="printAgreementPDF()">1. Descargar / Imprimir Acuerdo PDF</button>
-            <label class="btn-outline" style="cursor: pointer; display: inline-flex; align-items: center;">
-              2. Adjuntar Acuerdo Firmado (PDF/Img)
-              <input type="file" accept=".pdf,image/*" onchange="verifySignedUpload(event)" style="display: none;" />
-            </label>
-          </div>
-
-          <!-- Formulario de reseña desbloqueado tras adjuntar acuerdo -->
-          <div id="review-box" style="display: none; margin-top: 1.1rem; background: var(--bg-pergamino); padding: 1rem; border-radius: 8px; border: 1px solid var(--oro-laton);">
-            <label for="review-text">3. Escribir Reseña del Evento (verificada con acuerdo)</label>
-            <div style="display: flex; gap: 0.5rem; margin-top: 0.4rem;">
-              <input type="text" id="review-text" placeholder="Comparte tu valoración sobre la puntualidad y calidad musical..." style="flex: 1;" />
-              <button type="button" class="btn-primary" onclick="submitReview()">Publicar Reseña</button>
-            </div>
+          <div>
+            <label class="block text-xs font-semibold text-varnish mb-1">Municipio (Prov. Valencia) *</label>
+            <input type="text" id="req-municipio" required placeholder="Ej. València, Torrent, Gandia..." class="w-full bg-white border border-wood rounded-lg px-3 py-2 text-sm" />
           </div>
         </div>
+        <div>
+          <label class="block text-xs font-semibold text-varnish mb-1">Detalles del evento y consulta *</label>
+          <textarea id="req-mensaje" rows="3" required placeholder="Describe el tipo de acto, repertorio deseado, horarios estimados y propón hablar sobre las condiciones..." class="w-full bg-white border border-wood rounded-lg px-3 py-2 text-sm"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeMusicianModal()" class="px-4 py-2 rounded-lg border border-wood text-sm">Cancelar</button>
+          <button type="submit" class="bg-varnish hover:bg-varnish-dark text-white px-5 py-2 rounded-lg text-sm font-medium">
+            Iniciar contacto (Plazo 3 días)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: DOCUMENTO DE ACUERDO PARA IMPRIMIR / GUARDAR PDF -->
+  <div id="modal-acuerdo" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white border-2 border-ebony rounded-xl max-w-2xl w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div id="printable-agreement" class="space-y-4 text-sm text-gray-900">
+        <div class="border-b-2 border-gray-800 pb-3 flex justify-between items-center">
+          <div>
+            <h3 class="text-xl font-serif-classical font-bold">DOCUMENTO DE ACUERDO ENTRE PARTES</h3>
+            <p class="text-xs text-gray-600">Generado a través de Cuerda Viva Música (Provincia de Valencia)</p>
+          </div>
+          <span class="text-xs border border-gray-400 px-2 py-1 rounded">Ref: <span id="agr-ref"></span></span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 bg-gray-50 p-3 rounded border border-gray-200">
+          <div>
+            <p class="text-xs uppercase text-gray-500 font-bold">Parte Solicitante / Organizadora</p>
+            <p id="agr-org-nombre" class="font-semibold"></p>
+            <p id="agr-org-dni" class="text-xs"></p>
+          </div>
+          <div>
+            <p class="text-xs uppercase text-gray-500 font-bold">Intérprete de Cuerda</p>
+            <p id="agr-mus-nombre" class="font-semibold"></p>
+            <p id="agr-mus-inst" class="text-xs"></p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <p><strong>Fecha del evento:</strong> <span id="agr-fecha"></span></p>
+          <p><strong>Municipio de celebración:</strong> <span id="agr-municipio"></span> (Valencia)</p>
+          <div>
+            <label class="block font-bold mb-1 no-print">Condiciones económicas, horarios y repertorio acordados libremente:</label>
+            <textarea id="agr-condiciones" rows="4" class="w-full border border-gray-300 rounded p-2 text-sm" placeholder="Escribid aquí la aportación económica pactada, horarios de prueba de sonido y actuación, repertorio y forma de pago..."></textarea>
+          </div>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 p-3 rounded text-xs text-gray-700">
+          <strong>Nota de Exención de Responsabilidad:</strong> Este documento recoge exclusivamente el acuerdo privado alcanzado entre el solicitante y el intérprete. <strong>Ángeles Muñoz de Sande</strong>, como titular particular de la web divulgativa <em>Cuerda Viva Música</em>, no es parte contratante, no percibe comisión alguna ni responde del cumplimiento, ejecución o fiscalidad del presente acuerdo.
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 pt-8">
+          <div class="border-t border-gray-600 pt-2 text-center text-xs">
+            Firma de la Parte Organizadora
+          </div>
+          <div class="border-t border-gray-600 pt-2 text-center text-xs">
+            Firma del/de la Intérprete
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-end gap-3 mt-6 pt-4 border-t border-gray-200 no-print">
+        <button onclick="closeAgreementModal()" class="px-4 py-2 rounded border border-gray-300 text-sm">Cerrar</button>
+        <button onclick="window.print()" class="bg-ebony text-white px-5 py-2 rounded text-sm font-medium hover:bg-rosewood">
+          1. Descargar / Imprimir PDF para firmar fuera
+        </button>
       </div>
     </div>
   </div>
 
-  <footer>
-    <div class="footer-inner">
-      <div>
-        <h4>Cuerda Viva Música</h4>
-        <p class="sans">Iniciativa cultural para dar visibilidad a los estudiantes y titulados de instrumentos de cuerda sinfónica de los conservatorios de la provincia de Valencia.</p>
+  <!-- MODAL: AVISO LEGAL Y PRIVACIDAD -->
+  <div id="modal-legal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-spruce border-2 border-wood rounded-xl max-w-2xl w-full p-6 shadow-xl max-h-[85vh] overflow-y-auto text-sm space-y-3">
+      <div class="flex justify-between items-center border-b border-wood pb-3">
+        <h3 class="text-xl text-ebony">Aviso Legal, Condiciones de Uso y Privacidad (RGPD)</h3>
+        <button onclick="closeLegalModal()" class="text-2xl leading-none">&times;</button>
       </div>
-      <div>
-        <h4>Especialidades</h4>
-        <p class="sans">Violín · Viola · Violonchelo · Contrabajo · Arpa · Música de Cámara (Dúos, Tríos y Cuartetos de Cuerda).</p>
+      <p><strong>1. Titularidad:</strong> En cumplimiento de la Ley 34/2002 (LSSI-CE), se informa que <em>Cuerda Viva Música</em> es una iniciativa cultural y sin ánimo de lucro titularidad de la particular <strong>Ángeles Muñoz de Sande</strong>, con ámbito territorial en la provincia de Valencia.</p>
+      <p><strong>2. Naturaleza del servicio:</strong> La plataforma actúa únicamente como tablón de encuentro entre estudiantes o titulados de instrumentos de cuerda sinfónica y personas interesadas en contar con música en directo. No existe relación laboral, agencia de representación ni intermediación financiera.</p>
+      <p><strong>3. Verificación y protección de datos personales:</strong> Para salvaguardar la privacidad de los músicos, sus datos personales completos solo son accesibles para usuarios registrados y verificados como personas reales. Los datos aportados se tratan conforme al Reglamento (UE) 2016/679 (RGPD) y la LOPDGDD únicamente para permitir el contacto directo entre las partes. Puedes solicitar la baja y supresión de tus datos en cualquier momento.</p>
+      <p><strong>4. Compromiso de respuesta de 3 días:</strong> Los intérpretes registrados se comprometen a atender las consultas recibidas en un plazo máximo de 3 días naturales.</p>
+      <div class="pt-3 text-right">
+        <button onclick="closeLegalModal()" class="bg-varnish text-white px-4 py-2 rounded-lg text-sm">Entendido</button>
       </div>
+    </div>
+  </div>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="bg-ebony text-[#cbbba8] border-t border-[#4e382b] mt-12 py-6 text-xs">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
       <div>
-        <h4>Titularidad y Contacto</h4>
-        <p class="sans">Portal gestionado a título particular por <strong>Ángeles Muñoz de Sande</strong> (Valencia). Sin comisiones ni intermediación contractual.</p>
+        <strong class="text-[#faf6f0] font-serif-classical text-sm">Cuerda Viva Música</strong> · Apoyo al talento de cuerda sinfónica en la provincia de Valencia.
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <button onclick="openLegalModal()" class="hover:text-brass underline">Aviso Legal y Privacidad (Ángeles Muñoz de Sande)</button>
+        <button onclick="resetDemoData()" class="hover:text-brass underline">Restaurar datos de ejemplo</button>
       </div>
     </div>
   </footer>
 
+  <!-- LÓGICA DE APLICACIÓN -->
   <script>
-    // Configuración preparada para conexión opcional con Supabase (Servidor UE)
-    const SUPABASE_URL = "";
-    const SUPABASE_ANON_KEY = "";
-
-    const initialMusicians = [
+    const INITIAL_MUSICIANS = [
       {
-        id: 1,
-        nombre: "Elena Martínez",
+        id: "m1",
+        nombre: "Clara Santamaría Pons",
         instrumento: "Violín",
-        conservatorio: "CSM Joaquín Rodrigo (Valencia)",
         nivel: "Enseñanzas Superiores",
-        comarca: "València ciudad",
-        tarifa: "Desde 130 € / evento",
-        repertorio: "Estudiante de 3º de Enseñanzas Superiores. Especializada en ceremonias, cócteles y repertorio clásico (Bach, Vivaldi, Massenet) y bandas sonoras.",
-        resenas: ["Interpretación delicada y puntualidad impecable en nuestra ceremonia en València."]
-      },
-      {
-        id: 2,
-        nombre: "Cuarteto de Cuerda Turia",
-        instrumento: "Cuarteto de Cuerda",
-        conservatorio: "CPM Valencia (Velluters)",
-        nivel: "Enseñanzas Profesionales",
-        comarca: "L'Horta Nord / Sud / Oest",
-        tarifa: "Desde 380 € / agrupación",
-        repertorio: "Dos violines, viola y violonchelo de últimos cursos de Profesional. Repertorio de Mozart, Haydn, arreglos de música contemporánea y valenciana.",
-        resenas: []
-      },
-      {
-        id: 3,
-        nombre: "Marc Soler",
-        instrumento: "Violonchelo",
-        conservatorio: "CPM Torrent",
-        nivel: "Enseñanzas Profesionales",
-        comarca: "L'Horta Nord / Sud / Oest",
-        tarifa: "Desde 110 € / ceremonia",
-        repertorio: "Suites de J.S. Bach para violonchelo solo, El Cisne de Saint-Saëns y acompañamiento en actos culturales y presentaciones literarias.",
-        resenas: []
-      },
-      {
-        id: 4,
-        nombre: "Sofía Navarro",
-        instrumento: "Arpa",
         conservatorio: "CSM Joaquín Rodrigo (Valencia)",
+        comarca: "Valencia Ciudad",
+        bio: "Estudiante de 4º curso de Enseñanzas Superiores de Violín. Concertino en orquesta académica y amplia experiencia en música de cámara, ceremonias civiles y recitales solistas.",
+        verificado: true,
+        resenas: [
+          { autor: "Javier R. (València)", texto: "Puntualidad impecable y un sonido cálido precioso en el Palau de Cervelló.", fecha: "2026-10-12" }
+        ]
+      },
+      {
+        id: "m2",
+        nombre: "Marc Albiñana Ferrer",
+        instrumento: "Violonchelo",
+        nivel: "Enseñanzas Profesionales",
+        conservatorio: "CPM Torrent",
+        comarca: "L'Horta Nord / Sud / Oest",
+        bio: "6º curso de Enseñanzas Profesionales de Violonchelo. Miembro activo de agrupaciones sinfónicas juveniles de l'Horta Sud. Repertorio desde Bach hasta arreglos clásicos contemporáneos.",
+        verificado: true,
+        resenas: []
+      },
+      {
+        id: "m3",
+        nombre: "Cuarteto Turia (Cuerda)",
+        instrumento: "Agrupación de Cámara",
         nivel: "Titulado/a Superior",
-        comarca: "València ciudad",
-        tarifa: "Desde 220 € / evento",
-        repertorio: "Arpa de pedales de concierto. Experiencia en orquestas sinfónicas jóvenes y recitales solistas en salones históricos de la provincia de Valencia.",
-        resenas: ["El sonido del arpa llenó todo el salón con una elegancia extraordinaria."]
+        conservatorio: "CSM Joaquín Rodrigo (Valencia)",
+        comarca: "Valencia Ciudad",
+        bio: "Formación estable de dos violines, viola y violonchelo integrada por titulados superiores de Valencia. Especializados en conciertos de cámara, actos institucionales y eventos culturales.",
+        verificado: true,
+        resenas: [
+          { autor: "Fundación Cultural", texto: "Excelente empaste y trato muy profesional desde el primer contacto.", fecha: "2026-09-28" }
+        ]
+      },
+      {
+        id: "m4",
+        nombre: "Núria Castelló Llopis",
+        instrumento: "Arpa",
+        nivel: "Enseñanzas Superiores",
+        conservatorio: "CSM Joaquín Rodrigo (Valencia)",
+        comarca: "La Ribera Alta / Baixa",
+        bio: "Intérprete de arpa clásica de pedales. Colaboradora habitual en bandas y orquestas sinfónicas de la Ribera y Valencia. Disponible para recitales íntimos y eventos.",
+        verificado: true,
+        resenas: []
+      },
+      {
+        id: "m5",
+        nombre: "Pau Peris Navarro",
+        instrumento: "Contrabajo",
+        nivel: "Enseñanzas Profesionales",
+        conservatorio: "CPM Llíria",
+        comarca: "Camp de Túria",
+        bio: "Estudiante de último curso de Profesional en Llíria. Experiencia en sección de graves de orquesta sinfónica y ensambles de cuerda.",
+        verificado: true,
+        resenas: []
+      },
+      {
+        id: "m6",
+        nombre: "Laia Soriano Soler",
+        instrumento: "Viola",
+        nivel: "Enseñanzas Superiores",
+        conservatorio: "CPM José Iturbi (Valencia)",
+        comarca: "Camp de Morvedre",
+        bio: "Violista con formación en el CPM José Iturbi y Superior. Apasionada por el repertorio camerístico y orquestal.",
+        verificado: true,
+        resenas: []
       }
     ];
 
-    let musicians = JSON.parse(localStorage.getItem("cuerda_viva_musicians")) || initialMusicians;
-    let chats = JSON.parse(localStorage.getItem("cuerda_viva_chats")) || {};
-    let verifiedAgreements = JSON.parse(localStorage.getItem("cuerda_viva_verified")) || {};
-    let currentMusicianId = null;
+    let state = {
+      currentUser: JSON.parse(localStorage.getItem("cvm_user")) || null,
+      musicians: JSON.parse(localStorage.getItem("cvm_musicians")) || INITIAL_MUSICIANS,
+      requests: JSON.parse(localStorage.getItem("cvm_requests")) || []
+    };
 
-    function saveData() {
-      localStorage.setItem("cuerda_viva_musicians", JSON.stringify(musicians));
-      localStorage.setItem("cuerda_viva_chats", JSON.stringify(chats));
-      localStorage.setItem("cuerda_viva_verified", JSON.stringify(verifiedAgreements));
+    function saveState() {
+      localStorage.setItem("cvm_user", JSON.stringify(state.currentUser));
+      localStorage.setItem("cvm_musicians", JSON.stringify(state.musicians));
+      localStorage.setItem("cvm_requests", JSON.stringify(state.requests));
+      updateHeaderUI();
     }
 
-    function showSection(sectionId, btn) {
-      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-      document.getElementById(sectionId).classList.add("active");
-      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
+    function resetDemoData() {
+      localStorage.removeItem("cvm_user");
+      localStorage.removeItem("cvm_musicians");
+      localStorage.removeItem("cvm_requests");
+      location.reload();
     }
 
-    function renderMusicians() {
-      const inst = document.getElementById("filtro-instrumento").value;
-      const cons = document.getElementById("filtro-conservatorio").value;
-      const niv = document.getElementById("filtro-nivel").value;
-      const com = document.getElementById("filtro-comarca").value;
+    function navigate(view) {
+      ["catalogo", "registro", "solicitudes"].forEach(v => {
+        document.getElementById("view-" + v).classList.add("hidden");
+      });
+      document.getElementById("view-" + view).classList.remove("hidden");
+      if (view === "catalogo") renderMusicians();
+      if (view === "solicitudes") renderRequests();
+    }
 
-      const grid = document.getElementById("musicians-grid");
-      grid.innerHTML = "";
+    function updateHeaderUI() {
+      const badge = document.getElementById("user-session-badge");
+      if (state.currentUser && state.currentUser.verificado) {
+        badge.innerHTML = `
+          <span class="text-xs text-[#e8dccb]">
+            ✔ <strong>${state.currentUser.nombre.split(" ")[0]}</strong> (${state.currentUser.role === 'musico' ? 'Intérprete' : 'Verificado'})
+          </span>
+          <button onclick="logout()" class="text-xs text-brass hover:underline ml-1">Salir</button>
+        `;
+      } else {
+        badge.innerHTML = `
+          <span class="text-xs text-[#cbbba8]">Visitante no verificado</span>
+        `;
+      }
 
-      const filtered = musicians.filter(m =>
-        (!inst || m.instrumento === inst) &&
-        (!cons || m.conservatorio === cons) &&
-        (!niv || m.nivel === niv) &&
-        (!com || m.comarca === com)
-      );
+      const pendingCount = state.requests.filter(r => r.estado === "Pendiente de respuesta").length;
+      const pBadge = document.getElementById("badge-pendientes");
+      if (pendingCount > 0) {
+        pBadge.textContent = pendingCount;
+        pBadge.classList.remove("hidden");
+      } else {
+        pBadge.classList.add("hidden");
+      }
+    }
 
-      if (filtered.length === 0) {
-        grid.innerHTML = `<p class="sans" style="grid-column: 1/-1; text-align: center; color: var(--texto-secundario); padding: 2rem;">No hay intérpretes registrados con esos filtros actualmente.</p>`;
+    function logout() {
+      state.currentUser = null;
+      saveState();
+      navigate("catalogo");
+    }
+
+    function setRegRole(role) {
+      document.getElementById("reg-role").value = role;
+      const btnOrg = document.getElementById("btn-rol-organizador");
+      const btnMus = document.getElementById("btn-rol-musico");
+      const camposMus = document.getElementById("campos-musico");
+
+      if (role === "musico") {
+        btnMus.className = "flex-1 py-2.5 px-4 rounded-lg border-2 border-varnish bg-varnish text-white text-sm font-medium transition";
+        btnOrg.className = "flex-1 py-2.5 px-4 rounded-lg border-2 border-wood bg-spruce text-ebony text-sm font-medium transition";
+        camposMus.classList.remove("hidden");
+      } else {
+        btnOrg.className = "flex-1 py-2.5 px-4 rounded-lg border-2 border-varnish bg-varnish text-white text-sm font-medium transition";
+        btnMus.className = "flex-1 py-2.5 px-4 rounded-lg border-2 border-wood bg-spruce text-ebony text-sm font-medium transition";
+        camposMus.classList.add("hidden");
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const role = document.getElementById("reg-role").value;
+      const nombre = document.getElementById("reg-nombre").value.trim();
+      const dni = document.getElementById("reg-dni").value.trim().toUpperCase();
+      const email = document.getElementById("reg-email").value.trim();
+      const telefono = document.getElementById("reg-telefono").value.trim();
+      const docFile = document.getElementById("reg-doc-verificacion").files[0];
+
+      if (!docFile) {
+        alert("Debes adjuntar un documento acreditativo para verificar que eres una persona real.");
         return;
       }
 
-      filtered.forEach(m => {
-        const card = document.createElement("article");
-        card.className = "musician-card";
-        const reviewsHtml = m.resenas && m.resenas.length > 0
-          ? `<div class="sans" style="font-size: 0.82rem; color: var(--exito); background: #eef5ef; padding: 0.45rem 0.65rem; border-radius: 5px;">&#10003; Reseña verificada: "${m.resenas[m.resenas.length - 1]}"</div>`
-          : "";
+      const newUser = {
+        id: "u_" + Date.now(),
+        role,
+        nombre,
+        dni,
+        email,
+        telefono,
+        docVerificacion: docFile.name,
+        verificado: true
+      };
 
-        card.innerHTML = `
-          <div class="card-top">
+      if (role === "musico") {
+        const musicianProfile = {
+          id: newUser.id,
+          nombre,
+          instrumento: document.getElementById("reg-instrumento").value,
+          nivel: document.getElementById("reg-nivel").value,
+          conservatorio: document.getElementById("reg-conservatorio").value,
+          comarca: document.getElementById("reg-comarca").value,
+          bio: document.getElementById("reg-bio").value.trim() || "Intérprete de cuerda sinfónica disponible en la provincia de Valencia.",
+          verificado: true,
+          resenas: []
+        };
+        state.musicians.unshift(musicianProfile);
+      }
+
+      state.currentUser = newUser;
+      saveState();
+      alert("Identidad verificada correctamente. Ya tienes acceso completo a las fichas de los intérpretes y al contacto directo.");
+      navigate("catalogo");
+    }
+
+    function renderMusicians() {
+      const inst = document.getElementById("filter-instrumento").value;
+      const cons = document.getElementById("filter-conservatorio").value;
+      const niv = document.getElementById("filter-nivel").value;
+      const com = document.getElementById("filter-comarca").value;
+
+      const isVerified = state.currentUser && state.currentUser.verificado;
+      const gateBanner = document.getElementById("gatekeeper-banner");
+      if (!isVerified) {
+        gateBanner.classList.remove("hidden");
+      } else {
+        gateBanner.classList.add("hidden");
+      }
+
+      const filtered = state.musicians.filter(m => {
+        if (inst && m.instrumento !== inst) return false;
+        if (cons && m.conservatorio !== cons) return false;
+        if (niv && m.nivel !== niv) return false;
+        if (com && m.comarca !== com) return false;
+        return true;
+      });
+
+      const grid = document.getElementById("musicians-grid");
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-10 text-[#6b5b4e]">No hay intérpretes que coincidan con esos filtros en este momento.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(m => {
+        if (!isVerified) {
+          // Vista protegida: oculta identidad y datos personales hasta que el solicitante se registre y verifique
+          const iniciales = m.nombre.split(" ").map(p => p[0]).slice(0, 2).join(".") + ".";
+          return `
+            <article class="bg-parchment border border-wood rounded-xl p-5 flex flex-col justify-between shadow-sm">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-xs font-bold uppercase tracking-wider text-varnish bg-[#e6dacb] px-2.5 py-1 rounded">
+                    ${m.instrumento}
+                  </span>
+                  <span class="text-xs text-[#6b5b4e]">🔒 Ficha protegida</span>
+                </div>
+                <h3 class="text-lg text-ebony font-semibold mb-1">Intérprete (${iniciales})</h3>
+                <p class="text-xs text-[#5c4d42] mb-3">${m.nivel} · ${m.comarca}</p>
+                <div class="bg-spruce border border-dashed border-wood rounded-lg p-3 text-xs text-[#6b5b4e] mb-4">
+                  Datos personales, conservatorio exacto, repertorio y contacto directo ocultos. Regístrate y verifica tu identidad como persona real para acceder.
+                </div>
+              </div>
+              <button onclick="navigate('registro')" class="w-full py-2 px-4 rounded-lg border border-varnish text-varnish hover:bg-varnish hover:text-white text-xs font-semibold transition">
+                Verificar identidad para ver ficha
+              </button>
+            </article>
+          `;
+        }
+
+        // Vista completa para usuario registrado y verificado (SIN TARIFAS)
+        return `
+          <article class="bg-parchment border border-wood rounded-xl p-5 flex flex-col justify-between shadow-sm hover:border-brass transition">
             <div>
-              <h3 class="musician-name">${m.nombre}</h3>
-              <span class="sans" style="font-size: 0.8rem; color: var(--texto-secundario);">${m.comarca}</span>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-white bg-varnish px-2.5 py-1 rounded">
+                  ${m.instrumento}
+                </span>
+                <span class="text-xs text-emerald-800 font-medium">✔ Verificado/a</span>
+              </div>
+              <h3 class="text-xl text-ebony mb-1">${m.nombre}</h3>
+              <p class="text-xs font-semibold text-varnish mb-1">${m.conservatorio}</p>
+              <p class="text-xs text-[#6b5b4e] mb-3">${m.nivel} · ${m.comarca}</p>
+              <p class="text-sm text-[#3e3128] line-clamp-3 mb-4">${m.bio}</p>
             </div>
-            <span class="instrument-tag">${m.instrumento}</span>
-          </div>
-          <div class="card-body">
-            <ul class="meta-list">
-              <li><strong>Centro:</strong> ${m.conservatorio}</li>
-              <li><strong>Nivel:</strong> ${m.nivel}</li>
-            </ul>
-            <p class="bio-text">${m.repertorio}</p>
-            ${reviewsHtml}
-          </div>
-          <div class="card-footer">
-            <span class="price-hint">${m.tarifa || "Consultar caché"}</span>
-            <button class="btn-primary" onclick="openContact(${m.id})">Contactar</button>
+            <div class="pt-3 border-t border-wood flex items-center justify-between gap-2">
+              <span class="text-[11px] text-[#6b5b4e]">⏳ Respuesta máx. 3 días</span>
+              <button onclick="openMusicianModal('${m.id}')" class="bg-ebony hover:bg-rosewood text-[#faf6f0] px-4 py-2 rounded-lg text-xs font-medium transition">
+                Ver ficha y contactar
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function openMusicianModal(id) {
+      if (!state.currentUser || !state.currentUser.verificado) {
+        navigate("registro");
+        return;
+      }
+      const m = state.musicians.find(x => x.id === id);
+      if (!m) return;
+
+      document.getElementById("contact-musician-id").value = m.id;
+      document.getElementById("m-instrumento").textContent = m.instrumento;
+      document.getElementById("m-nombre").textContent = m.nombre;
+      document.getElementById("m-conservatorio").textContent = m.conservatorio;
+      document.getElementById("m-nivel").textContent = m.nivel;
+      document.getElementById("m-comarca").textContent = m.comarca;
+      document.getElementById("m-bio").textContent = m.bio;
+
+      document.getElementById("modal-musico").classList.remove("hidden");
+    }
+
+    function closeMusicianModal() {
+      document.getElementById("modal-musico").classList.add("hidden");
+    }
+
+    function sendInitialRequest(e) {
+      e.preventDefault();
+      const musicianId = document.getElementById("contact-musician-id").value;
+      const m = state.musicians.find(x => x.id === musicianId);
+      const fechaEvento = document.getElementById("req-fecha-evento").value;
+      const municipio = document.getElementById("req-municipio").value.trim();
+      const mensaje = document.getElementById("req-mensaje").value.trim();
+
+      const now = Date.now();
+      const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
+
+      const newReq = {
+        id: "SOL-" + Math.floor(1000 + Math.random() * 9000),
+        musicianId: m.id,
+        musicianNombre: m.nombre,
+        musicianInstrumento: m.instrumento,
+        organizerId: state.currentUser.id,
+        organizerNombre: state.currentUser.nombre,
+        organizerDni: state.currentUser.dni,
+        fechaEvento,
+        municipio,
+        createdAt: now,
+        deadlineAt: now + threeDaysMs,
+        estado: "Pendiente de respuesta",
+        acuerdoSubido: null,
+        resenaPublicada: false,
+        mensajes: [
+          {
+            autor: state.currentUser.nombre,
+            texto: mensaje,
+            fecha: new Date().toLocaleString("es-ES")
+          }
+        ]
+      };
+
+      state.requests.unshift(newReq);
+      saveState();
+      closeMusicianModal();
+      document.getElementById("form-contacto-musico").reset();
+      alert("Solicitud enviada. El intérprete tiene un plazo máximo de 3 días naturales para responder.");
+      navigate("solicitudes");
+    }
+
+    function getRemainingDeadlineText(req) {
+      if (req.estado !== "Pendiente de respuesta") {
+        return `<span class="text-emerald-800 font-semibold">✔ Respondida dentro de plazo</span>`;
+      }
+      const diff = req.deadlineAt - Date.now();
+      if (diff <= 0) {
+        return `<span class="text-amber-900 font-bold">⚠ Plazo de 3 días vencido</span>`;
+      }
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const days = Math.floor(hours / 24);
+      const remHours = hours % 24;
+      return `<span class="text-varnish font-semibold">⏳ Quedan ${days}d ${remHours}h para responder (máx. 3 días)</span>`;
+    }
+
+    function renderRequests() {
+      const container = document.getElementById("solicitudes-container");
+      if (!state.currentUser || !state.currentUser.verificado) {
+        container.innerHTML = `
+          <div class="bg-parchment border border-wood rounded-xl p-6 text-center">
+            <p class="text-sm mb-3">Debes registrarte y verificar tu identidad para gestionar mensajes y acuerdos.</p>
+            <button onclick="navigate('registro')" class="bg-varnish text-white px-4 py-2 rounded-lg text-sm">Ir a Verificación</button>
           </div>
         `;
-        grid.appendChild(card);
-      });
-    }
-
-    function addMusician(e) {
-      e.preventDefault();
-      const nuevo = {
-        id: Date.now(),
-        nombre: document.getElementById("nombre").value.trim(),
-        instrumento: document.getElementById("instrumento").value,
-        conservatorio: document.getElementById("conservatorio").value,
-        nivel: document.getElementById("nivel").value,
-        comarca: document.getElementById("comarca").value,
-        tarifa: document.getElementById("tarifa").value.trim() || "A convenir",
-        repertorio: document.getElementById("repertorio").value.trim(),
-        resenas: []
-      };
-      musicians.unshift(nuevo);
-      saveData();
-      e.target.reset();
-      showSection("explorar", document.querySelectorAll(".nav-btn")[0]);
-      renderMusicians();
-    }
-
-    function openContact(id) {
-      currentMusicianId = id;
-      const m = musicians.find(item => item.id === id);
-      document.getElementById("modal-title").textContent = `Conversación con ${m.nombre}`;
-      document.getElementById("modal-subtitle").textContent = `${m.instrumento} · ${m.conservatorio}`;
-
-      if (!chats[id]) {
-        chats[id] = [
-          { sender: "musician", text: `Hola, soy ${m.nombre}. Gracias por interesarte en mi música en Cuerda Viva Música. Cuéntame la fecha y el lugar del evento en Valencia.` }
-        ];
-        saveData();
+        return;
       }
-      renderChat();
-      updateAgreementUI();
-      document.getElementById("contact-modal").classList.add("open");
+
+      if (state.requests.length === 0) {
+        container.innerHTML = `
+          <div class="bg-parchment border border-wood rounded-xl p-8 text-center text-sm text-[#6b5b4e]">
+            Todavía no tienes conversaciones activas. Filtra por instrumento en el catálogo y contacta con un intérprete para acordar las condiciones.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = state.requests.map(req => `
+        <div class="bg-parchment border border-wood rounded-xl p-5 shadow-sm space-y-4">
+          <div class="flex flex-wrap justify-between items-start gap-2 border-b border-wood pb-3">
+            <div>
+              <span class="text-xs font-bold uppercase text-brass">${req.id} · ${req.musicianInstrumento}</span>
+              <h3 class="text-lg text-ebony">
+                ${req.organizerNombre} ↔ ${req.musicianNombre}
+              </h3>
+              <p class="text-xs text-[#5c4d42]">Evento: <strong>${req.fechaEvento}</strong> en <strong>${req.municipio}</strong></p>
+            </div>
+            <div class="text-right text-xs space-y-1">
+              <div>${getRemainingDeadlineText(req)}</div>
+              ${req.estado === "Pendiente de respuesta" ? `
+                <button onclick="simulateMusicianReply('${req.id}')" class="underline text-[#6b5b4e] hover:text-ebony">
+                  (Simular respuesta del músico)
+                </button>
+              ` : ""}
+            </div>
+          </div>
+
+          <!-- HISTORIAL DE CHAT -->
+          <div class="bg-spruce border border-wood rounded-lg p-3 space-y-2 max-h-48 overflow-y-auto">
+            ${req.mensajes.map(msg => `
+              <div class="text-xs">
+                <span class="font-bold text-varnish">${msg.autor}</span>
+                <span class="text-[#8a796b] ml-1">(${msg.fecha}):</span>
+                <p class="text-ebony mt-0.5">${msg.texto}</p>
+              </div>
+            `).join("")}
+          </div>
+
+          <!-- ENVIAR NUEVO MENSAJE -->
+          <div class="flex gap-2">
+            <input type="text" id="chat-input-${req.id}" placeholder="Escribe un mensaje para dialogar y pactar condiciones..." class="flex-1 bg-spruce border border-wood rounded-lg px-3 py-2 text-sm" />
+            <button onclick="sendChatMessage('${req.id}')" class="bg-ebony text-white px-4 py-2 rounded-lg text-xs font-medium hover:bg-rosewood">
+              Enviar
+            </button>
+          </div>
+
+          <!-- FLUJO DE ACUERDO EXTERNO Y RESEÑA -->
+          <div class="pt-3 border-t border-wood flex flex-wrap items-center justify-between gap-3">
+            <div class="flex flex-wrap gap-2">
+              <button onclick="openAgreementModal('${req.id}')" class="bg-varnish hover:bg-varnish-dark text-white px-3.5 py-2 rounded-lg text-xs font-medium">
+                1. Generar / Imprimir Acuerdo PDF
+              </button>
+              <label class="cursor-pointer bg-spruce border border-varnish text-varnish hover:bg-[#efe5d8] px-3.5 py-2 rounded-lg text-xs font-medium">
+                2. ${req.acuerdoSubido ? "✔ Acuerdo Firmado Adjunto" : "Adjuntar Acuerdo Firmado"}
+                <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="uploadSignedAgreement('${req.id}', this)" class="hidden" />
+              </label>
+            </div>
+
+            ${req.acuerdoSubido && !req.resenaPublicada ? `
+              <button onclick="addReviewPrompt('${req.id}')" class="bg-brass text-ebony px-3.5 py-2 rounded-lg text-xs font-bold">
+                3. Escribir Reseña Verificada
+              </button>
+            ` : ""}
+            ${req.resenaPublicada ? `<span class="text-xs text-emerald-800 font-semibold">✔ Reseña publicada</span>` : ""}
+          </div>
+        </div>
+      `).join("");
     }
 
-    function closeModal() {
-      document.getElementById("contact-modal").classList.remove("open");
-    }
-
-    function renderChat() {
-      const box = document.getElementById("chat-messages");
-      box.innerHTML = "";
-      (chats[currentMusicianId] || []).forEach(msg => {
-        const div = document.createElement("div");
-        div.className = `msg ${msg.sender}`;
-        div.textContent = msg.text;
-        box.appendChild(div);
-      });
-      box.scrollTop = box.scrollHeight;
-    }
-
-    function sendMessage(e) {
-      e.preventDefault();
-      const input = document.getElementById("chat-input");
+    function sendChatMessage(reqId) {
+      const input = document.getElementById("chat-input-" + reqId);
       const text = input.value.trim();
       if (!text) return;
-      chats[currentMusicianId].push({ sender: "client", text });
-      saveData();
-      input.value = "";
-      renderChat();
-    }
 
-    function printAgreementPDF() {
-      const m = musicians.find(item => item.id === currentMusicianId);
-      const fecha = document.getElementById("acuerdo-fecha").value || "[Fecha por concretar]";
-      const lugar = document.getElementById("acuerdo-lugar").value || "[Municipio de Valencia]";
-      const cond = document.getElementById("acuerdo-condiciones").value || "[Repertorio, horario y caché acordados]";
-
-      const win = window.open("", "_blank");
-      win.document.write(`
-        <!DOCTYPE html>
-        <html lang="es">
-        <head>
-          <meta charset="UTF-8">
-          <title>Acuerdo de Actuación Musical - Cuerda Viva Música</title>
-          <style>
-            body { font-family: Georgia, serif; color: #241914; padding: 40px; line-height: 1.6; max-width: 750px; margin: auto; }
-            h1 { border-bottom: 2px solid #5c3a21; padding-bottom: 10px; font-size: 22px; }
-            .box { background: #faf6f0; border: 1px solid #d4c5b2; padding: 18px; margin: 20px 0; }
-            .firmas { display: flex; justify-content: space-between; margin-top: 60px; }
-            .firma-col { width: 44%; border-top: 1px solid #241914; padding-top: 8px; font-size: 14px; }
-            .nota { font-size: 12px; color: #5e5047; margin-top: 40px; border-top: 1px dashed #cbbba8; padding-top: 10px; }
-          </style>
-        </head>
-        <body>
-          <h1>Cuerda Viva Música · Documento de Acuerdo entre Partes</h1>
-          <p>En la provincia de Valencia, las partes abajo firmantes acuerdan la realización de una interpretación musical en directo conforme a los siguientes datos:</p>
-          <div class="box">
-            <p><strong>Intérprete / Agrupación:</strong> ${m.nombre} (${m.instrumento} · ${m.conservatorio})</p>
-            <p><strong>Fecha prevista del evento:</strong> ${fecha}</p>
-            <p><strong>Municipio de celebración:</strong> ${lugar}</p>
-            <p><strong>Condiciones, repertorio y caché acordado:</strong> ${cond}</p>
-          </div>
-          <p>Ambas partes manifiestan su conformidad con las condiciones pactadas directamente entre ellas.</p>
-          <div class="firmas">
-            <div class="firma-col">Firma de la persona organizadora<br>DNI/NIE:</div>
-            <div class="firma-col">Firma del/de la intérprete<br>DNI/NIE:</div>
-          </div>
-          <p class="nota">Nota legal: Este borrador ha sido generado a través de la herramienta gratuita Cuerda Viva Música. Su titular, Ángeles Muñoz de Sande, actúa exclusivamente como difusora cultural sin intervenir como agencia, representante ni parte contratante en este acuerdo.</p>
-          <script>window.print();<\/script>
-        </body>
-        </html>
-      `);
-      win.document.close();
-    }
-
-    function verifySignedUpload(e) {
-      if (e.target.files && e.target.files.length > 0) {
-        verifiedAgreements[currentMusicianId] = true;
-        saveData();
-        updateAgreementUI();
+      const req = state.requests.find(r => r.id === reqId);
+      req.mensajes.push({
+        autor: state.currentUser.nombre,
+        texto: text,
+        fecha: new Date().toLocaleString("es-ES")
+      });
+      if (state.currentUser.role === "musico") {
+        req.estado = "En conversación";
       }
+      saveState();
+      renderRequests();
     }
 
-    function updateAgreementUI() {
-      const isVerified = !!verifiedAgreements[currentMusicianId];
-      const badge = document.getElementById("agreement-status");
-      const reviewBox = document.getElementById("review-box");
-      if (isVerified) {
-        badge.textContent = "Acuerdo firmado adjuntado";
-        badge.className = "status-badge status-verified";
-        reviewBox.style.display = "block";
-      } else {
-        badge.textContent = "Pendiente de acuerdo firmado";
-        badge.className = "status-badge status-pending";
-        reviewBox.style.display = "none";
+    function simulateMusicianReply(reqId) {
+      const req = state.requests.find(r => r.id === reqId);
+      req.estado = "En conversación";
+      req.mensajes.push({
+        autor: req.musicianNombre,
+        texto: "Hola, gracias por contactar conmigo. Tengo disponibilidad para esa fecha; hablemos de los detalles del repertorio y las condiciones del evento.",
+        fecha: new Date().toLocaleString("es-ES")
+      });
+      saveState();
+      renderRequests();
+    }
+
+    function openAgreementModal(reqId) {
+      const req = state.requests.find(r => r.id === reqId);
+      if (!req) return;
+      document.getElementById("agr-ref").textContent = req.id;
+      document.getElementById("agr-org-nombre").textContent = req.organizerNombre;
+      document.getElementById("agr-org-dni").textContent = "DNI/NIE: " + req.organizerDni;
+      document.getElementById("agr-mus-nombre").textContent = req.musicianNombre;
+      document.getElementById("agr-mus-inst").textContent = "Instrumento: " + req.musicianInstrumento;
+      document.getElementById("agr-fecha").textContent = req.fechaEvento;
+      document.getElementById("agr-municipio").textContent = req.municipio;
+      document.getElementById("modal-acuerdo").classList.remove("hidden");
+    }
+
+    function closeAgreementModal() {
+      document.getElementById("modal-acuerdo").classList.add("hidden");
+    }
+
+    function uploadSignedAgreement(reqId, input) {
+      if (!input.files || !input.files[0]) return;
+      const req = state.requests.find(r => r.id === reqId);
+      req.acuerdoSubido = input.files[0].name;
+      saveState();
+      renderRequests();
+      alert("Acuerdo firmado adjuntado correctamente. Ya podéis valorar el evento una vez celebrado.");
+    }
+
+    function addReviewPrompt(reqId) {
+      const req = state.requests.find(r => r.id === reqId);
+      const texto = prompt("Escribe tu valoración sobre la actuación de " + req.musicianNombre + ":");
+      if (!texto || !texto.trim()) return;
+
+      const m = state.musicians.find(x => x.id === req.musicianId);
+      if (m) {
+        m.resenas.push({
+          autor: req.organizerNombre + " (" + req.municipio + ")",
+          texto: texto.trim(),
+          fecha: new Date().toISOString().slice(0, 10)
+        });
       }
+      req.resenaPublicada = true;
+      saveState();
+      renderRequests();
+      alert("Reseña verificada añadida a la ficha del intérprete.");
     }
 
-    function submitReview() {
-      const input = document.getElementById("review-text");
-      const text = input.value.trim();
-      if (!text) return;
-      const m = musicians.find(item => item.id === currentMusicianId);
-      m.resenas.push(text);
-      saveData();
-      input.value = "";
-      renderMusicians();
-      alert("Tu reseña verificada se ha publicado en el perfil del intérprete.");
+    function openLegalModal() {
+      document.getElementById("modal-legal").classList.remove("hidden");
     }
 
+    function closeLegalModal() {
+      document.getElementById("modal-legal").classList.add("hidden");
+    }
+
+    // Inicialización
+    updateHeaderUI();
     renderMusicians();
   </script>
 </body>
