@@ -804,7 +804,7 @@
         <button type="submit" id="btn-submit-musico" class="btn btn-primary" style="width:100%; margin-top:1rem;">Enviar perfil a verificación</button>
       </form>
       <div class="alert-success" id="musico-success">
-        <strong>¡Solicitud enviada correctamente!</strong> Hemos recibido tus datos y acreditación en <em>cuerdavivamusica@gmail.com</em>. Revisaremos tu perfil antes de publicarlo en el catálogo.
+        <strong>¡Solicitud enviada correctamente!</strong> Hemos recibido tus datos y acreditación en <em>cuerdavivamusica@gmail.com</em> y te hemos enviado una copia a tu correo electrónico. Revisaremos tu perfil antes de publicarlo en el catálogo.
       </div>
     </div>
   </div>
@@ -867,7 +867,7 @@
         <button type="submit" id="btn-submit-evento" class="btn btn-primary" style="width:100%; margin-top:1rem;">Enviar solicitud de disponibilidad</button>
       </form>
       <div class="alert-success" id="evento-success">
-        <strong>¡Solicitud enviada!</strong> Hemos remitido tu propuesta a <em>cuerdavivamusica@gmail.com</em> y nos pondremos en contacto contigo tras confirmar disponibilidad con el músico.
+        <strong>¡Solicitud enviada!</strong> Hemos remitido tu propuesta a <em>cuerdavivamusica@gmail.com</em> junto con una copia a tu correo electrónico, y nos pondremos en contacto contigo tras confirmar disponibilidad con el músico.
       </div>
     </div>
   </div>
@@ -1061,10 +1061,13 @@
         status: 'pendiente'
       };
 
-      // 1. Envío directo a cuerdavivamusica@gmail.com (con adjunto PDF si existe)
+      // 1. Envío directo a cuerdavivamusica@gmail.com + copia al músico solicitante
       try {
         const formData = new FormData();
         formData.append("_subject", `🎻 Nuevo Músico (+18): ${newM.name} - ${newM.instrument}`);
+        formData.append("_cc", newM.email);
+        formData.append("email", newM.email);
+        formData.append("_autoresponse", `Hola ${newM.name}, hemos recibido correctamente tu solicitud de alta en Cuerda Viva Música (${newM.instrument}). Revisaremos tu formación y datos antes de publicar tu perfil en el catálogo.`);
         formData.append("_captcha", "false");
         formData.append("_template", "table");
         formData.append("Nombre y Apellidos", newM.name);
@@ -1079,8 +1082,8 @@
         formData.append("Experiencia y Repertorio", newM.bio);
 
         const cvInput = document.getElementById('m-cv');
-        if (cvInput.files && cvInput.files) {
-          formData.append("attachment", cvInput.files);
+        if (cvInput.files && cvInput.files[0]) {
+          formData.append("attachment", cvInput.files[0]);
         }
 
         await fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
@@ -1123,10 +1126,13 @@
         details: document.getElementById('e-details').value
       };
 
-      // 1. Envío directo a cuerdavivamusica@gmail.com
+      // 1. Envío directo a cuerdavivamusica@gmail.com + copia al cliente solicitante
       try {
         const formData = new FormData();
         formData.append("_subject", `📅 Nueva Solicitud de Evento: ${newE.type} en ${newE.city}`);
+        formData.append("_cc", newE.email);
+        formData.append("email", newE.email);
+        formData.append("_autoresponse", `Hola ${newE.client}, hemos recibido tu solicitud para "${newE.musician}" el día ${newE.date} en ${newE.city}. Consultaremos disponibilidad y nos pondremos en contacto contigo muy pronto.`);
         formData.append("_captcha", "false");
         formData.append("_template", "table");
         formData.append("Músico / Formación Solicitada", newE.musician);
