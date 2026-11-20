@@ -104,7 +104,7 @@
 
     .hero p {
       color: var(--muted);
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto 1.5rem;
       font-size: 1.05rem;
     }
@@ -137,6 +137,63 @@
       color: var(--muted);
       margin-bottom: 1.5rem;
       font-size: 0.95rem;
+    }
+
+    .story-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .story-box p {
+      color: var(--muted);
+      font-size: 0.98rem;
+      margin-bottom: 1rem;
+    }
+
+    .story-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .story-box strong {
+      color: var(--text);
+    }
+
+    .info-pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .pillar-item {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem;
+    }
+
+    .pillar-item h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .pillar-item p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .cta-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
     }
 
     .grid-cards {
@@ -292,6 +349,7 @@
 
     .btn-primary:hover {
       background: var(--primary-hover);
+      text-decoration: none;
     }
 
     .btn-secondary {
@@ -301,6 +359,7 @@
 
     .btn-secondary:hover {
       background: #374054;
+      text-decoration: none;
     }
 
     .notice-destruction {
@@ -439,23 +498,59 @@
     <div class="nav-container">
       <div class="brand">Cuerda Viva <span>Música</span></div>
       <nav>
+        <a href="#inicio">Inicio</a>
         <a href="#directorio">Músicos y Eventos</a>
         <a href="#registro">Solicitar Alta Verificada</a>
+        <a href="#sugerencias">Sugerencias</a>
         <a href="#contacto">Contacto</a>
         <a href="#privacidad">Privacidad</a>
       </nav>
     </div>
   </header>
 
-  <section class="hero">
+  <section id="inicio" class="hero">
     <div class="badge-verified">Comunidad 100% Verificada · Revisión Humana Previa</div>
-    <h1>Conecta con músicos de cuerda reales y eventos en directo</h1>
+    <h1>El punto de encuentro para los músicos de cuerda que buscan su lugar en el escenario</h1>
     <p>
-      Directorio independiente exclusivo de intérpretes de cuerda, agrupaciones y conciertos. Cada perfil se revisa manualmente antes de su publicación para garantizar autenticidad y evitar suplantaciones.
+      Una plataforma independiente creada para dar visibilidad real, fiabilidad y oportunidades laborales a intérpretes de cuerda mayores de 18 años y organizadores de conciertos en directo.
     </p>
+    <div class="cta-panel">
+      <button type="button" class="btn btn-primary" onclick="mostrarRegistro()">Acceder al Registro de Músico o Evento</button>
+      <a href="#directorio" class="btn btn-secondary">Explorar Directorio Verificado</a>
+    </div>
   </section>
 
   <main class="container">
+    <!-- Historia, propósito y garantías de la plataforma en portada -->
+    <section class="story-box">
+      <h2 class="section-title">¿Cómo nace Cuerda Viva Música?</h2>
+      <p>
+        Detrás de cada violín, violonchelo, guitarra, contrabajo o arpa hay años de conservatorio, escuelas de música y miles de horas de estudio silencioso desde la infancia. Sin embargo, al cumplir la mayoría de edad y querer dar el salto al ámbito profesional, muchos jóvenes músicos de cuerda se encuentran con una realidad evidente: mientras los instrumentos de viento y percusión cuentan con una salida recurrente y constante en bandas, charangas, pasacalles, fallas y festejos populares, <strong>los intérpretes de cuerda disponen de muchos menos circuitos accesibles para darse a conocer e introducirse en el mercado laboral</strong>.
+      </p>
+      <p>
+        <strong>Cuerda Viva Música</strong> surge precisamente para equilibrar esa balanza: ofrecer un escaparate digno, especializado y directo donde promotores, salas, organizadores de eventos y público puedan encontrar músicos de cuerda y propuestas acústicas con total garantía.
+      </p>
+
+      <div class="info-pillars">
+        <div class="pillar-item">
+          <h3>¿Qué encontrarás al registrarte?</h3>
+          <p>Un espacio dedicado exclusivamente a la cuerda frotada y pulsada, tanto para solistas y agrupaciones como para ciclos o conciertos, sin ruido de otras categorías y con visibilidad directa ante quienes buscan música en vivo.</p>
+        </div>
+        <div class="pillar-item">
+          <h3>Fiabilidad y confianza real</h3>
+          <p>Cada solicitud pasa por una comprobación humana de identidad antes de publicarse. Quien contrata o acude a un evento sabe que detrás de cada ficha hay un músico real, mayor de edad y comprometido.</p>
+        </div>
+        <div class="pillar-item">
+          <h3>Plataforma en evolución contigo</h3>
+          <p>Somos un proyecto de nueva creación abierto a crecer junto a la comunidad. Escuchamos activamente qué herramientas echas en falta o qué mejorarías en la web a través de nuestro buzón de sugerencias.</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 1rem;">
+        <button type="button" class="btn btn-primary" onclick="mostrarRegistro()">Solicitar mi Alta como Músico o Evento</button>
+      </div>
+    </section>
+
     <!-- Directorio aprobado manualmente + cargado desde Google Sheets CSV -->
     <section id="directorio">
       <h2 class="section-title">Perfiles y Eventos Destacados</h2>
@@ -482,9 +577,12 @@
       </div>
     </section>
 
-    <!-- Formulario de Alta con Revisión Humana y Verificación Separada -->
-    <section id="registro" class="form-box">
-      <h2 class="section-title">Solicitar Alta de Músico de Cuerda o Evento</h2>
+    <!-- Formulario de Alta oculto en portada hasta que el usuario pulsa en acceder al registro -->
+    <section id="registro" class="form-box" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.5rem;">
+        <h2 class="section-title" style="margin-bottom: 0;">Solicitar Alta de Músico de Cuerda o Evento</h2>
+        <button type="button" class="btn btn-secondary" onclick="ocultarRegistro()" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;">Cerrar formulario</button>
+      </div>
       <p class="section-subtitle">
         Ningún dato se publica automáticamente. Tu solicitud llegará a nuestro equipo para revisión manual.
       </p>
@@ -611,7 +709,7 @@
           <div class="checkbox-group">
             <input type="checkbox" id="checkDestruccion" required />
             <label for="checkDestruccion" style="font-weight: 400; color: var(--text);">
-              Confirmo que soy el titular de los datos y acepto el envío del selfie y DNI/NIE sabiendo que ambos documentos serán eliminados inmediatamente tras verificar mi identidad.
+              Confirmo que soy mayor de 18 años, titular de los datos y acepto el envío del selfie y DNI/NIE sabiendo que ambos documentos serán eliminados inmediatamente tras verificar mi identidad.
             </label>
           </div>
 
@@ -624,6 +722,43 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Enviar Solicitud para Revisión</button>
+      </form>
+    </section>
+
+    <!-- Buzón de Sugerencias para mejorar la plataforma -->
+    <section id="sugerencias" class="form-box">
+      <h2 class="section-title">Buzón de Sugerencias y Mejoras</h2>
+      <p class="section-subtitle">
+        Al ser una plataforma de nueva creación, tu opinión nos ayuda a crecer. Cuéntanos qué funciones crees que le hacen falta a la página o qué cambiarías; nuestro equipo leerá cada propuesta y valorará su viabilidad.
+      </p>
+
+      <form action="https://formsubmit.co/cuerdavivamusica@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Nueva Sugerencia Web - Cuerda Viva Música" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="sugerenciaNombre">Tu nombre o perfil (opcional)</label>
+            <input type="text" id="sugerenciaNombre" name="Nombre_Sugerencia" placeholder="Ej. Estudiante de violín / Organizador" />
+          </div>
+          <div class="form-group">
+            <label for="sugerenciaTipo">Tipo de propuesta *</label>
+            <select id="sugerenciaTipo" name="Tipo_Propuesta" required>
+              <option value="Añadir una nueva función o sección">Añadir una nueva función o sección</option>
+              <option value="Quitar o simplificar algún elemento">Quitar o simplificar algún elemento</option>
+              <option value="Mejora de diseño o facilidad de uso">Mejora de diseño o facilidad de uso</option>
+              <option value="Otra idea para músicos de cuerda">Otra idea para músicos de cuerda</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sugerenciaMensaje">¿Qué añadirías, quitarías o mejorarías en la página? *</label>
+          <textarea id="sugerenciaMensaje" name="Detalle_Sugerencia" rows="3" placeholder="Escribe aquí tu sugerencia para que nuestro equipo la valore..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar Sugerencia al Equipo</button>
       </form>
     </section>
 
@@ -732,12 +867,29 @@
     </div>
   </div>
 
-  <!-- Librería PapaParse para leer el CSV de Google Sheets -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-
   <script>
     // URL CSV de tu hoja de Google Sheets (sustituye el texto entre comillas por tu URL .../export?format=csv)
     const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTcmJwQQULPJL2eTkahzEowGHpEv4BziHtl_csksQ47EkHJ1taQOnWDCmZdbllkNuxhcECJHw1lTwWS/pub?gid=0&single=true&output=csv';
+
+    // Control de apertura y cierre del formulario de registro desde la portada
+    function mostrarRegistro() {
+      const secRegistro = document.getElementById('registro');
+      secRegistro.style.display = 'block';
+      secRegistro.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function ocultarRegistro() {
+      document.getElementById('registro').style.display = 'none';
+    }
+
+    // Abrir registro automáticamente si el usuario pulsa en el enlace del menú superior
+    document.querySelectorAll('a[href="#registro"]').forEach(enlace => {
+      enlace.addEventListener('click', (e) => {
+        e.preventDefault();
+        mostrarRegistro();
+      });
+    });
 
     // Cargar automáticamente las fichas aprobadas desde Google Sheets (CSV)
     function cargarPerfilesAprobados() {
