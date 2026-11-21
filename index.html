@@ -97,14 +97,18 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <div id="vAuth">
 <div class="form-grid">
 <div class="fg"><label for="aEmail">Correo electrónico</label><input type="email" id="aEmail" autocomplete="email" /></div>
-<div class="fg"><label for="aPass">Contraseña (mínimo 8 caracteres)</label><input type="password" id="aPass" minlength="8" autocomplete="current-password" /></div>
+<div class="fg"><label for="aPass">Contraseña (mínimo 8 caracteres)</label><input type="password" id="aPass" minlength="8" autocomplete="current-password" /><label class="chk"><input type="checkbox" onchange="$('aPass').type=this.checked?'text':'password'" />Mostrar contraseña</label></div>
 </div>
-<div class="row"><button type="button" id="bEntrar" class="btn btn-primary" onclick="entrar()">Entrar</button><button type="button" id="bCrear" class="btn btn-secondary" onclick="crear()">Crear cuenta</button></div>
-<p class="section-subtitle" style="margin-top:1rem">Al crear la cuenta recibirás un correo de confirmación. Pulsa el enlace y vuelve para entrar.</p>
+<div class="row"><button type="button" id="bEntrar" class="btn btn-primary" onclick="entrar()">Entrar</button><button type="button" class="btn btn-secondary" onclick="irRegistro()">Crear cuenta nueva</button></div>
+<p class="section-subtitle" style="margin-top:1rem">Para registrarte tendrás que rellenar tu ficha de músico o de evento. Recibirás un correo de confirmación y revisaremos tu ficha manualmente antes de publicarla.</p>
 </div>
 
 <div id="vPerfil" style="display:none">
 <form id="fPerfil">
+<div id="camposCuenta" style="display:none"><div class="form-grid">
+<div class="fg"><label for="rEmail">Correo electrónico *</label><input type="email" id="rEmail" autocomplete="email" /></div>
+<div class="fg"><label for="rPass">Contraseña (mínimo 8 caracteres) *</label><input type="password" id="rPass" minlength="8" autocomplete="new-password" /><label class="chk"><input type="checkbox" onchange="$('rPass').type=this.checked?'text':'password'" />Mostrar contraseña</label></div>
+</div></div>
 <div class="form-grid">
 <div class="fg"><label>Tipo de solicitud *</label><select name="tipo" required><option value="musico">Músico / Agrupación de cuerda</option><option value="organizador">Organizador / Evento o ciclo</option></select></div>
 <div class="fg"><label>Instrumento o formación *</label>
@@ -124,7 +128,7 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <span class="section-subtitle" style="margin:0">Nunca es público. Solo lo verá la otra parte de un acuerdo que ambos hayáis firmado.</span></div>
 <div class="chk"><input type="checkbox" id="c1" required /><label for="c1">Confirmo que soy mayor de 18 años y que Cuerda Viva Música solo pone en contacto a las partes, sin ser parte de ningún acuerdo.</label></div>
 <div class="chk"><input type="checkbox" id="c2" required /><label for="c2">He leído y acepto la <a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a>.</label></div>
-<button type="submit" class="btn btn-primary">Enviar ficha para revisión</button>
+<div class="row"><button type="submit" id="bPerfil" class="btn btn-primary">Enviar ficha para revisión</button><button type="button" id="bYaCuenta" class="btn btn-secondary" style="display:none" onclick="refrescar()">Ya tengo cuenta</button></div>
 </form>
 </div>
 
@@ -242,8 +246,10 @@ async function refrescar(){
   msg('');
   const {data:{session}}=await sb.auth.getSession();
   yo=session?session.user:null;miPerfil=null;esAdmin=false;
-  if(yo){const {data}=await sb.from('perfiles').select('id,tipo,nombre,estado').eq('id',yo.id).maybeSingle();miPerfil=data;}
+  if(yo){const {data}=await sb.from('perfiles').select('id,tipo,nombre,ciudad,estado').eq('id',yo.id).maybeSingle();miPerfil=data;}
+  if(miPerfil){const r=await sb.rpc('avisar_ficha');if(r.data===true)avisarAdmin(miPerfil);}
   if(yo){const r=await sb.rpc('es_admin');esAdmin=r.data===true;}
+  if(yo)modoCuenta(false);
   vista(!yo?'vAuth':(!miPerfil&&!esAdmin)?'vPerfil':'vPanel');
   if(miPerfil||esAdmin)await cargarPanel();
   cargarDirectorio();
@@ -255,6 +261,7 @@ function traducir(e){
   if(c==='email_not_confirmed'||m.includes('not confirmed'))return 'Aún no has confirmado tu correo. Busca el mensaje de confirmación (mira también en spam) y pulsa el enlace.';
   if(c==='invalid_credentials'||m.includes('invalid login'))return 'Correo o contraseña incorrectos.';
   if(c==='weak_password'||m.includes('password'))return 'La contraseña es demasiado débil. Usa al menos 8 caracteres.';
+  if(m.includes('database error'))return 'Revisa que todos los campos de la ficha estén rellenos.';
   if(m.includes('not authorized'))return 'No se pudo enviar el correo de confirmación a esa dirección. Escríbenos desde el formulario de contacto.';
   if(c==='email_address_invalid'||m.includes('invalid'))return 'El correo no parece válido.';
   return 'Ha ocurrido un error. Inténtalo de nuevo en un minuto.';
@@ -269,14 +276,14 @@ async function entrar(){
   b.disabled=false;
   if(error)msg(traducir(error));else refrescar();
 }
-async function crear(){
-  const email=$('aEmail').value.trim(),password=$('aPass').value;
-  if(!email||password.length<8){msg('Escribe un correo y una contraseña de al menos 8 caracteres.');return;}
-  const b=$('bCrear');if(b.disabled)return;esperar(b,60,'Crear cuenta');
-  const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin}});
-  if(error){msg(traducir(error));return;}
-  if(data.user&&data.user.identities&&!data.user.identities.length){msg('Ese correo ya tiene una cuenta. Pulsa "Entrar" con tu contraseña.');return;}
-  msg('Cuenta creada. Revisa tu correo (mira también en spam), pulsa el enlace de confirmación y vuelve para entrar.',true);
+function modoCuenta(reg){
+  $('camposCuenta').style.display=reg?'block':'none';$('rEmail').required=reg;$('rPass').required=reg;
+  $('bPerfil').textContent=reg?'Crear cuenta y enviar ficha':'Enviar ficha para revisión';
+  $('bYaCuenta').style.display=reg?'inline-flex':'none';
+}
+function irRegistro(){msg('');modoCuenta(true);vista('vPerfil');}
+async function avisarAdmin(p){
+  try{await fetch('https://formsubmit.co/ajax/cuerdavivamusica@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:'Nueva ficha pendiente de revisión - Cuerda Viva Música',Tipo:p.tipo,Nombre:p.nombre,Ciudad:p.ciudad,Aviso:'Entra en la web, Acceso y alta, Panel de administración para revisarla.'})});}catch(e){}
 }
 async function abrirAdmin(){vista('vAdmin');await cargarAdmin();}
 async function cargarAdmin(){
@@ -302,10 +309,19 @@ sb.auth.onAuthStateChange(()=>{if($('registro').style.display==='block')refresca
 
 $('fPerfil').addEventListener('submit',async e=>{
   e.preventDefault();const f=e.target;
-  let {error}=await sb.from('perfiles').insert({id:yo.id,tipo:f.tipo.value,nombre:f.nombre.value.trim(),instrumento:f.instrumento.value,ciudad:f.ciudad.value.trim(),descripcion:f.descripcion.value.trim(),enlace:f.enlace.value.trim()});
-  if(!error){const r=await sb.from('telefonos').insert({user_id:yo.id,telefono:f.telefono.value.trim()});error=r.error;}
+  const d={tipo:f.tipo.value,nombre:f.nombre.value.trim(),instrumento:f.instrumento.value,ciudad:f.ciudad.value.trim(),descripcion:f.descripcion.value.trim(),enlace:f.enlace.value.trim(),telefono:f.telefono.value.trim()};
+  if(!yo){
+    const b=$('bPerfil');if(b.disabled)return;esperar(b,60,'Crear cuenta y enviar ficha');
+    const {data,error}=await sb.auth.signUp({email:$('rEmail').value.trim(),password:$('rPass').value,options:{emailRedirectTo:location.origin,data:d}});
+    if(error){msg(traducir(error));return;}
+    if(data.user&&data.user.identities&&!data.user.identities.length){msg('Ese correo ya tiene una cuenta. Pulsa "Ya tengo cuenta" y entra con tu contraseña.');return;}
+    f.reset();msg('Solicitud enviada. Revisa tu correo (mira también en spam) y pulsa el enlace de confirmación. Después revisaremos tu ficha manualmente.',true);
+    return;
+  }
+  let {error}=await sb.from('perfiles').insert({id:yo.id,tipo:d.tipo,nombre:d.nombre,instrumento:d.instrumento,ciudad:d.ciudad,descripcion:d.descripcion,enlace:d.enlace});
+  if(!error){const r=await sb.from('telefonos').insert({user_id:yo.id,telefono:d.telefono});error=r.error;}
   if(error){msg('No se pudo guardar la ficha. Inténtalo de nuevo.');return;}
-  try{await fetch('https://formsubmit.co/ajax/cuerdavivamusica@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:'Nueva ficha pendiente de revisión - Cuerda Viva Música',Tipo:f.tipo.value,Nombre:f.nombre.value.trim(),Ciudad:f.ciudad.value.trim(),Aviso:'Entra en la web, Acceso y alta, Panel de administración para revisarla.'})});}catch(e){}
+  avisarAdmin(d);
   refrescar();msg('Ficha enviada. La revisaremos manualmente antes de publicarla.',true);
 });
 
