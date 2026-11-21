@@ -4,69 +4,89 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Cuerda Viva Música | Directorio de Músicos y Eventos de Cuerda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1115;--surface:#181b22;--alt:#202530;--border:#2c3342;--primary:#e09f3e;--primary-h:#f0b254;--text:#f3f4f6;--muted:#9ca3af;--ok:#10b981;--err:#ef4444;--warn:rgba(224,159,62,.12)}
+:root{--bg:#0a0607;--surface:#150d10;--alt:#1e1318;--border:#3a2429;--primary:#d4a94f;--primary-h:#f1d58a;--text:#f6efe6;--muted:#b9a99d;--ok:#4ade80;--err:#f87171;--warn:rgba(212,169,79,.1);--serif:'Cormorant Garamond','Playfair Display',Georgia,'Times New Roman',serif;--sans:'Montserrat',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-a{color:var(--primary);text-decoration:none}a:hover{text-decoration:underline}
-header{background:linear-gradient(135deg,#14171f,#1e222d);border-bottom:1px solid var(--border);padding:1.25rem 1.5rem;position:sticky;top:0;z-index:50}
-.nav{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem}
-.brand{font-size:1.35rem;font-weight:700;color:var(--primary)}.brand span{color:var(--text);font-weight:400}
-nav{display:flex;gap:1.25rem;flex-wrap:wrap}nav a{color:var(--text);font-size:.95rem;font-weight:500}nav a:hover{color:var(--primary);text-decoration:none}
-.hero{max-width:1100px;margin:2.5rem auto 1.5rem;padding:0 1.5rem;text-align:center}
-.hero h1{font-size:clamp(1.8rem,3.5vw,2.6rem);margin-bottom:.75rem;line-height:1.2}
-.hero p{color:var(--muted);max-width:720px;margin:0 auto 1.5rem;font-size:1.05rem}
-.badge{display:inline-block;background:var(--warn);color:var(--primary);border:1px solid rgba(224,159,62,.35);padding:.35rem .85rem;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:1rem}
-.container{max-width:1100px;margin:0 auto;padding:1.5rem}
-.section-title{font-size:1.5rem;margin-bottom:.4rem}.section-subtitle{color:var(--muted);margin-bottom:1.5rem;font-size:.95rem}
-.story-box,.form-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2rem;margin-bottom:2.5rem}
-.story-box p{color:var(--muted);font-size:.98rem;margin-bottom:1rem}.story-box strong{color:var(--text)}
-.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin:1.5rem 0}
-.pillar{background:var(--alt);border:1px solid var(--border);border-radius:10px;padding:1.2rem}
-.pillar h3{font-size:1.05rem;color:var(--primary);margin-bottom:.4rem}.pillar p{font-size:.9rem;margin:0!important}
-.cta{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:1.5rem}
-.grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-bottom:3rem}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.35rem}
-.card-tag{display:inline-block;font-size:.75rem;text-transform:uppercase;letter-spacing:.6px;background:var(--alt);color:var(--primary);padding:.2rem .6rem;border-radius:6px;margin-bottom:.6rem;font-weight:600}
-.card h3{font-size:1.15rem;margin-bottom:.35rem}.card p{color:var(--muted);font-size:.92rem;margin-bottom:.6rem}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:radial-gradient(ellipse at 50% 0,#1d0e13 0,#0a0607 62%) fixed;color:var(--text);line-height:1.65;font-size:15.5px}
+a{color:var(--primary);text-decoration:none}a:hover{color:var(--primary-h)}
+h1,h2,h3,h4,.brand{font-family:var(--serif)}
+small{font-size:.8em;color:var(--muted);font-weight:400}
+header{position:sticky;top:0;z-index:50;padding:.85rem 1.5rem;background:linear-gradient(#2c0a11,#14070a);border-bottom:1px solid rgba(212,169,79,.5);box-shadow:0 6px 24px rgba(0,0,0,.6)}
+.nav{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.8rem}
+.brand{font-size:1.6rem;font-weight:700;color:var(--primary);letter-spacing:.5px}.brand span{color:var(--text);font-weight:500;font-style:italic}
+nav{display:flex;gap:1.3rem;flex-wrap:wrap}nav a{color:var(--text);font-size:.74rem;letter-spacing:1.6px;text-transform:uppercase;font-weight:500}nav a:hover{color:var(--primary-h);text-decoration:none}
+.hero{position:relative;overflow:hidden;text-align:center;padding:5.5rem 1.5rem 6.5rem;background:radial-gradient(ellipse at 50% -5%,rgba(255,226,160,.26),transparent 58%),linear-gradient(#0d0608,#170a0e)}
+.hero::before{content:"";position:absolute;top:0;left:0;right:0;height:28px;z-index:3;background:linear-gradient(#7a1020,#3b0810);border-bottom:3px solid var(--primary);box-shadow:0 8px 18px rgba(0,0,0,.6)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:38px;z-index:3;background:linear-gradient(#2e180f,#110806);border-top:2px solid rgba(212,169,79,.55)}
+.curtain{position:absolute;top:0;bottom:0;width:clamp(30px,9vw,140px);z-index:1;background:repeating-linear-gradient(90deg,#4a0b14 0 14px,#7a1020 14px 30px,#38070f 30px 44px)}
+.curtain.l{left:0;box-shadow:inset -22px 0 34px rgba(0,0,0,.65),8px 0 22px rgba(0,0,0,.5)}.curtain.r{right:0;box-shadow:inset 22px 0 34px rgba(0,0,0,.65),-8px 0 22px rgba(0,0,0,.5)}
+.spot{position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(980px,92%);height:100%;z-index:0;clip-path:polygon(41% 0,59% 0,100% 100%,0 100%);background:linear-gradient(rgba(255,238,200,.2),rgba(255,238,200,.02) 85%)}
+.hero-in{position:relative;z-index:2;max-width:760px;margin:0 auto}
+.hero h1{font-size:clamp(2rem,4.6vw,3.4rem);font-weight:600;line-height:1.15;margin-bottom:1rem;background:linear-gradient(#fff3cf,#d4a94f 70%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#e3d6c8;max-width:640px;margin:0 auto 1.7rem;font-size:1.02rem}
+.badge{display:inline-block;color:var(--primary-h);border:1px solid rgba(212,169,79,.5);padding:.35rem 1rem;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:1.3rem;background:rgba(0,0,0,.35)}
+.notas{margin-top:1.8rem;letter-spacing:.9rem;color:rgba(241,213,138,.45);font-size:1.3rem}
+.container{max-width:1100px;margin:0 auto;padding:2.2rem 1.5rem 1.5rem}
+.section-title{font-size:2.1rem;font-weight:600;color:var(--primary-h);margin-bottom:.5rem}
+.section-title::after{content:"";display:block;width:70px;height:2px;margin-top:.4rem;background:linear-gradient(90deg,var(--primary),transparent)}
+#directorio .section-title,#directorio .section-subtitle{text-align:center}#directorio .section-title::after{margin-left:auto;margin-right:auto;background:linear-gradient(90deg,transparent,var(--primary),transparent)}
+.section-subtitle{color:var(--muted);margin-bottom:1.5rem;font-size:.92rem}
+.story-box,.form-box{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01)),var(--surface);border:1px solid rgba(212,169,79,.3);border-radius:3px;padding:2.2rem;margin-bottom:2.8rem;box-shadow:0 0 0 5px rgba(0,0,0,.35),0 0 0 6px rgba(212,169,79,.1),0 24px 55px rgba(0,0,0,.55)}
+.story-box p{color:#cdbfb2;font-size:.97rem;margin-bottom:1rem}.story-box strong{color:var(--text)}
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin:1.6rem 0}
+.pillar{background:var(--alt);border:1px solid var(--border);border-top:2px solid var(--primary);padding:1.3rem}
+.pillar h3{font-size:1.3rem;color:var(--primary-h);margin-bottom:.4rem}.pillar p{font-size:.88rem;margin:0!important}
+.cta{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem;margin-bottom:3rem}
+.card{position:relative;background:var(--surface);border:1px solid rgba(212,169,79,.28);border-radius:3px;padding:1.5rem;transition:transform .25s,box-shadow .25s}
+.card::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,transparent,var(--primary),transparent)}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(0,0,0,.55),0 0 22px rgba(212,169,79,.12)}
+.card-tag{display:inline-block;font-size:.66rem;text-transform:uppercase;letter-spacing:1.4px;color:var(--primary-h);border:1px solid rgba(212,169,79,.4);padding:.15rem .6rem;margin-bottom:.7rem;font-weight:600}
+.card h3{font-size:1.5rem;margin-bottom:.25rem;line-height:1.2}.card p{color:#c9bbad;font-size:.9rem;margin-bottom:.6rem}.stars{color:var(--primary-h);font-size:.95rem;margin-bottom:.4rem}
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-bottom:1.1rem}
 .fg{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
-label{font-size:.9rem;font-weight:600}
-input[type=text],input[type=email],input[type=password],input[type=tel],input[type=date],select,textarea{background:var(--alt);border:1px solid var(--border);border-radius:8px;padding:.7rem .85rem;color:var(--text);font-size:.95rem;width:100%}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary)}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.25rem;border-radius:8px;font-weight:600;font-size:.95rem;cursor:pointer;border:none}
-.btn-primary{background:var(--primary);color:#111318}.btn-primary:hover{background:var(--primary-h);text-decoration:none}
-.btn-secondary{background:#2b3242;color:var(--text)}.btn-secondary:hover{background:#374054;text-decoration:none}
-.btn-sm{padding:.4rem .8rem;font-size:.85rem}
+label{font-size:.82rem;font-weight:600;letter-spacing:.3px}
+input[type=text],input[type=email],input[type=password],input[type=tel],input[type=date],select,textarea{background:#110a0d;border:1px solid var(--border);border-radius:2px;padding:.72rem .85rem;color:var(--text);font-family:var(--sans);font-size:.94rem;width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(212,169,79,.15)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:.8rem 1.5rem;border-radius:2px;font-family:var(--sans);font-weight:600;font-size:.74rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:1px solid transparent;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,#f1d58a,#c99a3b 60%,#a97c24);color:#1a0d05;box-shadow:0 4px 18px rgba(212,169,79,.28)}.btn-primary:hover{filter:brightness(1.08);box-shadow:0 6px 24px rgba(212,169,79,.4);text-decoration:none;color:#1a0d05}
+.btn-secondary{background:transparent;border-color:rgba(212,169,79,.55);color:var(--primary-h)}.btn-secondary:hover{background:rgba(212,169,79,.12);text-decoration:none;color:var(--primary-h)}
+.btn:disabled{opacity:.55;cursor:not-allowed}.btn-sm{padding:.5rem 1rem;font-size:.68rem}
 .row{display:flex;flex-wrap:wrap;gap:.65rem}
-.notice{background:var(--warn);border-left:4px solid var(--primary);padding:1rem 1.15rem;border-radius:6px;font-size:.9rem;margin:1.25rem 0}
-.chk{display:flex;align-items:flex-start;gap:.65rem;margin:.85rem 0;font-size:.9rem}
+.notice{background:var(--warn);border-left:3px solid var(--primary);padding:1rem 1.15rem;font-size:.9rem;margin:1.1rem 0}
+.chk{display:flex;align-items:flex-start;gap:.65rem;margin:.85rem 0;font-size:.88rem}
 .chk input{margin-top:.25rem;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0}.chk label{font-weight:400}
 .status-msg{font-size:.9rem;margin:.5rem 0;font-weight:500}.status-ok{color:var(--ok)}.status-err{color:var(--err)}
-.ac{background:var(--alt);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:1rem;font-size:.92rem}
-.ac h4{color:var(--primary);margin-bottom:.4rem}.ac .row{margin-top:.7rem;align-items:center}
-footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5rem;margin-top:3rem;color:var(--muted);font-size:.88rem}
+.ac{background:var(--alt);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.1rem;margin-bottom:1rem;font-size:.9rem}
+.ac h4{color:var(--primary-h);font-size:1.25rem;margin-bottom:.4rem}.ac .row{margin-top:.7rem;align-items:center}
+footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4rem 1.5rem;margin-top:3rem;color:var(--muted);font-size:.86rem}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:1.25rem}
-.privbox{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.15rem 1.35rem;font-size:.84rem;line-height:1.55}.privbox strong{color:var(--text)}
+.privbox{background:var(--surface);border:1px solid var(--border);padding:1.15rem 1.35rem;font-size:.82rem;line-height:1.6}.privbox strong{color:var(--text)}
 .fb{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
-.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(6,2,3,.86);backdrop-filter:blur(3px);z-index:100;align-items:flex-start;justify-content:center;padding:1.2rem;overflow-y:auto}
 .modal-backdrop.open{display:flex}
-.modal-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:1.75rem}
-.modal-card h2{color:var(--primary);font-size:1.3rem;margin-bottom:.85rem}.modal-card h4{margin:1rem 0 .25rem;font-size:.95rem}
+.modal-card{background:linear-gradient(180deg,#1d1015,#120a0d);border:1px solid rgba(212,169,79,.5);box-shadow:0 0 0 5px rgba(0,0,0,.4),0 30px 70px rgba(0,0,0,.7);max-width:680px;width:100%;margin:auto;padding:1.9rem}
+#registro .modal-card{max-width:820px}
+.modal-card h2{color:var(--primary-h);font-size:1.7rem;margin-bottom:.85rem}.modal-card h3{color:var(--primary-h);font-size:1.4rem}.modal-card h4{margin:1rem 0 .25rem;font-size:1.05rem;color:var(--text)}
 .modal-card p{font-size:.88rem;color:var(--muted);margin-bottom:.5rem}
-#cvFirma{width:100%;background:#fff;border-radius:8px;touch-action:none;margin:.5rem 0}
+#cvFirma{width:100%;background:#fff;border-radius:2px;touch-action:none;margin:.5rem 0}
+@media(max-width:640px){.curtain{width:26px}.hero{padding:4.4rem 1rem 5.4rem}.nav{justify-content:center}.story-box,.form-box{padding:1.4rem}.modal-card{padding:1.2rem}}
 </style>
 </head>
 <body>
-<header><div class="nav"><div class="brand">Cuerda Viva <span>Música</span></div>
+<header><div class="nav"><div class="brand">♪ Cuerda Viva <span>Música</span></div>
 <nav><a href="#inicio">Inicio</a><a href="#directorio">Músicos y Eventos</a><a href="#registro">Acceso y alta</a><a href="#sugerencias">Sugerencias</a><a href="#contacto">Contacto</a><a href="#privacidad">Privacidad</a></nav></div></header>
 
-<section id="inicio" class="hero">
+<section id="inicio" class="hero"><div class="curtain l"></div><div class="curtain r"></div><div class="spot"></div><div class="hero-in">
 <div class="badge">Fichas revisadas manualmente · Contactos protegidos</div>
 <h1>El punto de encuentro para los músicos de cuerda que buscan su lugar en el escenario</h1>
 <p>Una plataforma independiente creada para dar visibilidad real, fiabilidad y oportunidades laborales a intérpretes de cuerda mayores de 18 años y organizadores de conciertos en directo.</p>
 <div class="cta"><button type="button" class="btn btn-primary" onclick="mostrarRegistro()">Acceder o registrarme</button><a href="#directorio" class="btn btn-secondary">Explorar directorio</a></div>
-</section>
+<div class="notas">♪ ♫ ♩ ♬ ♪</div>
+</div></section>
 
 <main class="container">
 <section class="story-box">
@@ -87,11 +107,11 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <div id="gridCards" class="grid-cards"><p class="section-subtitle">Cargando fichas...</p></div>
 </section>
 
-<section id="registro" class="form-box" style="display:none">
+<div id="registro" class="modal-backdrop" role="dialog" aria-modal="true"><div class="modal-card">
 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;margin-bottom:.5rem">
 <h2 class="section-title" style="margin:0">Acceso y alta</h2>
 <button type="button" class="btn btn-secondary btn-sm" onclick="ocultarRegistro()">Cerrar</button></div>
-<p class="section-subtitle">Ninguna ficha se publica sin revisión manual. Tu teléfono nunca es público.</p>
+<p class="section-subtitle">Ninguna ficha se publica sin revisión manual. Tus datos de contacto nunca son públicos.</p>
 <div id="msg" class="status-msg"></div>
 
 <div id="vAuth">
@@ -100,24 +120,21 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <div class="fg"><label for="aEmail">Correo electrónico</label><input type="email" id="aEmail" autocomplete="email" /></div>
 <div class="fg"><label for="aPass">Contraseña (mínimo 8 caracteres)</label><input type="password" id="aPass" minlength="8" autocomplete="current-password" /><label class="chk"><input type="checkbox" onchange="$('aPass').type=this.checked?'text':'password'" />Mostrar contraseña</label></div>
 </div>
-<div class="row"><button type="button" id="bEntrar" class="btn btn-primary" onclick="entrar()">Entrar</button><button type="button" class="btn btn-secondary" onclick="irRegistro()">Crear cuenta nueva</button></div>
-<p class="section-subtitle" style="margin-top:1rem">Para registrarte tendrás que rellenar tu ficha de músico o de evento. Recibirás un correo de confirmación y revisaremos tu ficha manualmente antes de publicarla.</p>
+<div class="row"><button type="button" id="bEntrar" class="btn btn-primary" onclick="entrar()">Entrar</button><button type="button" class="btn btn-secondary" onclick="irRegistro()">Crear cuenta</button></div>
+<p class="section-subtitle" style="margin-top:1rem">Escribe tu correo y una contraseña y pulsa Crear cuenta: en el siguiente paso elegirás si eres músico u organizador y completarás tu ficha. Recibirás un correo de confirmación y revisaremos tu ficha manualmente antes de publicarla.</p>
 </div>
 
 <div id="vPerfil" style="display:none">
+<p id="regInfo" class="section-subtitle" style="display:none">Paso 2 de 2 · Cuenta para <strong id="regDe"></strong>. <a href="#" onclick="event.preventDefault();refrescar()">Cambiar correo</a></p>
+<p id="notaRech" class="notice" style="display:none"></p>
 <form id="fPerfil">
-<div id="camposCuenta" style="display:none"><div class="form-grid">
-<div class="fg"><label for="rEmail">Correo electrónico *</label><input type="email" id="rEmail" autocomplete="email" /></div>
-<div class="fg"><label for="rPass">Contraseña (mínimo 8 caracteres) *</label><input type="password" id="rPass" minlength="8" autocomplete="new-password" /><label class="chk"><input type="checkbox" onchange="$('rPass').type=this.checked?'text':'password'" />Mostrar contraseña</label></div>
-</div></div>
-<div class="form-grid">
-<div class="fg"><label>Tipo de solicitud *</label><select name="tipo" required onchange="camposTipo()"><option value="musico">Músico / Agrupación de cuerda</option><option value="organizador">Organizador / Evento o ciclo</option></select></div>
-<div class="fg"><label>Instrumento o formación (obligatorio para músicos)</label>
+<div class="fg"><label>¿Qué eres? *</label><select name="tipo" required onchange="camposTipo()"><option value="">Selecciona...</option><option value="musico">Músico / Agrupación de cuerda</option><option value="organizador">Organizador (entidad, sala, asociación, particular...)</option></select></div>
+<div id="restoFicha" style="display:none">
+<div class="fg" id="blInstr"><label>Instrumento o formación *</label>
 <select name="instrumento" required><option value="">Selecciona...</option>
 <optgroup label="Cuerda frotada"><option>Violín</option><option>Viola</option><option>Violonchelo</option><option>Contrabajo</option><option>Viola da gamba / Zanfona</option></optgroup>
 <optgroup label="Cuerda pulsada"><option>Guitarra española / clásica</option><option>Guitarra flamenca</option><option>Guitarra acústica</option><option>Guitarra eléctrica</option><option>Bajo eléctrico</option><option>Arpa</option><option>Bandurria / Laúd / Mandolina</option><option>Ukelele / Timple / Charango</option><option>Banjo / Bouzouki / Sitar</option></optgroup>
 <optgroup label="Agrupaciones y eventos"><option>Dúo / Trío / Cuarteto de cuerda</option><option>Orquesta / Rondalla / Ensemble de cuerda</option><option>Evento exclusivo de instrumentos de cuerda</option></optgroup></select></div>
-</div>
 <div id="blOrg" style="display:none">
 <div class="fg"><label>Tipo de organizador *</label><select name="subtipo" onchange="camposTipo()"><option value="">Selecciona...</option><option value="entidad">Profesional o entidad (asociación, sala, orquesta, wedding planner...)</option><option value="particular">Particular (boda, cumpleaños, comunión...)</option></select></div>
 <div id="blEntidad" style="display:none"><div class="fg"><label>Tu cargo en la entidad *</label><input type="text" name="cargo" maxlength="80" /></div></div>
@@ -139,12 +156,15 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <div class="chk"><input type="checkbox" id="c3" /><label for="c3">Autorizo a Cuerda Viva Música a seguir esta cuenta para comprobar que es mía. Tú también puedes seguirnos en <span class="igp"></span>.</label></div></div>
 <div class="chk"><input type="checkbox" id="c1" required /><label for="c1">Confirmo que soy mayor de 18 años y que Cuerda Viva Música solo pone en contacto a las partes, sin ser parte de ningún acuerdo.</label></div>
 <div class="chk"><input type="checkbox" id="c2" required /><label for="c2">He leído y acepto la <a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a>.</label></div>
-<div class="row"><button type="submit" id="bPerfil" class="btn btn-primary">Enviar ficha para revisión</button><button type="button" id="bYaCuenta" class="btn btn-secondary" style="display:none" onclick="refrescar()">Ya tengo cuenta</button></div>
+</div>
+<div class="row"><button type="submit" id="bPerfil" class="btn btn-primary">Enviar ficha para revisión</button><button type="button" id="bYaCuenta" class="btn btn-secondary" style="display:none" onclick="refrescar()">Volver</button></div>
 </form>
 </div>
 
 <div id="vPanel" style="display:none">
 <p id="estadoFicha" class="notice"></p>
+<div id="accionesPerfil" class="row" style="margin-bottom:1rem"></div>
+<div id="pendVal"></div>
 <p class="notice">Consejos de seguridad: habla primero por el chat de la web, no des tu dirección ni datos personales hasta fiarte, quedad en lugares públicos o en el recinto, no pagues nunca por tocar y, si algo no te cuadra, pulsa Reportar.</p>
 <h3 style="margin-bottom:.75rem">Mis acuerdos</h3>
 <div id="listaAcuerdos"></div>
@@ -155,7 +175,41 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <h3 style="margin-bottom:.5rem">Panel de administración</h3>
 <p class="section-subtitle">Abre el enlace de cada ficha, comprueba que es real y decide. Al aprobarla se publica en el directorio.</p>
 <div class="row" style="margin-bottom:1rem"><select id="admFiltro" onchange="cargarAdmin()" style="max-width:240px"><option value="pendiente">Pendientes</option><option value="aprobado">Aprobadas</option><option value="rechazado">Rechazadas</option><option value="suspendido">Suspendidas</option><option value="reportes">Reportes</option></select><button type="button" class="btn btn-secondary btn-sm" onclick="salirAdmin()">Volver</button></div>
+<div class="row" style="margin-bottom:1rem"><input type="email" id="admResetEmail" placeholder="Correo de quien no recuerda su clave" style="max-width:340px" /><button type="button" class="btn btn-secondary btn-sm" onclick="resetClave()">Generar contraseña temporal</button></div>
 <div id="admLista"></div>
+</div>
+
+<div id="vEditar" style="display:none">
+<h3 style="margin-bottom:.5rem">Editar mi ficha</h3>
+<p class="section-subtitle">Los cambios se publican al guardar. Si cambias el enlace de comprobación, perderás la insignia hasta que se revise de nuevo.</p>
+<form id="fEditar">
+<div class="form-grid"><div class="fg"><label>Ciudad / Provincia *</label><input type="text" name="ciudad" maxlength="60" required /></div>
+<div class="fg" id="edMus"><label>Instrumento o formación *</label><select name="instrumento" id="edInstrSel"></select></div></div>
+<div class="fg"><label>Descripción *</label><textarea name="descripcion" rows="3" maxlength="600" required></textarea></div>
+<div id="edMus2"><div class="fg"><label>Estudios y formación (conservatorio, grado, profesores...)</label><textarea name="estudios" rows="2" maxlength="400"></textarea></div>
+<div class="fg"><label>Experiencia (orquestas, bodas, conciertos...)</label><textarea name="experiencia" rows="3" maxlength="600"></textarea></div></div>
+<div class="fg"><label>Enlace para comprobar tu ficha *</label><input type="text" name="enlace" maxlength="300" required /></div>
+<div class="fg"><label>Tu Instagram (opcional)</label><input type="text" name="instagram" maxlength="40" placeholder="@tucuenta" /></div>
+<div class="row"><button type="submit" class="btn btn-primary">Guardar cambios</button><button type="button" class="btn btn-secondary" onclick="refrescar()">Cancelar</button></div>
+</form>
+</div>
+
+<div id="vEvento" style="display:none">
+<h3 style="margin-bottom:.5rem">Añadir otro evento</h3>
+<p class="section-subtitle">Un evento nuevo se revisa de nuevo antes de poder enviar solicitudes a los músicos. Necesitas haber valorado los eventos que ya han terminado.</p>
+<form id="fEvento">
+<div class="form-grid"><div class="fg"><label>Tipo de evento *</label><select name="evento_tipo" required><option value="">Selecciona...</option><option>Boda</option><option>Cumpleaños</option><option>Comunión o bautizo</option><option>Evento de empresa</option><option>Otro</option></select></div>
+<div class="fg"><label>Fecha del evento *</label><input type="date" name="evento_fecha" required /></div></div>
+<div class="fg"><label>Lugar concreto (recinto, finca o iglesia, y municipio) *</label><input type="text" name="evento_lugar" maxlength="150" required /></div>
+<div class="fg"><label>Referencia que pueda confirmar el evento *</label><input type="text" name="referencia" maxlength="300" placeholder="Nombre y web o teléfono" required /></div>
+<div class="row"><button type="submit" class="btn btn-primary">Enviar evento</button><button type="button" class="btn btn-secondary" onclick="refrescar()">Cancelar</button></div>
+</form>
+</div>
+
+<div id="vClave" style="display:none">
+<h3 style="margin-bottom:.5rem">Elige tu nueva contraseña</h3>
+<p class="section-subtitle">Has entrado con una contraseña temporal. Elige una nueva para continuar.</p>
+<form id="fClave"><div class="fg"><label for="nClave">Nueva contraseña (mínimo 8 caracteres)</label><input type="password" id="nClave" minlength="8" autocomplete="new-password" required /><label class="chk"><input type="checkbox" onchange="$('nClave').type=this.checked?'text':'password'" />Mostrar contraseña</label></div><button type="submit" class="btn btn-primary">Guardar contraseña</button></form>
 </div>
 
 <div id="vSolicitud" style="display:none">
@@ -174,7 +228,7 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <div class="row"><button type="submit" class="btn btn-primary">Enviar solicitud</button><button type="button" class="btn btn-secondary" onclick="refrescar()">Volver</button></div>
 </form>
 </div>
-</section>
+</div></div>
 
 <section id="sugerencias" class="form-box">
 <h2 class="section-title">Buzón de Sugerencias y Mejoras</h2>
@@ -220,9 +274,9 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <div id="privacyModal" class="modal-backdrop" role="dialog" aria-modal="true"><div class="modal-card">
 <h2>Política de Privacidad — Cuerda Viva Música</h2>
 <h4>1. Responsable</h4><p>Cuerda Viva Música, correo de contacto <strong>cuerdavivamusica@gmail.com</strong>.</p>
-<h4>2. Datos y finalidad</h4><p>Tratamos los datos que facilitas al crear tu cuenta y tu ficha: correo, nombre artístico o del evento, ciudad, descripción, enlace de comprobación y, según tu caso, cargo, datos del evento (tipo, fecha, lugar y referencia) y tu cuenta de Instagram si decides facilitarla, además de las condiciones y firmas de los acuerdos y los mensajes del chat. La finalidad es revisar y publicar tu ficha, y permitir el contacto entre músicos y organizadores. No solicitamos DNI, selfie ni teléfono.</p>
+<h4>2. Datos y finalidad</h4><p>Tratamos los datos que facilitas al crear tu cuenta y tu ficha: correo, nombre artístico o del evento, ciudad, descripción, enlace de comprobación y, según tu caso, cargo, datos del evento (tipo, fecha, lugar y referencia) y tu cuenta de Instagram, estudios y experiencia si decides facilitarlos, además de las condiciones y firmas de los acuerdos los mensajes del chat y las valoraciones entre usuarios. La finalidad es revisar y publicar tu ficha, y permitir el contacto entre músicos y organizadores. No solicitamos DNI, selfie ni teléfono.</p>
 <h4>3. Base jurídica</h4><p>Tu consentimiento expreso (art. 6.1.a RGPD), otorgado al marcar las casillas antes de enviar cada formulario.</p>
-<h4>4. Visibilidad de los datos</h4><p>Solo son públicos el nombre artístico o del evento, el instrumento, la ciudad y la descripción de las fichas aprobadas; las fichas de organizadores particulares no se publican. El correo, el enlace de comprobación, el Instagram y los datos del evento los ve el equipo administrador para revisar la ficha. Los mensajes del chat solo los ven las dos partes de una solicitud aceptada y, si hay un reporte, el equipo administrador.</p>
+<h4>4. Visibilidad de los datos</h4><p>Solo son públicos el nombre artístico o del evento, el instrumento, la ciudad, la descripción, los estudios y la experiencia (si los añades) y la valoración media de las fichas aprobadas; las fichas de organizadores particulares no se publican. El correo, el enlace de comprobación, el Instagram y los datos del evento los ve el equipo administrador para revisar la ficha. Los mensajes del chat solo los ven las dos partes de una solicitud aceptada y, si hay un reporte, el equipo administrador.</p>
 <h4>5. Conservación</h4><p>Conservamos tus datos mientras mantengas tu cuenta. Puedes pedir la baja y la supresión en cualquier momento por correo.</p>
 <h4>6. Destinatarios</h4><p>Supabase actúa como encargado del tratamiento y aloja los datos en la Unión Europea. Los formularios de sugerencias y contacto, y el aviso interno de nueva ficha (tipo, nombre y ciudad), se envían mediante FormSubmit al correo del responsable. No vendemos datos.</p>
 <h4>7. Derechos</h4><p>Puedes retirar tu consentimiento y ejercer los derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a <strong>cuerdavivamusica@gmail.com</strong>, o reclamar ante la Agencia Española de Protección de Datos (www.aepd.es).</p>
@@ -252,22 +306,25 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 const SB_URL='https://gnptyanshmecpsrrosky.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImducHR5YW5zaG1lY3BzcnJvc2t5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyMDgyOTEsImV4cCI6MjExMDc4NDI5MX0.3SgJX2QW4WuZ-n9VSGYF_vDz0CAONexYcQ4_zFhqHw8';
 const IG_PLATAFORMA='@cuerdavivamusica';
+const MSG_CONTACTO='Tu solicitud ha sido rechazada en los tres intentos. Contacta con cuerdavivamusica@gmail.com para solicitar su aprobación.';
+const MSG_VAL='Antes debes valorar los eventos que ya han terminado (mira «Valoraciones pendientes» en tu panel).';
+const MSG_EXISTE='Ese correo ya existe. Entra con tu usuario y clave. Si no la recuerdas, escribe a cuerdavivamusica@gmail.com y te enviaremos una contraseña aleatoria para que después elijas la tuya.';
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let PF={},chatId=null,chatT=null,modoAdmin=false,esAdmin=false,yo=null,miPerfil=null,destino=null,firmaId=null,AC={},NM={};
+let regEmail='',regPass='',PF={},chatId=null,chatT=null,modoAdmin=false,esAdmin=false,yo=null,miPerfil=null,destino=null,firmaId=null,AC={},NM={};
 
 function msg(t,ok){const m=$('msg');m.textContent=t||'';m.className='status-msg '+(ok?'status-ok':'status-err');}
-function vista(v){['vAuth','vPerfil','vPanel','vSolicitud','vAdmin'].forEach(x=>$(x).style.display=x===v?'block':'none');}
-function mostrarRegistro(){modoAdmin=false;const s=$('registro');s.style.display='block';s.scrollIntoView({behavior:'smooth'});refrescar();}
-function ocultarRegistro(){modoAdmin=false;$('registro').style.display='none';}
+function vista(v){['vAuth','vPerfil','vPanel','vSolicitud','vAdmin','vClave','vEditar','vEvento'].forEach(x=>$(x).style.display=x===v?'block':'none');}
+function mostrarRegistro(){modoAdmin=false;$('registro').classList.add('open');refrescar();}
+function ocultarRegistro(){modoAdmin=false;$('registro').classList.remove('open');}
 document.querySelectorAll('a[href="#registro"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();mostrarRegistro();}));
 
 async function refrescar(){
   msg('');
   const {data:{session}}=await sb.auth.getSession();
   yo=session?session.user:null;miPerfil=null;esAdmin=false;
-  if(yo){const {data}=await sb.from('perfiles').select('id,tipo,nombre,ciudad,estado').eq('id',yo.id).maybeSingle();miPerfil=data;}
+  if(yo){const {data}=await sb.from('perfiles').select('id,tipo,subtipo,nombre,ciudad,estado,intentos,cambiar_clave').eq('id',yo.id).maybeSingle();miPerfil=data;}
   if(miPerfil){const r=await sb.rpc('avisar_ficha');if(r.data===true)avisarAdmin(miPerfil);}
   if(yo){const r=await sb.rpc('es_admin');esAdmin=r.data===true;}
   $('notaAdmin').style.display=(modoAdmin&&!yo)?'block':'none';
@@ -276,7 +333,10 @@ async function refrescar(){
     modoAdmin=false;msg('Esta cuenta no tiene permisos de administración.');
   }
   if(yo)modoCuenta(false);
-  vista(!yo?'vAuth':(!miPerfil&&!esAdmin)?'vPerfil':'vPanel');
+  const rech=!!miPerfil&&miPerfil.estado==='rechazado'&&(miPerfil.intentos||1)<3;
+  $('notaRech').style.display=rech?'block':'none';
+  if(rech)$('notaRech').textContent='Tu solicitud fue rechazada. Corrige los datos y vuelve a enviarla (intento '+((miPerfil.intentos||1)+1)+' de 3).';
+  vista(!yo?'vAuth':(miPerfil&&miPerfil.cambiar_clave)?'vClave':(rech||(!miPerfil&&!esAdmin))?'vPerfil':'vPanel');
   if(miPerfil||esAdmin)await cargarPanel();
   cargarDirectorio();
 }
@@ -286,6 +346,7 @@ function traducir(e){
   if(c==='over_email_send_rate_limit'||m.includes('security purposes'))return 'Has pedido el correo hace muy poco. Espera un minuto y vuelve a intentarlo.';
   if(c==='email_not_confirmed'||m.includes('not confirmed'))return 'Aún no has confirmado tu correo. Busca el mensaje de confirmación (mira también en spam) y pulsa el enlace.';
   if(c==='invalid_credentials'||m.includes('invalid login'))return 'Correo o contraseña incorrectos.';
+  if(c==='same_password'||m.includes('different from the old'))return 'La nueva contraseña debe ser distinta de la temporal.';
   if(c==='weak_password'||m.includes('password'))return 'La contraseña es demasiado débil. Usa al menos 8 caracteres.';
   if(m.includes('database error'))return 'Revisa que todos los campos de la ficha estén rellenos.';
   if(m.includes('not authorized'))return 'No se pudo enviar el correo de confirmación a esa dirección. Escríbenos desde el formulario de contacto.';
@@ -303,23 +364,28 @@ async function entrar(){
   if(error)msg(traducir(error));else refrescar();
 }
 function modoCuenta(reg){
-  $('camposCuenta').style.display=reg?'block':'none';$('rEmail').required=reg;$('rPass').required=reg;
+  $('regInfo').style.display=reg?'block':'none';
   $('bPerfil').textContent=reg?'Crear cuenta y enviar ficha':'Enviar ficha para revisión';
   $('bYaCuenta').style.display=reg?'inline-flex':'none';
 }
 function camposTipo(){
   const f=$('fPerfil'),org=f.tipo.value==='organizador',sub=f.subtipo.value;
+  $('restoFicha').style.display=f.tipo.value?'block':'none';$('blInstr').style.display=org?'none':'block';
   $('blOrg').style.display=org?'block':'none';
   $('blEntidad').style.display=(org&&sub==='entidad')?'block':'none';
   $('blPart').style.display=(org&&sub==='particular')?'block':'none';
-  f.instrumento.required=!org;f.subtipo.required=org;f.cargo.required=org&&sub==='entidad';
+  f.instrumento.required=f.tipo.value==='musico';f.subtipo.required=org;f.cargo.required=org&&sub==='entidad';
   ['evento_tipo','evento_fecha','evento_lugar','referencia'].forEach(n=>f[n].required=org&&sub==='particular');
 }
-function irRegistro(){msg('');modoCuenta(true);vista('vPerfil');}
+function irRegistro(){
+  const email=$('aEmail').value.trim(),pw=$('aPass').value;
+  if(!/^\S+@\S+\.\S+$/.test(email)||pw.length<8){msg('Escribe tu correo y una contraseña de al menos 8 caracteres para crear la cuenta.');return;}
+  regEmail=email;regPass=pw;msg('');$('fPerfil').reset();camposTipo();$('notaRech').style.display='none';$('regDe').textContent=email;modoCuenta(true);vista('vPerfil');
+}
 async function avisarAdmin(p){
   try{await fetch('https://formsubmit.co/ajax/cuerdavivamusica@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:'Nueva ficha pendiente de revisión - Cuerda Viva Música',Tipo:p.tipo,Nombre:p.nombre,Ciudad:p.ciudad,Aviso:'Entra en la web, Acceso y alta, Panel de administración para revisarla.'})});}catch(e){}
 }
-function entrarAdmin(e){e.preventDefault();modoAdmin=true;const s=$('registro');s.style.display='block';s.scrollIntoView({behavior:'smooth'});refrescar();}
+function entrarAdmin(e){e.preventDefault();modoAdmin=true;$('registro').classList.add('open');refrescar();}
 function salirAdmin(){modoAdmin=false;refrescar();}
 async function cargarAdmin(){
   const est=$('admFiltro').value,L=$('admLista');
@@ -374,8 +440,35 @@ async function reportar(acId,otroId){
   msg('Reporte enviado. Lo revisaremos lo antes posible.',true);
   try{fetch('https://formsubmit.co/ajax/cuerdavivamusica@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:'NUEVO REPORTE - Cuerda Viva Música',Aviso:'Hay un reporte nuevo. Revísalo en Administración, Reportes.'})});}catch(e){}
 }
+async function abrirEditar(){
+  const {data:fi}=await sb.rpc('mi_ficha');if(!fi){msg('No se pudo cargar tu ficha.');return;}
+  const f=$('fEditar'),mus=fi.tipo==='musico';
+  f.ciudad.value=fi.ciudad||'';f.descripcion.value=fi.descripcion||'';f.enlace.value=fi.enlace||'';f.instagram.value=fi.instagram||'';
+  f.instrumento.value=fi.instrumento||'';f.estudios.value=fi.estudios||'';f.experiencia.value=fi.experiencia||'';
+  $('edMus').style.display=mus?'flex':'none';$('edMus2').style.display=mus?'block':'none';f.instrumento.required=mus;
+  msg('');vista('vEditar');
+}
+$('fEditar').addEventListener('submit',async e=>{
+  e.preventDefault();const f=e.target,g=n=>f[n].value.trim();
+  const {error}=await sb.rpc('actualizar_ficha',{p:{ciudad:g('ciudad'),descripcion:g('descripcion'),enlace:g('enlace'),instagram:g('instagram'),instrumento:f.instrumento.value,estudios:g('estudios'),experiencia:g('experiencia')}});
+  await refrescar();msg(error?'No se pudieron guardar los cambios.':'Cambios guardados.',!error);
+});
+function abrirEvento(){msg('');$('fEvento').reset();vista('vEvento');}
+$('fEvento').addEventListener('submit',async e=>{
+  e.preventDefault();const f=e.target;
+  const {error}=await sb.rpc('nuevo_evento',{p:{evento_tipo:f.evento_tipo.value,evento_fecha:f.evento_fecha.value,evento_lugar:f.evento_lugar.value.trim(),referencia:f.referencia.value.trim()}});
+  if(error){msg(String(error.message).includes('valoraciones_pendientes')?MSG_VAL:'No se pudo añadir el evento.');return;}
+  avisarAdmin({tipo:'Nuevo evento de particular',nombre:miPerfil.nombre,ciudad:miPerfil.ciudad});
+  f.reset();await refrescar();msg('Evento enviado. Lo revisaremos y podrás enviar solicitudes en cuanto lo aprobemos.',true);
+});
+async function valorar(acId,destId){
+  const pt=parseInt($('vp'+acId).value,10),c=$('vc'+acId).value.trim()||null;
+  const {error}=await sb.from('valoraciones').insert({acuerdo_id:acId,autor_id:yo.id,destino_id:destId,puntuacion:pt,comentario:c});
+  if(error){msg('No se pudo enviar la valoración.');return;}
+  await refrescar();msg('Gracias por tu valoración.',true);
+}
 async function salir(){await sb.auth.signOut();refrescar();}
-sb.auth.onAuthStateChange(()=>{if($('registro').style.display==='block')refrescar();});
+sb.auth.onAuthStateChange(()=>{if($('registro').classList.contains('open'))refrescar();});
 
 $('fPerfil').addEventListener('submit',async e=>{
   e.preventDefault();const f=e.target;
@@ -383,49 +476,87 @@ $('fPerfil').addEventListener('submit',async e=>{
   const d={tipo:f.tipo.value,subtipo:org?sub:null,nombre:v('nombre'),instrumento:f.instrumento.value||null,ciudad:v('ciudad'),descripcion:v('descripcion'),enlace:v('enlace'),cargo:ent?v('cargo'):null,evento_tipo:par?v('evento_tipo'):null,evento_fecha:par?v('evento_fecha'):null,evento_lugar:par?v('evento_lugar'):null,referencia:par?v('referencia'):null,instagram:$('c3').checked?v('instagram'):null};
   if(!yo){
     const b=$('bPerfil');if(b.disabled)return;esperar(b,60,'Crear cuenta y enviar ficha');
-    const {data,error}=await sb.auth.signUp({email:$('rEmail').value.trim(),password:$('rPass').value,options:{emailRedirectTo:location.origin,data:d}});
+    const email=regEmail,password=regPass;
+    const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin,data:d}});
     if(error){msg(traducir(error));return;}
-    if(data.user&&data.user.identities&&!data.user.identities.length){msg('Ese correo ya tiene una cuenta. Pulsa "Ya tengo cuenta" y entra con tu contraseña.');return;}
-    f.reset();camposTipo();msg('Solicitud enviada. Revisa tu correo (mira también en spam) y pulsa el enlace de confirmación. Después revisaremos tu ficha manualmente.',true);
+    if(data.user&&data.user.identities&&!data.user.identities.length){await correoExistente(email,password,d);return;}
+    f.reset();camposTipo();regPass='';vista('vAuth');msg('Solicitud enviada. Revisa tu correo (mira también en spam) y pulsa el enlace de confirmación. Después revisaremos tu ficha manualmente.',true);
     return;
   }
+  if(miPerfil&&miPerfil.estado==='rechazado'){await reenviar(d);return;}
   const {error}=await sb.from('perfiles').insert({id:yo.id,...d});
   if(error){msg('No se pudo guardar la ficha. Inténtalo de nuevo.');return;}
   avisarAdmin(d);
   refrescar();msg('Ficha enviada. La revisaremos manualmente antes de publicarla.',true);
 });
 
+async function reenviar(d){
+  const {data,error}=await sb.rpc('reenviar_ficha',{p:d});
+  await refrescar();
+  if(error){msg(String(error.message).includes('sin_intentos')?MSG_CONTACTO:'No se pudo reenviar la solicitud. Revisa los datos e inténtalo de nuevo.');return;}
+  avisarAdmin(d);msg('Solicitud reenviada: es tu intento '+data+' de 3. La revisaremos manualmente.',true);
+}
+async function correoExistente(email,password,d){
+  const {error}=await sb.auth.signInWithPassword({email,password});
+  if(error){
+    if((error.code||'')==='email_not_confirmed'||String(error.message).toLowerCase().includes('not confirmed')){msg('Ese correo ya se registró pero falta confirmarlo. Busca el mensaje de confirmación (mira también en spam) y pulsa el enlace.');return;}
+    $('aEmail').value=email;vista('vAuth');msg(MSG_EXISTE);return;
+  }
+  const {data:{session}}=await sb.auth.getSession();yo=session?session.user:null;
+  const {data:p}=yo?await sb.from('perfiles').select('id,estado,intentos').eq('id',yo.id).maybeSingle():{data:null};
+  if(p&&p.estado==='rechazado'){miPerfil=p;await reenviar(d);return;}
+  await sb.auth.signOut();yo=null;miPerfil=null;
+  $('aEmail').value=email;vista('vAuth');msg(MSG_EXISTE);
+}
+$('fClave').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const {error}=await sb.auth.updateUser({password:$('nClave').value});
+  if(error){msg(traducir(error));return;}
+  await sb.rpc('clave_cambiada');$('nClave').value='';await refrescar();msg('Contraseña cambiada correctamente.',true);
+});
+async function resetClave(){
+  const em=$('admResetEmail').value.trim();if(!em)return;
+  const {data,error}=await sb.rpc('admin_reset_password',{p_email:em});
+  if(error){msg(String(error.message).includes('correo_no_encontrado')?'No existe ninguna cuenta con ese correo.':'No se pudo generar la contraseña.');return;}
+  $('admResetEmail').value='';
+  alert('Contraseña temporal para '+em+':\n\n'+data+'\n\nEnvíasela por correo desde cuerdavivamusica@gmail.com. Al entrar tendrá que elegir una nueva.');
+}
 async function cargarDirectorio(){
   const g=$('gridCards');
-  const {data,error}=await sb.from('perfiles').select('id,tipo,nombre,instrumento,ciudad,descripcion,verificado').eq('estado','aprobado').order('creado',{ascending:false});
+  const {data,error}=await sb.from('perfiles').select('id,tipo,nombre,instrumento,ciudad,descripcion,estudios,experiencia,verificado').eq('estado','aprobado').order('creado',{ascending:false});
   if(error||!data||!data.length){g.innerHTML='<p class="section-subtitle">Todavía no hay fichas publicadas. ¡Sé el primero en registrarte!</p>';return;}
+  const {data:md}=await sb.rpc('medias',{p_ids:data.map(p=>p.id)});const M={};(md||[]).forEach(m=>M[m.user_id]=m);
   const puede=miPerfil&&miPerfil.tipo==='organizador'&&miPerfil.estado==='aprobado';
-  g.innerHTML=data.map(p=>`<article class="card"><span class="card-tag">${p.tipo==='musico'?'Músico':'Evento'} · ${esc(p.instrumento||'Cuerda')}${p.verificado?' · ✓ Comprobado':''}</span><h3>${esc(p.nombre)} (${esc(p.ciudad)})</h3><p>${esc(p.descripcion)}</p>${puede&&p.tipo==='musico'?`<button class="btn btn-primary btn-sm" onclick="solicitar('${p.id}','${esc(p.nombre).replace(/'/g,'')}')">Solicitar contacto</button>`:''}</article>`).join('');
+  g.innerHTML=data.map(p=>{const m=M[p.id];return `<article class="card"><span class="card-tag">${p.tipo==='musico'?'Músico':'Evento'} · ${esc(p.instrumento||'Cuerda')}${p.verificado?' · ✓ Comprobado':''}</span><h3>${esc(p.nombre)} <small>(${esc(p.ciudad)})</small></h3>${m?`<div class="stars">★ ${m.media} <small>(${m.total})</small></div>`:''}<p>${esc(p.descripcion)}</p>${p.estudios?`<p><strong>Estudios:</strong> ${esc(p.estudios)}</p>`:''}${p.experiencia?`<p><strong>Experiencia:</strong> ${esc(p.experiencia)}</p>`:''}${puede&&p.tipo==='musico'?`<button class="btn btn-primary btn-sm" onclick="solicitar('${p.id}','${esc(p.nombre).replace(/'/g,'')}')">Solicitar contacto</button>`:''}</article>`;}).join('');
 }
 
 function solicitar(id,nombre){destino=id;$('solDest').textContent=nombre;mostrarRegistro2();}
-function mostrarRegistro2(){const s=$('registro');s.style.display='block';s.scrollIntoView({behavior:'smooth'});vista('vSolicitud');}
+function mostrarRegistro2(){$('registro').classList.add('open');vista('vSolicitud');}
 $('fSol').addEventListener('submit',async e=>{
   e.preventDefault();const f=e.target;
   const {error}=await sb.from('acuerdos').insert({organizador_id:yo.id,musico_id:destino,fecha:f.fecha.value,lugar:f.lugar.value.trim(),tarifa:f.tarifa.value.trim(),pago:f.pago.value.trim(),cancelacion:f.cancelacion.value.trim()});
-  if(error){msg(String(error.message).includes('limite_solicitudes')?'Has alcanzado el límite de solicitudes por ahora. Podrás enviar más cuando te respondan o pasen 24 horas.':'No se pudo enviar la solicitud. Comprueba que tu ficha está aprobada.');return;}
+  if(error){msg(String(error.message).includes('valoraciones_pendientes')?MSG_VAL:String(error.message).includes('limite_solicitudes')?'Has alcanzado el límite de solicitudes por ahora. Podrás enviar más cuando te respondan o pasen 24 horas.':'No se pudo enviar la solicitud. Comprueba que tu ficha está aprobada.');return;}
   f.reset();await refrescar();msg('Solicitud enviada. El músico la verá en su panel.',true);
 });
 
 async function cargarPanel(){
   if(!miPerfil){$('estadoFicha').textContent='Sesión iniciada. Para gestionar fichas, usa el enlace «Administración» al pie de la página.';$('listaAcuerdos').innerHTML='';return;}
-  $('estadoFicha').innerHTML='Tu ficha <strong>'+esc(miPerfil.nombre)+'</strong>: <strong>'+esc(miPerfil.estado)+'</strong>'+(miPerfil.estado==='aprobado'?'.':'. Está pendiente de revisión manual; hasta entonces no se publica ni puedes usar acuerdos.');
+  {const E=miPerfil.estado;$('estadoFicha').innerHTML='Tu ficha <strong>'+esc(miPerfil.nombre)+'</strong>: <strong>'+esc(E)+'</strong>'+(E==='aprobado'?'.':E==='rechazado'?'. '+MSG_CONTACTO:E==='suspendido'?'. Tu cuenta está suspendida. Contacta con cuerdavivamusica@gmail.com.':'. Está pendiente de revisión manual; hasta entonces no se publica ni puedes usar acuerdos.');}
   if(miPerfil.estado==='pendiente'){const {data:c}=await sb.rpc('mi_codigo');if(c)$('estadoFicha').innerHTML+='<br>Para acelerar la revisión, pon este código en la bio de tu Instagram o en tu web (o envíalo por mensaje directo a '+esc(IG_PLATAFORMA)+') y no lo borres hasta que te aprobemos: <strong>'+esc(c)+'</strong>';}
+  {const part=miPerfil.tipo==='organizador'&&miPerfil.subtipo==='particular',ed=['pendiente','aprobado'].includes(miPerfil.estado);
+  $('accionesPerfil').innerHTML=(ed?'<button class="btn btn-secondary btn-sm" onclick="abrirEditar()">Editar mi ficha</button>':'')+(part&&miPerfil.estado==='aprobado'?'<button class="btn btn-primary btn-sm" onclick="abrirEvento()">Añadir otro evento</button>':'');}
+  const {data:pv}=await sb.rpc('pendientes_valoracion');
+  $('pendVal').innerHTML=(pv&&pv.length)?'<p class="notice">Valoraciones pendientes: valora los eventos terminados para poder crear o aceptar eventos nuevos.</p>'+pv.map(x=>`<div class="ac"><h4>Valora a ${esc(x.destino_nombre)}</h4>Evento del ${esc(x.fecha)} en ${esc(x.lugar)}<div class="row"><select id="vp${x.acuerdo_id}" style="max-width:200px"><option value="5">★★★★★ Excelente</option><option value="4">★★★★ Muy bien</option><option value="3">★★★ Bien</option><option value="2">★★ Regular</option><option value="1">★ Mal</option></select><input type="text" id="vc${x.acuerdo_id}" maxlength="500" placeholder="Comentario (opcional)" style="max-width:300px" /><button class="btn btn-primary btn-sm" onclick="valorar('${x.acuerdo_id}','${x.destino_id}')">Enviar valoración</button></div></div>`).join(''):'';
   const {data:ac}=await sb.from('acuerdos').select('*').order('creado',{ascending:false});
   AC={};(ac||[]).forEach(a=>AC[a.id]=a);
   NM={};NM[yo.id]=miPerfil.nombre;
   const ids=[...new Set((ac||[]).flatMap(a=>[a.organizador_id,a.musico_id]))].filter(i=>i!==yo.id);
-  if(ids.length){const {data:n}=await sb.from('perfiles').select('id,nombre,subtipo,verificado').in('id',ids);PF={};(n||[]).forEach(p=>{NM[p.id]=p.nombre;PF[p.id]=p;});}
+  if(ids.length){const {data:n}=await sb.from('perfiles').select('id,nombre,subtipo,verificado').in('id',ids);PF={};(n||[]).forEach(p=>{NM[p.id]=p.nombre;PF[p.id]=p;});const {data:md}=await sb.rpc('medias',{p_ids:ids});(md||[]).forEach(m=>{if(PF[m.user_id])PF[m.user_id].media=m;});}
   const L=$('listaAcuerdos');
   if(!ac||!ac.length){L.innerHTML='<p class="section-subtitle">Aún no tienes acuerdos.</p>';return;}
   L.innerHTML=ac.map(a=>{
     const soyOrg=a.organizador_id===yo.id,otroId=soyOrg?a.musico_id:a.organizador_id,otro=esc(NM[otroId]||'Usuario');
-    const pf=PF[otroId]||{},ins=pf.verificado?' ✓ Comprobado':(pf.subtipo==='particular'?' · Particular, sin verificar':'');
+    const pf=PF[otroId]||{},ins=(pf.verificado?' ✓ Comprobado':(pf.subtipo==='particular'?' · Particular, sin verificar':''))+(pf.media?' · ★ '+pf.media.media+' ('+pf.media.total+')':'');
     let acc='';
     if(a.estado==='propuesto')acc=soyOrg?'Esperando respuesta del músico.':`<button class="btn btn-primary btn-sm" onclick="responder('${a.id}','aceptado')">Aceptar condiciones</button><button class="btn btn-secondary btn-sm" onclick="responder('${a.id}','rechazado')">Rechazar</button>`;
     const chat=`<button class="btn btn-primary btn-sm" onclick="abrirChat('${a.id}')">Abrir chat</button><button class="btn btn-secondary btn-sm" onclick="reportar('${a.id}','${otroId}')">Reportar</button>`;
@@ -438,7 +569,7 @@ async function cargarPanel(){
 
 async function responder(id,estado){
   const {error}=await sb.from('acuerdos').update({estado}).eq('id',id);
-  if(error)msg('No se pudo actualizar el acuerdo.');else cargarPanel();
+  if(error)msg(String(error.message).includes('valoraciones_pendientes')?MSG_VAL:'No se pudo actualizar el acuerdo.');else cargarPanel();
 }
 
 const cv=$('cvFirma'),cx=cv.getContext('2d');let dib=false,tocado=false;
@@ -469,6 +600,7 @@ function openPrivacyModal(e){if(e)e.preventDefault();privacyModal.classList.add(
 function closePrivacyModal(){privacyModal.classList.remove('open');}
 privacyModal.addEventListener('click',e=>{if(e.target===privacyModal)closePrivacyModal();});
 
+$('edInstrSel').innerHTML=document.querySelector('#fPerfil select[name=instrumento]').innerHTML;
 document.querySelectorAll('.igp').forEach(e=>e.textContent=IG_PLATAFORMA);
 refrescar();
 </script>
