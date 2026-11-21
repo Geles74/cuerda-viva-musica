@@ -62,7 +62,7 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <nav><a href="#inicio">Inicio</a><a href="#directorio">Músicos y Eventos</a><a href="#registro">Acceso y alta</a><a href="#sugerencias">Sugerencias</a><a href="#contacto">Contacto</a><a href="#privacidad">Privacidad</a></nav></div></header>
 
 <section id="inicio" class="hero">
-<div class="badge">Fichas revisadas manualmente · Teléfonos protegidos</div>
+<div class="badge">Fichas revisadas manualmente · Contactos protegidos</div>
 <h1>El punto de encuentro para los músicos de cuerda que buscan su lugar en el escenario</h1>
 <p>Una plataforma independiente creada para dar visibilidad real, fiabilidad y oportunidades laborales a intérpretes de cuerda mayores de 18 años y organizadores de conciertos en directo.</p>
 <div class="cta"><button type="button" class="btn btn-primary" onclick="mostrarRegistro()">Acceder o registrarme</button><a href="#directorio" class="btn btn-secondary">Explorar directorio</a></div>
@@ -75,7 +75,7 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <p><strong>Cuerda Viva Música</strong> surge precisamente para equilibrar esa balanza: ofrecer un escaparate digno, especializado y directo donde promotores, salas, organizadores de eventos y público puedan encontrar músicos de cuerda y propuestas acústicas.</p>
 <div class="pillars">
 <div class="pillar"><h3>¿Qué encontrarás al registrarte?</h3><p>Un espacio dedicado exclusivamente a la cuerda frotada y pulsada, tanto para solistas y agrupaciones como para ciclos o conciertos, con visibilidad directa ante quienes buscan música en vivo.</p></div>
-<div class="pillar"><h3>Contactos protegidos</h3><p>Cada ficha se revisa manualmente antes de publicarse. Ningún teléfono es público: solo se comparte entre dos personas cuando ambas aceptan y firman un acuerdo por escrito.</p></div>
+<div class="pillar"><h3>Contactos protegidos</h3><p>Cada ficha se revisa manualmente antes de publicarse. Ningún dato de contacto es público: el músico decide si acepta cada solicitud y solo entonces se abre un chat privado entre las dos partes.</p></div>
 <div class="pillar"><h3>Plataforma en evolución contigo</h3><p>Somos un proyecto de nueva creación abierto a crecer junto a la comunidad. Cuéntanos qué mejorarías a través del buzón de sugerencias.</p></div>
 </div>
 <div style="text-align:center"><button type="button" class="btn btn-primary" onclick="mostrarRegistro()">Solicitar mi alta como músico o evento</button></div>
@@ -95,6 +95,7 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <div id="msg" class="status-msg"></div>
 
 <div id="vAuth">
+<p id="notaAdmin" class="notice" style="display:none">Acceso de administración: entra con la cuenta administradora.</p>
 <div class="form-grid">
 <div class="fg"><label for="aEmail">Correo electrónico</label><input type="email" id="aEmail" autocomplete="email" /></div>
 <div class="fg"><label for="aPass">Contraseña (mínimo 8 caracteres)</label><input type="password" id="aPass" minlength="8" autocomplete="current-password" /><label class="chk"><input type="checkbox" onchange="$('aPass').type=this.checked?'text':'password'" />Mostrar contraseña</label></div>
@@ -110,22 +111,32 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <div class="fg"><label for="rPass">Contraseña (mínimo 8 caracteres) *</label><input type="password" id="rPass" minlength="8" autocomplete="new-password" /><label class="chk"><input type="checkbox" onchange="$('rPass').type=this.checked?'text':'password'" />Mostrar contraseña</label></div>
 </div></div>
 <div class="form-grid">
-<div class="fg"><label>Tipo de solicitud *</label><select name="tipo" required><option value="musico">Músico / Agrupación de cuerda</option><option value="organizador">Organizador / Evento o ciclo</option></select></div>
-<div class="fg"><label>Instrumento o formación *</label>
+<div class="fg"><label>Tipo de solicitud *</label><select name="tipo" required onchange="camposTipo()"><option value="musico">Músico / Agrupación de cuerda</option><option value="organizador">Organizador / Evento o ciclo</option></select></div>
+<div class="fg"><label>Instrumento o formación (obligatorio para músicos)</label>
 <select name="instrumento" required><option value="">Selecciona...</option>
 <optgroup label="Cuerda frotada"><option>Violín</option><option>Viola</option><option>Violonchelo</option><option>Contrabajo</option><option>Viola da gamba / Zanfona</option></optgroup>
 <optgroup label="Cuerda pulsada"><option>Guitarra española / clásica</option><option>Guitarra flamenca</option><option>Guitarra acústica</option><option>Guitarra eléctrica</option><option>Bajo eléctrico</option><option>Arpa</option><option>Bandurria / Laúd / Mandolina</option><option>Ukelele / Timple / Charango</option><option>Banjo / Bouzouki / Sitar</option></optgroup>
 <optgroup label="Agrupaciones y eventos"><option>Dúo / Trío / Cuarteto de cuerda</option><option>Orquesta / Rondalla / Ensemble de cuerda</option><option>Evento exclusivo de instrumentos de cuerda</option></optgroup></select></div>
 </div>
+<div id="blOrg" style="display:none">
+<div class="fg"><label>Tipo de organizador *</label><select name="subtipo" onchange="camposTipo()"><option value="">Selecciona...</option><option value="entidad">Profesional o entidad (asociación, sala, orquesta, wedding planner...)</option><option value="particular">Particular (boda, cumpleaños, comunión...)</option></select></div>
+<div id="blEntidad" style="display:none"><div class="fg"><label>Tu cargo en la entidad *</label><input type="text" name="cargo" maxlength="80" /></div></div>
+<div id="blPart" style="display:none">
+<div class="form-grid"><div class="fg"><label>Tipo de evento *</label><select name="evento_tipo"><option value="">Selecciona...</option><option>Boda</option><option>Cumpleaños</option><option>Comunión o bautizo</option><option>Evento de empresa</option><option>Otro</option></select></div>
+<div class="fg"><label>Fecha del evento *</label><input type="date" name="evento_fecha" /></div></div>
+<div class="fg"><label>Lugar concreto (recinto, finca o iglesia, y municipio) *</label><input type="text" name="evento_lugar" maxlength="150" /></div>
+<div class="fg"><label>Referencia que pueda confirmar el evento (recinto, wedding planner, fotógrafo...) *</label><input type="text" name="referencia" maxlength="300" placeholder="Nombre y web o teléfono" /></div>
+<p class="notice">Los eventos en domicilios particulares se revisan con más cuidado. Tu ficha de particular no se publica en el directorio.</p>
+</div></div>
 <div class="form-grid">
 <div class="fg"><label>Nombre artístico o del evento *</label><input type="text" name="nombre" maxlength="80" required /></div>
 <div class="fg"><label>Ciudad / Provincia *</label><input type="text" name="ciudad" maxlength="60" required /></div>
 </div>
 <div class="fg"><label>Descripción artística o detalles del evento *</label><textarea name="descripcion" rows="3" maxlength="600" required></textarea></div>
-<div class="fg"><label>Enlace para comprobar tu ficha *</label><input type="text" name="enlace" maxlength="300" placeholder="Evento: web, entradas o Instagram oficial. Músico: vídeo, web o perfil con tu actividad (p. ej. conservatorio)" required />
-<span class="section-subtitle" style="margin:0">Solo lo ve el equipo de Cuerda Viva. No se publica.</span></div>
-<div class="fg"><label>Teléfono *</label><input type="tel" name="telefono" maxlength="20" required />
-<span class="section-subtitle" style="margin:0">Nunca es público. Solo lo verá la otra parte de un acuerdo que ambos hayáis firmado.</span></div>
+<div class="fg"><label>Enlace para comprobar tu ficha *</label><input type="text" name="enlace" maxlength="300" placeholder="Web, Instagram o vídeo donde se vea tu actividad o el evento" required />
+<span class="section-subtitle" style="margin:0">Músicos: vídeo, web o perfil (p. ej. del conservatorio). Entidades: web o Instagram. Particulares: web o Instagram del recinto o del evento. Solo lo ve el equipo; no se publica.</span></div>
+<div class="fg"><label>Tu Instagram (opcional, ayuda a verificarte)</label><input type="text" name="instagram" maxlength="40" placeholder="@tucuenta" />
+<div class="chk"><input type="checkbox" id="c3" /><label for="c3">Autorizo a Cuerda Viva Música a seguir esta cuenta para comprobar que es mía. Tú también puedes seguirnos en <span class="igp"></span>.</label></div></div>
 <div class="chk"><input type="checkbox" id="c1" required /><label for="c1">Confirmo que soy mayor de 18 años y que Cuerda Viva Música solo pone en contacto a las partes, sin ser parte de ningún acuerdo.</label></div>
 <div class="chk"><input type="checkbox" id="c2" required /><label for="c2">He leído y acepto la <a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a>.</label></div>
 <div class="row"><button type="submit" id="bPerfil" class="btn btn-primary">Enviar ficha para revisión</button><button type="button" id="bYaCuenta" class="btn btn-secondary" style="display:none" onclick="refrescar()">Ya tengo cuenta</button></div>
@@ -134,7 +145,7 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 
 <div id="vPanel" style="display:none">
 <p id="estadoFicha" class="notice"></p>
-<div id="adminBox" style="display:none;margin-bottom:1rem"><button type="button" id="bAdmin" class="btn btn-primary" onclick="abrirAdmin()">Panel de administración</button></div>
+<p class="notice">Consejos de seguridad: habla primero por el chat de la web, no des tu dirección ni datos personales hasta fiarte, quedad en lugares públicos o en el recinto, no pagues nunca por tocar y, si algo no te cuadra, pulsa Reportar.</p>
 <h3 style="margin-bottom:.75rem">Mis acuerdos</h3>
 <div id="listaAcuerdos"></div>
 <button type="button" class="btn btn-secondary btn-sm" onclick="salir()">Cerrar sesión</button>
@@ -143,13 +154,13 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <div id="vAdmin" style="display:none">
 <h3 style="margin-bottom:.5rem">Panel de administración</h3>
 <p class="section-subtitle">Abre el enlace de cada ficha, comprueba que es real y decide. Al aprobarla se publica en el directorio.</p>
-<div class="row" style="margin-bottom:1rem"><select id="admFiltro" onchange="cargarAdmin()" style="max-width:240px"><option value="pendiente">Pendientes</option><option value="aprobado">Aprobadas</option><option value="rechazado">Rechazadas</option></select><button type="button" class="btn btn-secondary btn-sm" onclick="refrescar()">Volver</button></div>
+<div class="row" style="margin-bottom:1rem"><select id="admFiltro" onchange="cargarAdmin()" style="max-width:240px"><option value="pendiente">Pendientes</option><option value="aprobado">Aprobadas</option><option value="rechazado">Rechazadas</option><option value="suspendido">Suspendidas</option><option value="reportes">Reportes</option></select><button type="button" class="btn btn-secondary btn-sm" onclick="salirAdmin()">Volver</button></div>
 <div id="admLista"></div>
 </div>
 
 <div id="vSolicitud" style="display:none">
 <h3 style="margin-bottom:.5rem">Solicitud de contacto a <span id="solDest"></span></h3>
-<p class="section-subtitle">El músico recibirá estas condiciones. Si las acepta y ambos firmáis, se desbloquean los teléfonos. Una vez enviadas, las condiciones no se pueden modificar.</p>
+<p class="section-subtitle">El músico recibirá estas condiciones. Si las acepta, se abrirá un chat privado entre vosotros y la firma del acuerdo es opcional. Una vez enviadas, las condiciones no se pueden modificar.</p>
 <form id="fSol">
 <div class="form-grid">
 <div class="fg"><label>Fecha del evento *</label><input type="date" name="fecha" required /></div>
@@ -200,18 +211,18 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <strong>Responsable:</strong> Cuerda Viva Música (<a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>).<br />
 <strong>Finalidad:</strong> gestionar cuentas y fichas del directorio (con revisión manual), permitir acuerdos entre músicos y organizadores y responder consultas.<br />
 <strong>Legitimación:</strong> consentimiento expreso al marcar las casillas de aceptación (art. 6.1.a RGPD).<br />
-<strong>Datos:</strong> no solicitamos DNI ni selfie. El teléfono nunca es público y solo se muestra a la otra parte de un acuerdo firmado por ambas.<br />
+<strong>Datos:</strong> no solicitamos DNI, selfie ni teléfono. Los mensajes del chat solo los ven las dos partes de una solicitud aceptada y, si hay un reporte, el equipo administrador.<br />
 <strong>Destinatarios:</strong> Supabase, como encargado del alojamiento de datos en la UE (Fráncfort). Los formularios de sugerencias y contacto, y el aviso interno de nueva ficha (solo tipo, nombre y ciudad), usan FormSubmit como canal de envío al correo del responsable. No cedemos datos a terceros salvo obligación legal.<br />
 <strong>Derechos:</strong> acceso, rectificación, supresión, oposición y limitación escribiendo a <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>, o reclamación ante la AEPD. <a href="#privacidad" onclick="openPrivacyModal(event)">Ver texto legal completo</a>.</div>
-<div class="fb"><span>&copy; 2026 Cuerda Viva Música · Comunidad Cultural Independiente</span><span><a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a> · <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a></span></div>
+<div class="fb"><span>&copy; 2026 Cuerda Viva Música · Comunidad Cultural Independiente</span><span><a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a> · <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a> · <a href="#" onclick="entrarAdmin(event)" style="font-size:.75rem;opacity:.55">Administración</a></span></div>
 </div></footer>
 
 <div id="privacyModal" class="modal-backdrop" role="dialog" aria-modal="true"><div class="modal-card">
 <h2>Política de Privacidad — Cuerda Viva Música</h2>
 <h4>1. Responsable</h4><p>Cuerda Viva Música, correo de contacto <strong>cuerdavivamusica@gmail.com</strong>.</p>
-<h4>2. Datos y finalidad</h4><p>Tratamos los datos que facilitas al crear tu cuenta y tu ficha: correo, nombre artístico o del evento, ciudad, descripción, enlace de comprobación y teléfono, además de las condiciones y firmas electrónicas de los acuerdos. La finalidad es revisar y publicar tu ficha, y permitir el contacto entre músicos y organizadores. No solicitamos DNI ni selfie.</p>
+<h4>2. Datos y finalidad</h4><p>Tratamos los datos que facilitas al crear tu cuenta y tu ficha: correo, nombre artístico o del evento, ciudad, descripción, enlace de comprobación y, según tu caso, cargo, datos del evento (tipo, fecha, lugar y referencia) y tu cuenta de Instagram si decides facilitarla, además de las condiciones y firmas de los acuerdos y los mensajes del chat. La finalidad es revisar y publicar tu ficha, y permitir el contacto entre músicos y organizadores. No solicitamos DNI, selfie ni teléfono.</p>
 <h4>3. Base jurídica</h4><p>Tu consentimiento expreso (art. 6.1.a RGPD), otorgado al marcar las casillas antes de enviar cada formulario.</p>
-<h4>4. Visibilidad de los datos</h4><p>Solo son públicos el nombre artístico o del evento, el instrumento, la ciudad y la descripción de las fichas aprobadas. El correo y el enlace de comprobación solo los ve el equipo. El teléfono solo lo ve la otra parte cuando ambas habéis firmado un acuerdo, y no se puede retirar una vez compartido.</p>
+<h4>4. Visibilidad de los datos</h4><p>Solo son públicos el nombre artístico o del evento, el instrumento, la ciudad y la descripción de las fichas aprobadas; las fichas de organizadores particulares no se publican. El correo, el enlace de comprobación, el Instagram y los datos del evento los ve el equipo administrador para revisar la ficha. Los mensajes del chat solo los ven las dos partes de una solicitud aceptada y, si hay un reporte, el equipo administrador.</p>
 <h4>5. Conservación</h4><p>Conservamos tus datos mientras mantengas tu cuenta. Puedes pedir la baja y la supresión en cualquier momento por correo.</p>
 <h4>6. Destinatarios</h4><p>Supabase actúa como encargado del tratamiento y aloja los datos en la Unión Europea. Los formularios de sugerencias y contacto, y el aviso interno de nueva ficha (tipo, nombre y ciudad), se envían mediante FormSubmit al correo del responsable. No vendemos datos.</p>
 <h4>7. Derechos</h4><p>Puedes retirar tu consentimiento y ejercer los derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a <strong>cuerdavivamusica@gmail.com</strong>, o reclamar ante la Agencia Española de Protección de Datos (www.aepd.es).</p>
@@ -220,10 +231,19 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 
 <div id="modalFirma" class="modal-backdrop" role="dialog" aria-modal="true"><div class="modal-card">
 <h2>Firma del acuerdo</h2>
-<p>Dibuja tu firma con el dedo o el ratón. Al firmar aceptas las condiciones del acuerdo. Cuando ambas partes hayáis firmado, se compartirán los teléfonos.</p>
+<p>Dibuja tu firma con el dedo o el ratón. Al firmar aceptas las condiciones del acuerdo. La firma es opcional; cuando ambas partes firméis podréis descargar el PDF.</p>
 <canvas id="cvFirma" width="500" height="200"></canvas>
 <div class="row"><button type="button" class="btn btn-secondary btn-sm" onclick="limpiarFirma()">Borrar</button><button type="button" class="btn btn-primary btn-sm" onclick="confirmarFirma()">Firmar y confirmar</button><button type="button" class="btn btn-secondary btn-sm" onclick="$('modalFirma').classList.remove('open')">Cancelar</button></div>
 <div id="msgFirma" class="status-msg"></div>
+</div></div>
+
+<div id="modalChat" class="modal-backdrop" role="dialog" aria-modal="true"><div class="modal-card">
+<h2>Chat privado</h2>
+<p>Solo lo veis vosotros dos. No des tu dirección ni datos personales hasta fiarte, quedad en lugares públicos o en el recinto y no pagues nunca por tocar. Si algo no te cuadra, cierra el chat y pulsa Reportar.</p>
+<div id="chatLista" style="max-height:40vh;overflow-y:auto;margin:.5rem 0"></div>
+<div class="fg"><textarea id="chatTxt" rows="2" maxlength="1000" placeholder="Escribe un mensaje..."></textarea></div>
+<div class="row"><button type="button" class="btn btn-primary btn-sm" onclick="enviarMsg()">Enviar</button><button type="button" class="btn btn-secondary btn-sm" onclick="cargarChat()">Actualizar</button><button type="button" class="btn btn-secondary btn-sm" onclick="cerrarChat()">Cerrar</button></div>
+<div id="chatMsg" class="status-msg"></div>
 </div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -231,15 +251,16 @@ footer{background:#0b0d10;border-top:1px solid var(--border);padding:2.25rem 1.5
 <script>
 const SB_URL='https://gnptyanshmecpsrrosky.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImducHR5YW5zaG1lY3BzcnJvc2t5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyMDgyOTEsImV4cCI6MjExMDc4NDI5MX0.3SgJX2QW4WuZ-n9VSGYF_vDz0CAONexYcQ4_zFhqHw8';
+const IG_PLATAFORMA='@cuerdavivamusica';
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let esAdmin=false,yo=null,miPerfil=null,destino=null,firmaId=null,AC={},NM={};
+let PF={},chatId=null,chatT=null,modoAdmin=false,esAdmin=false,yo=null,miPerfil=null,destino=null,firmaId=null,AC={},NM={};
 
 function msg(t,ok){const m=$('msg');m.textContent=t||'';m.className='status-msg '+(ok?'status-ok':'status-err');}
 function vista(v){['vAuth','vPerfil','vPanel','vSolicitud','vAdmin'].forEach(x=>$(x).style.display=x===v?'block':'none');}
-function mostrarRegistro(){const s=$('registro');s.style.display='block';s.scrollIntoView({behavior:'smooth'});refrescar();}
-function ocultarRegistro(){$('registro').style.display='none';}
+function mostrarRegistro(){modoAdmin=false;const s=$('registro');s.style.display='block';s.scrollIntoView({behavior:'smooth'});refrescar();}
+function ocultarRegistro(){modoAdmin=false;$('registro').style.display='none';}
 document.querySelectorAll('a[href="#registro"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();mostrarRegistro();}));
 
 async function refrescar(){
@@ -249,6 +270,11 @@ async function refrescar(){
   if(yo){const {data}=await sb.from('perfiles').select('id,tipo,nombre,ciudad,estado').eq('id',yo.id).maybeSingle();miPerfil=data;}
   if(miPerfil){const r=await sb.rpc('avisar_ficha');if(r.data===true)avisarAdmin(miPerfil);}
   if(yo){const r=await sb.rpc('es_admin');esAdmin=r.data===true;}
+  $('notaAdmin').style.display=(modoAdmin&&!yo)?'block':'none';
+  if(modoAdmin&&yo){
+    if(esAdmin){vista('vAdmin');await cargarAdmin();return;}
+    modoAdmin=false;msg('Esta cuenta no tiene permisos de administración.');
+  }
   if(yo)modoCuenta(false);
   vista(!yo?'vAuth':(!miPerfil&&!esAdmin)?'vPerfil':'vPanel');
   if(miPerfil||esAdmin)await cargarPanel();
@@ -281,45 +307,89 @@ function modoCuenta(reg){
   $('bPerfil').textContent=reg?'Crear cuenta y enviar ficha':'Enviar ficha para revisión';
   $('bYaCuenta').style.display=reg?'inline-flex':'none';
 }
+function camposTipo(){
+  const f=$('fPerfil'),org=f.tipo.value==='organizador',sub=f.subtipo.value;
+  $('blOrg').style.display=org?'block':'none';
+  $('blEntidad').style.display=(org&&sub==='entidad')?'block':'none';
+  $('blPart').style.display=(org&&sub==='particular')?'block':'none';
+  f.instrumento.required=!org;f.subtipo.required=org;f.cargo.required=org&&sub==='entidad';
+  ['evento_tipo','evento_fecha','evento_lugar','referencia'].forEach(n=>f[n].required=org&&sub==='particular');
+}
 function irRegistro(){msg('');modoCuenta(true);vista('vPerfil');}
 async function avisarAdmin(p){
   try{await fetch('https://formsubmit.co/ajax/cuerdavivamusica@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:'Nueva ficha pendiente de revisión - Cuerda Viva Música',Tipo:p.tipo,Nombre:p.nombre,Ciudad:p.ciudad,Aviso:'Entra en la web, Acceso y alta, Panel de administración para revisarla.'})});}catch(e){}
 }
-async function abrirAdmin(){vista('vAdmin');await cargarAdmin();}
+function entrarAdmin(e){e.preventDefault();modoAdmin=true;const s=$('registro');s.style.display='block';s.scrollIntoView({behavior:'smooth'});refrescar();}
+function salirAdmin(){modoAdmin=false;refrescar();}
 async function cargarAdmin(){
   const est=$('admFiltro').value,L=$('admLista');
+  if(est==='reportes'){
+    const {data,error}=await sb.rpc('admin_reportes');
+    if(error){L.innerHTML='<p class="status-msg status-err">No se pudo cargar la lista.</p>';return;}
+    L.innerHTML=data.length?data.map(r=>`<div class="ac"><h4>Reporte contra ${esc(r.reportado_nombre||'?')} (${esc(r.reportado_estado||'')})</h4>De: ${esc(r.reporter_nombre||'?')}<br>Correo del reportado: ${esc(r.reportado_email||'')}<br>${esc(r.motivo)}<br>${new Date(r.creado).toLocaleString('es-ES')}<div class="row">${r.acuerdo_id?`<button class="btn btn-secondary btn-sm" onclick="verChatRep('${r.acuerdo_id}')">Ver chat</button>`:''}<button class="btn btn-primary btn-sm" onclick="decidir('${r.reportado_id}','suspendido')">Suspender cuenta</button><button class="btn btn-secondary btn-sm" onclick="cerrarRep('${r.id}')">Marcar atendido</button></div></div>`).join(''):'<p class="section-subtitle">No hay reportes pendientes.</p>';
+    return;
+  }
   const {data,error}=await sb.rpc('admin_fichas',{p_estado:est});
   if(error){L.innerHTML='<p class="status-msg status-err">No se pudo cargar la lista.</p>';return;}
   if(!data.length){L.innerHTML='<p class="section-subtitle">No hay fichas en este estado.</p>';return;}
   L.innerHTML=data.map(p=>{
     const url=/^https?:\/\//i.test(p.enlace)?p.enlace:(/^[\w.-]+\.[a-z]{2,}/i.test(p.enlace)?'https://'+p.enlace:'');
     const enl=url?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(p.enlace)}</a>`:esc(p.enlace);
+    const ig=(p.instagram||'').replace(/^@/,'');
+    const igl=ig?(/^[A-Za-z0-9._]{1,30}$/.test(ig)?`<a href="https://instagram.com/${ig}" target="_blank" rel="noopener noreferrer">@${ig}</a>`:esc(p.instagram)):'—';
+    const org=p.tipo!=='organizador'?'':(p.subtipo==='entidad'?`<br>Entidad · Cargo: ${esc(p.cargo)}`:`<br>Particular · ${esc(p.evento_tipo)} el ${esc(p.evento_fecha)} en ${esc(p.evento_lugar)}<br>Referencia: ${esc(p.referencia)}`);
     const b=(e,t,c)=>`<button class="btn ${c} btn-sm" onclick="decidir('${p.id}','${e}')">${t}</button>`;
-    return `<div class="ac"><h4>${p.tipo==='musico'?'Músico':'Organizador'}: ${esc(p.nombre)} (${esc(p.ciudad)})</h4>${esc(p.instrumento||'')}<br>${esc(p.descripcion)}<br>Enlace: ${enl}<br>Correo: ${esc(p.email)}<br>Recibida: ${new Date(p.creado).toLocaleString('es-ES')}<div class="row">${b('aprobado','Aprobar','btn-primary')}${b('rechazado','Rechazar','btn-secondary')}${est!=='pendiente'?b('pendiente','Volver a pendiente','btn-secondary'):''}</div></div>`;
+    return `<div class="ac"><h4>${p.tipo==='musico'?'Músico':'Organizador'}: ${esc(p.nombre)} (${esc(p.ciudad)})${p.verificado?' ✓':''}</h4>${esc(p.instrumento||'')}<br>${esc(p.descripcion)}${org}<br>Enlace: ${enl}<br>Instagram: ${igl}<br>Código que debe aparecer en su perfil o mensaje: <strong>${esc(p.codigo)}</strong><br>Correo: ${esc(p.email)}<br>Recibida: ${new Date(p.creado).toLocaleString('es-ES')}<div class="row">${est!=='aprobado'?b('aprobado','Aprobar','btn-primary'):''}${est!=='rechazado'?b('rechazado','Rechazar','btn-secondary'):''}${est==='aprobado'?b('suspendido','Suspender','btn-secondary'):''}${est!=='pendiente'&&est!=='aprobado'?b('pendiente','Volver a pendiente','btn-secondary'):''}${est==='aprobado'?`<button class="btn btn-secondary btn-sm" onclick="verificar('${p.id}',${!p.verificado})">${p.verificado?'Quitar insignia':'Marcar comprobado'}</button>`:''}</div></div>`;
   }).join('');
 }
+async function verificar(id,v){const {error}=await sb.rpc('admin_set_verificado',{p_id:id,p_v:v});if(error){msg('No se pudo actualizar.');return;}msg(v?'Marcada como comprobada.':'Insignia retirada.',true);cargarAdmin();}
+async function cerrarRep(id){await sb.rpc('admin_cerrar_reporte',{p_id:id});cargarAdmin();}
+async function verChatRep(ac){const {data,error}=await sb.rpc('admin_mensajes',{p_acuerdo:ac});alert(error?'No se pudo cargar el chat.':(data.length?data.map(m=>m.autor+': '+m.texto).join('\n'):'Sin mensajes.'));}
 async function decidir(id,estado){
   const {error}=await sb.rpc('admin_set_estado',{p_id:id,p_estado:estado});
   if(error){msg('No se pudo cambiar el estado.');return;}
   msg(estado==='aprobado'?'Ficha aprobada y publicada.':'Estado actualizado.',true);
   cargarAdmin();
 }
+function abrirChat(id){chatId=id;$('chatMsg').textContent='';$('modalChat').classList.add('open');cargarChat();clearInterval(chatT);chatT=setInterval(cargarChat,10000);}
+function cerrarChat(){$('modalChat').classList.remove('open');clearInterval(chatT);}
+async function cargarChat(){
+  const a=AC[chatId];if(!a)return;const oid=a.organizador_id===yo.id?a.musico_id:a.organizador_id;
+  const {data}=await sb.from('mensajes').select('autor_id,texto,creado').eq('acuerdo_id',chatId).order('creado');
+  const L=$('chatLista');
+  L.innerHTML=(data||[]).length?data.map(m=>{const me=m.autor_id===yo.id;return `<div style="margin:.4rem 0;text-align:${me?'right':'left'}"><span class="card-tag">${me?'Tú':esc(NM[oid]||'Otra persona')}</span><br>${esc(m.texto)}</div>`;}).join(''):'<p class="section-subtitle">Aún no hay mensajes. Preséntate y concretad los detalles.</p>';
+  L.scrollTop=L.scrollHeight;
+}
+async function enviarMsg(){
+  const t=$('chatTxt').value.trim();if(!t)return;
+  const {error}=await sb.from('mensajes').insert({acuerdo_id:chatId,autor_id:yo.id,texto:t});
+  if(error){$('chatMsg').textContent='No se pudo enviar el mensaje.';$('chatMsg').className='status-msg status-err';return;}
+  $('chatTxt').value='';cargarChat();
+}
+async function reportar(acId,otroId){
+  const motivo=prompt('¿Qué ha pasado? Cuéntanoslo brevemente.');
+  if(!motivo||motivo.trim().length<3)return;
+  const {error}=await sb.from('reportes').insert({reporter_id:yo.id,reportado_id:otroId,acuerdo_id:acId,motivo:motivo.trim().slice(0,500)});
+  if(error){msg('No se pudo enviar el reporte.');return;}
+  msg('Reporte enviado. Lo revisaremos lo antes posible.',true);
+  try{fetch('https://formsubmit.co/ajax/cuerdavivamusica@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:'NUEVO REPORTE - Cuerda Viva Música',Aviso:'Hay un reporte nuevo. Revísalo en Administración, Reportes.'})});}catch(e){}
+}
 async function salir(){await sb.auth.signOut();refrescar();}
 sb.auth.onAuthStateChange(()=>{if($('registro').style.display==='block')refrescar();});
 
 $('fPerfil').addEventListener('submit',async e=>{
   e.preventDefault();const f=e.target;
-  const d={tipo:f.tipo.value,nombre:f.nombre.value.trim(),instrumento:f.instrumento.value,ciudad:f.ciudad.value.trim(),descripcion:f.descripcion.value.trim(),enlace:f.enlace.value.trim(),telefono:f.telefono.value.trim()};
+  const v=n=>f[n].value.trim()||null,org=f.tipo.value==='organizador',sub=org?f.subtipo.value:'',ent=sub==='entidad',par=sub==='particular';
+  const d={tipo:f.tipo.value,subtipo:org?sub:null,nombre:v('nombre'),instrumento:f.instrumento.value||null,ciudad:v('ciudad'),descripcion:v('descripcion'),enlace:v('enlace'),cargo:ent?v('cargo'):null,evento_tipo:par?v('evento_tipo'):null,evento_fecha:par?v('evento_fecha'):null,evento_lugar:par?v('evento_lugar'):null,referencia:par?v('referencia'):null,instagram:$('c3').checked?v('instagram'):null};
   if(!yo){
     const b=$('bPerfil');if(b.disabled)return;esperar(b,60,'Crear cuenta y enviar ficha');
     const {data,error}=await sb.auth.signUp({email:$('rEmail').value.trim(),password:$('rPass').value,options:{emailRedirectTo:location.origin,data:d}});
     if(error){msg(traducir(error));return;}
     if(data.user&&data.user.identities&&!data.user.identities.length){msg('Ese correo ya tiene una cuenta. Pulsa "Ya tengo cuenta" y entra con tu contraseña.');return;}
-    f.reset();msg('Solicitud enviada. Revisa tu correo (mira también en spam) y pulsa el enlace de confirmación. Después revisaremos tu ficha manualmente.',true);
+    f.reset();camposTipo();msg('Solicitud enviada. Revisa tu correo (mira también en spam) y pulsa el enlace de confirmación. Después revisaremos tu ficha manualmente.',true);
     return;
   }
-  let {error}=await sb.from('perfiles').insert({id:yo.id,tipo:d.tipo,nombre:d.nombre,instrumento:d.instrumento,ciudad:d.ciudad,descripcion:d.descripcion,enlace:d.enlace});
-  if(!error){const r=await sb.from('telefonos').insert({user_id:yo.id,telefono:d.telefono});error=r.error;}
+  const {error}=await sb.from('perfiles').insert({id:yo.id,...d});
   if(error){msg('No se pudo guardar la ficha. Inténtalo de nuevo.');return;}
   avisarAdmin(d);
   refrescar();msg('Ficha enviada. La revisaremos manualmente antes de publicarla.',true);
@@ -327,10 +397,10 @@ $('fPerfil').addEventListener('submit',async e=>{
 
 async function cargarDirectorio(){
   const g=$('gridCards');
-  const {data,error}=await sb.from('perfiles').select('id,tipo,nombre,instrumento,ciudad,descripcion').eq('estado','aprobado').order('creado',{ascending:false});
+  const {data,error}=await sb.from('perfiles').select('id,tipo,nombre,instrumento,ciudad,descripcion,verificado').eq('estado','aprobado').order('creado',{ascending:false});
   if(error||!data||!data.length){g.innerHTML='<p class="section-subtitle">Todavía no hay fichas publicadas. ¡Sé el primero en registrarte!</p>';return;}
   const puede=miPerfil&&miPerfil.tipo==='organizador'&&miPerfil.estado==='aprobado';
-  g.innerHTML=data.map(p=>`<article class="card"><span class="card-tag">${p.tipo==='musico'?'Músico':'Evento'} · ${esc(p.instrumento||'Cuerda')}</span><h3>${esc(p.nombre)} (${esc(p.ciudad)})</h3><p>${esc(p.descripcion)}</p>${puede&&p.tipo==='musico'?`<button class="btn btn-primary btn-sm" onclick="solicitar('${p.id}','${esc(p.nombre).replace(/'/g,'')}')">Solicitar contacto</button>`:''}</article>`).join('');
+  g.innerHTML=data.map(p=>`<article class="card"><span class="card-tag">${p.tipo==='musico'?'Músico':'Evento'} · ${esc(p.instrumento||'Cuerda')}${p.verificado?' · ✓ Comprobado':''}</span><h3>${esc(p.nombre)} (${esc(p.ciudad)})</h3><p>${esc(p.descripcion)}</p>${puede&&p.tipo==='musico'?`<button class="btn btn-primary btn-sm" onclick="solicitar('${p.id}','${esc(p.nombre).replace(/'/g,'')}')">Solicitar contacto</button>`:''}</article>`).join('');
 }
 
 function solicitar(id,nombre){destino=id;$('solDest').textContent=nombre;mostrarRegistro2();}
@@ -338,32 +408,31 @@ function mostrarRegistro2(){const s=$('registro');s.style.display='block';s.scro
 $('fSol').addEventListener('submit',async e=>{
   e.preventDefault();const f=e.target;
   const {error}=await sb.from('acuerdos').insert({organizador_id:yo.id,musico_id:destino,fecha:f.fecha.value,lugar:f.lugar.value.trim(),tarifa:f.tarifa.value.trim(),pago:f.pago.value.trim(),cancelacion:f.cancelacion.value.trim()});
-  if(error){msg('No se pudo enviar la solicitud. Comprueba que tu ficha está aprobada.');return;}
+  if(error){msg(String(error.message).includes('limite_solicitudes')?'Has alcanzado el límite de solicitudes por ahora. Podrás enviar más cuando te respondan o pasen 24 horas.':'No se pudo enviar la solicitud. Comprueba que tu ficha está aprobada.');return;}
   f.reset();await refrescar();msg('Solicitud enviada. El músico la verá en su panel.',true);
 });
 
 async function cargarPanel(){
-  $('adminBox').style.display=esAdmin?'block':'none';
-  if(esAdmin){const {data:pe}=await sb.rpc('admin_fichas',{p_estado:'pendiente'});$('bAdmin').textContent='Panel de administración ('+(pe?pe.length:0)+' pendientes)';}
-  if(!miPerfil){$('estadoFicha').textContent='Sesión de administrador.';$('listaAcuerdos').innerHTML='';return;}
+  if(!miPerfil){$('estadoFicha').textContent='Sesión iniciada. Para gestionar fichas, usa el enlace «Administración» al pie de la página.';$('listaAcuerdos').innerHTML='';return;}
   $('estadoFicha').innerHTML='Tu ficha <strong>'+esc(miPerfil.nombre)+'</strong>: <strong>'+esc(miPerfil.estado)+'</strong>'+(miPerfil.estado==='aprobado'?'.':'. Está pendiente de revisión manual; hasta entonces no se publica ni puedes usar acuerdos.');
+  if(miPerfil.estado==='pendiente'){const {data:c}=await sb.rpc('mi_codigo');if(c)$('estadoFicha').innerHTML+='<br>Para acelerar la revisión, pon este código en la bio de tu Instagram o en tu web (o envíalo por mensaje directo a '+esc(IG_PLATAFORMA)+') y no lo borres hasta que te aprobemos: <strong>'+esc(c)+'</strong>';}
   const {data:ac}=await sb.from('acuerdos').select('*').order('creado',{ascending:false});
   AC={};(ac||[]).forEach(a=>AC[a.id]=a);
   NM={};NM[yo.id]=miPerfil.nombre;
   const ids=[...new Set((ac||[]).flatMap(a=>[a.organizador_id,a.musico_id]))].filter(i=>i!==yo.id);
-  if(ids.length){const {data:n}=await sb.from('perfiles').select('id,nombre').in('id',ids);(n||[]).forEach(p=>NM[p.id]=p.nombre);}
-  const {data:t}=await sb.from('telefonos').select('user_id,telefono');
-  const TEL={};(t||[]).forEach(x=>TEL[x.user_id]=x.telefono);
+  if(ids.length){const {data:n}=await sb.from('perfiles').select('id,nombre,subtipo,verificado').in('id',ids);PF={};(n||[]).forEach(p=>{NM[p.id]=p.nombre;PF[p.id]=p;});}
   const L=$('listaAcuerdos');
   if(!ac||!ac.length){L.innerHTML='<p class="section-subtitle">Aún no tienes acuerdos.</p>';return;}
   L.innerHTML=ac.map(a=>{
     const soyOrg=a.organizador_id===yo.id,otroId=soyOrg?a.musico_id:a.organizador_id,otro=esc(NM[otroId]||'Usuario');
+    const pf=PF[otroId]||{},ins=pf.verificado?' ✓ Comprobado':(pf.subtipo==='particular'?' · Particular, sin verificar':'');
     let acc='';
     if(a.estado==='propuesto')acc=soyOrg?'Esperando respuesta del músico.':`<button class="btn btn-primary btn-sm" onclick="responder('${a.id}','aceptado')">Aceptar condiciones</button><button class="btn btn-secondary btn-sm" onclick="responder('${a.id}','rechazado')">Rechazar</button>`;
-    if(a.estado==='aceptado'){const mia=soyOrg?a.firma_org:a.firma_mus;acc=mia?'Has firmado. Esperando la firma de la otra parte.':`<button class="btn btn-primary btn-sm" onclick="abrirFirma('${a.id}')">Firmar acuerdo</button>`;}
-    if(a.estado==='firmado')acc=`Teléfono de ${otro}: <strong>${esc(TEL[otroId]||'no disponible')}</strong><button class="btn btn-secondary btn-sm" onclick="pdf('${a.id}')">Descargar PDF</button>`;
+    const chat=`<button class="btn btn-primary btn-sm" onclick="abrirChat('${a.id}')">Abrir chat</button><button class="btn btn-secondary btn-sm" onclick="reportar('${a.id}','${otroId}')">Reportar</button>`;
+    if(a.estado==='aceptado'){const mia=soyOrg?a.firma_org:a.firma_mus;acc=chat+(mia?' Has firmado.':`<button class="btn btn-secondary btn-sm" onclick="abrirFirma('${a.id}')">Firmar acuerdo (opcional)</button>`);}
+    if(a.estado==='firmado')acc=chat+`<button class="btn btn-secondary btn-sm" onclick="pdf('${a.id}')">Descargar PDF</button>`;
     if(a.estado==='rechazado')acc='Solicitud rechazada.';
-    return `<div class="ac"><h4>${soyOrg?'Músico':'Organizador'}: ${otro} · ${esc(a.estado)}</h4>Fecha: ${esc(a.fecha)}<br>Lugar: ${esc(a.lugar)}<br>Tarifa: ${esc(a.tarifa)}<br>Pago: ${esc(a.pago)}<br>Cancelación: ${esc(a.cancelacion)}<div class="row">${acc}</div></div>`;
+    return `<div class="ac"><h4>${soyOrg?'Músico':'Organizador'}: ${otro}${ins} · ${esc(a.estado)}</h4>Fecha: ${esc(a.fecha)}<br>Lugar: ${esc(a.lugar)}<br>Tarifa: ${esc(a.tarifa)}<br>Pago: ${esc(a.pago)}<br>Cancelación: ${esc(a.cancelacion)}<div class="row">${acc}</div></div>`;
   }).join('');
 }
 
@@ -400,6 +469,7 @@ function openPrivacyModal(e){if(e)e.preventDefault();privacyModal.classList.add(
 function closePrivacyModal(){privacyModal.classList.remove('open');}
 privacyModal.addEventListener('click',e=>{if(e.target===privacyModal)closePrivacyModal();});
 
+document.querySelectorAll('.igp').forEach(e=>e.textContent=IG_PLATAFORMA);
 refrescar();
 </script>
 </body>
