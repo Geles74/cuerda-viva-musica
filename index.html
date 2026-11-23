@@ -60,6 +60,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary)
 .btn-secondary{background:transparent;border-color:rgba(212,169,79,.55);color:var(--primary-h)}.btn-secondary:hover{background:rgba(212,169,79,.12);text-decoration:none;color:var(--primary-h)}
 .btn:disabled{opacity:.55;cursor:not-allowed}.btn-sm{padding:.5rem 1rem;font-size:.68rem}
 .row{display:flex;flex-wrap:wrap;gap:.65rem}
+.ig-link{color:var(--primary-h);text-decoration:none;font-weight:600}.ig-link:hover{text-decoration:underline}.nav-ig{display:inline-flex;align-items:center;gap:.3rem}
+.grp-box{border:1px dashed rgba(212,169,79,.5);padding:.85rem 1rem;margin:.85rem 0}.grp-box .chk{margin:0}.grp-box select{margin-top:.6rem}
 .notice{background:var(--warn);border-left:3px solid var(--primary);padding:1rem 1.15rem;font-size:.9rem;margin:1.1rem 0}
 .chk{display:flex;align-items:flex-start;gap:.65rem;margin:.85rem 0;font-size:.88rem}
 .chk input{margin-top:.25rem;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0}.chk label{font-weight:400}
@@ -82,7 +84,8 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 </head>
 <body>
 <header><div class="nav"><div class="brand">♪ Cuerda Viva <span>Música</span></div>
-<nav><a href="#inicio">Inicio</a><a href="#directorio">Músicos y Eventos</a><a href="#registro">Acceso y alta</a><a href="#sugerencias">Sugerencias</a><a href="#contacto">Contacto</a><a href="#privacidad">Privacidad</a></nav></div></header>
+<nav><a href="#inicio">Inicio</a><a href="#directorio">Músicos y Eventos</a><a href="#registro">Acceso y alta</a><a href="#sugerencias">Sugerencias</a><a href="#contacto">Contacto</a><a href="#privacidad">Privacidad</a><a href="https://instagram.com/cuerdavivamusica" target="_blank" rel="noopener noreferrer" class="nav-ig" aria-label="Instagram de Cuerda Viva Música">Instagram</a></nav></div></header>
+
 
 <section id="inicio" class="hero"><div class="curtain l"></div><div class="curtain r"></div><div class="spot"></div><div class="hero-in">
 <div class="badge">Fichas revisadas manualmente · Contactos protegidos</div>
@@ -91,6 +94,7 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <div class="cta"><button type="button" class="btn btn-primary" onclick="mostrarRegistro()">Acceder o registrarme</button><a href="#directorio" class="btn btn-secondary">Explorar directorio</a></div>
 <div class="notas">♪ ♫ ♩ ♬ ♪</div>
 </div></section>
+
 
 <main class="container">
 <section class="story-box">
@@ -105,11 +109,13 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <div style="text-align:center"><button type="button" class="btn btn-primary" onclick="mostrarRegistro()">Solicitar mi alta como músico o evento</button></div>
 </section>
 
+
 <section id="directorio">
 <h2 class="section-title">Músicos y Eventos</h2>
 <p class="section-subtitle">Fichas publicadas tras una revisión manual. Los datos de contacto no son públicos.</p>
 <div id="gridCards" class="grid-cards"><p class="section-subtitle">Cargando fichas...</p></div>
 </section>
+
 
 <div id="registro" class="modal-backdrop" role="dialog" aria-modal="true"><div class="modal-card">
 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;margin-bottom:.5rem">
@@ -117,6 +123,7 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <button type="button" class="btn btn-secondary btn-sm" onclick="ocultarRegistro()">Cerrar</button></div>
 <p class="section-subtitle">Ninguna ficha se publica sin revisión manual. Tus datos de contacto nunca son públicos.</p>
 <div id="msg" class="status-msg"></div>
+
 
 <div id="vAuth">
 <p id="notaAdmin" class="notice" style="display:none">Acceso de administración: entra con la cuenta administradora.</p>
@@ -127,6 +134,7 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <div class="row"><button type="button" id="bEntrar" class="btn btn-primary" onclick="entrar()">Entrar</button><button type="button" class="btn btn-secondary" onclick="irRegistro()">Crear cuenta</button></div>
 <p class="section-subtitle" style="margin-top:1rem">Escribe tu correo y una contraseña y pulsa Crear cuenta: en el siguiente paso elegirás si eres músico u organizador y completarás tu ficha. Recibirás un correo de confirmación y revisaremos tu ficha manualmente antes de publicarla.</p>
 </div>
+
 
 <div id="vPerfil" style="display:none">
 <p id="regInfo" class="section-subtitle" style="display:none">Paso 2 de 2 · Cuenta para <strong id="regDe"></strong>. <a href="#" onclick="event.preventDefault();refrescar()">Cambiar correo</a></p>
@@ -157,13 +165,15 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <div class="fg"><label>Enlace para comprobar tu ficha *</label><input type="text" name="enlace" maxlength="300" placeholder="Web, Instagram o vídeo donde se vea tu actividad o el evento" required />
 <span class="section-subtitle" style="margin:0">Músicos: vídeo, web o perfil (p. ej. del conservatorio). Entidades: web o Instagram. Particulares: web o Instagram del recinto o del evento. Solo lo ve el equipo; no se publica.</span></div>
 <div class="fg"><label>Tu Instagram (opcional, ayuda a verificarte)</label><input type="text" name="instagram" maxlength="40" placeholder="@tucuenta" />
-<div class="chk"><input type="checkbox" id="c3" /><label for="c3">Autorizo a Cuerda Viva Música a seguir esta cuenta para comprobar que es mía. Tú también puedes seguirnos en <span class="igp"></span>.</label></div></div>
+<div class="chk"><input type="checkbox" id="c3" /><label for="c3">Autorizo a Cuerda Viva Música a seguir esta cuenta para comprobar que es mía. Tú también puedes seguirnos en <span class="igp"></span>.</label></div>
+<div class="grp-box" id="blGrupo" style="display:none"><div class="chk"><input type="checkbox" id="bgCheck" name="busca_grupo" /><label for="bgCheck">No tengo grupo, pero estaría dispuesto/a a unirme a otros músicos registrados en la web para formar dúo, trío o cuarteto.</label></div><select name="formato_grupo" id="bgFormato" style="display:none"><option value="">Formato que me interesa (opcional)</option><option value="duo">Dúo</option><option value="trio">Trío</option><option value="cuarteto">Cuarteto</option><option value="cualquiera">Me da igual</option></select></div></div>
 <div class="chk"><input type="checkbox" id="c1" required /><label for="c1">Confirmo que soy mayor de 18 años y que Cuerda Viva Música solo pone en contacto a las partes, sin ser parte de ningún acuerdo.</label></div>
 <div class="chk"><input type="checkbox" id="c2" required /><label for="c2">He leído y acepto la <a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a>.</label></div>
 </div>
 <div class="row"><button type="submit" id="bPerfil" class="btn btn-primary">Enviar ficha para revisión</button><button type="button" id="bYaCuenta" class="btn btn-secondary" style="display:none" onclick="refrescar()">Volver</button></div>
 </form>
 </div>
+
 
 <div id="vPanel" style="display:none">
 <p id="estadoFicha" class="notice"></p>
@@ -175,6 +185,7 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <button type="button" class="btn btn-secondary btn-sm" onclick="salir()">Cerrar sesión</button>
 </div>
 
+
 <div id="vAdmin" style="display:none">
 <h3 style="margin-bottom:.5rem">Panel de administración</h3>
 <p class="section-subtitle">Abre el enlace de cada ficha, comprueba que es real y decide. Al aprobarla se publica en el directorio.</p>
@@ -182,6 +193,7 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <div class="row" style="margin-bottom:1rem"><input type="email" id="admResetEmail" placeholder="Correo de quien no recuerda su clave" style="max-width:340px" /><button type="button" class="btn btn-secondary btn-sm" onclick="resetClave()">Generar contraseña temporal</button></div>
 <div id="admLista"></div>
 </div>
+
 
 <div id="vEditar" style="display:none">
 <h3 style="margin-bottom:.5rem">Editar mi ficha</h3>
@@ -194,9 +206,11 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <div class="fg"><label>Experiencia (orquestas, bodas, conciertos...)</label><textarea name="experiencia" rows="3" maxlength="600"></textarea></div></div>
 <div class="fg"><label>Enlace para comprobar tu ficha *</label><input type="text" name="enlace" maxlength="300" required /></div>
 <div class="fg"><label>Tu Instagram (opcional)</label><input type="text" name="instagram" maxlength="40" placeholder="@tucuenta" /></div>
+<div class="grp-box" id="edGrupo" style="display:none"><div class="chk"><input type="checkbox" id="edBgCheck" name="busca_grupo" /><label for="edBgCheck">No tengo grupo, pero estaría dispuesto/a a unirme a otros músicos registrados en la web para formar dúo, trío o cuarteto.</label></div><select name="formato_grupo" id="edBgFormato" style="display:none"><option value="">Formato que me interesa (opcional)</option><option value="duo">Dúo</option><option value="trio">Trío</option><option value="cuarteto">Cuarteto</option><option value="cualquiera">Me da igual</option></select></div>
 <div class="row"><button type="submit" class="btn btn-primary">Guardar cambios</button><button type="button" class="btn btn-secondary" onclick="refrescar()">Cancelar</button></div>
 </form>
 </div>
+
 
 <div id="vEvento" style="display:none">
 <h3 style="margin-bottom:.5rem">Añadir otro evento</h3>
@@ -210,11 +224,13 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 </form>
 </div>
 
+
 <div id="vClave" style="display:none">
 <h3 style="margin-bottom:.5rem">Elige tu nueva contraseña</h3>
 <p class="section-subtitle">Has entrado con una contraseña temporal. Elige una nueva para continuar.</p>
 <form id="fClave"><div class="fg"><label for="nClave">Nueva contraseña (mínimo 8 caracteres)</label><input type="password" id="nClave" minlength="8" autocomplete="new-password" required /><label class="chk"><input type="checkbox" onchange="$('nClave').type=this.checked?'text':'password'" />Mostrar contraseña</label></div><button type="submit" class="btn btn-primary">Guardar contraseña</button></form>
 </div>
+
 
 <div id="vSolicitud" style="display:none">
 <h3 style="margin-bottom:.5rem">Solicitud de contacto a <span id="solDest"></span></h3>
@@ -234,6 +250,7 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 </div>
 </div></div>
 
+
 <section id="sugerencias" class="form-box">
 <h2 class="section-title">Buzón de Sugerencias y Mejoras</h2>
 <p class="section-subtitle">Tu opinión nos ayuda a crecer. Cuéntanos qué funciones crees que le hacen falta a la página o qué cambiarías.</p>
@@ -248,9 +265,10 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 </form>
 </section>
 
+
 <section id="contacto" class="form-box">
 <h2 class="section-title">Canal de Contacto</h2>
-<p class="section-subtitle">Para consultas generales, modificaciones de ficha o solicitudes de baja.</p>
+<p class="section-subtitle">Para consultas generales, modificaciones de ficha o solicitudes de baja. También puedes escribirnos por Instagram: <a class="ig-link" href="https://instagram.com/cuerdavivamusica" target="_blank" rel="noopener noreferrer">@cuerdavivamusica</a>.</p>
 <form action="https://formsubmit.co/cuerdavivamusica@gmail.com" method="POST">
 <input type="hidden" name="_subject" value="Consulta Web - Cuerda Viva Música" /><input type="hidden" name="_template" value="table" /><input type="hidden" name="_captcha" value="false" />
 <div class="form-grid">
@@ -264,6 +282,7 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 </section>
 </main>
 
+
 <footer id="privacidad"><div class="footer-inner">
 <div class="privbox"><strong>Información básica sobre protección de datos:</strong><br />
 <strong>Responsable:</strong> Cuerda Viva Música (<a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>).<br />
@@ -272,20 +291,22 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <strong>Datos:</strong> no solicitamos DNI, selfie ni teléfono. Los mensajes del chat solo los ven las dos partes de una solicitud aceptada y, si hay un reporte, el equipo administrador.<br />
 <strong>Destinatarios:</strong> Supabase, como encargado del alojamiento de datos en la UE (Fráncfort). Los formularios de sugerencias y contacto, y el aviso interno de nueva ficha (solo tipo, nombre y ciudad), usan FormSubmit como canal de envío al correo del responsable. No cedemos datos a terceros salvo obligación legal.<br />
 <strong>Derechos:</strong> acceso, rectificación, supresión, oposición y limitación escribiendo a <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a>, o reclamación ante la AEPD. <a href="#privacidad" onclick="openPrivacyModal(event)">Ver texto legal completo</a>.</div>
-<div class="fb"><span>&copy; 2026 Cuerda Viva Música · Comunidad Cultural Independiente</span><span><a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a> · <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a> · <a href="#" onclick="entrarAdmin(event)" style="font-size:.75rem;opacity:.55">Administración</a></span></div>
+<div class="fb"><span>&copy; 2026 Cuerda Viva Música · Comunidad Cultural Independiente</span><span><a href="#privacidad" onclick="openPrivacyModal(event)">Política de Privacidad</a> · <a href="mailto:cuerdavivamusica@gmail.com">cuerdavivamusica@gmail.com</a> · <a class="ig-link" href="https://instagram.com/cuerdavivamusica" target="_blank" rel="noopener noreferrer">Instagram @cuerdavivamusica</a> · <a href="#" onclick="entrarAdmin(event)" style="font-size:.75rem;opacity:.55">Administración</a></span></div>
 </div></footer>
+
 
 <div id="privacyModal" class="modal-backdrop" role="dialog" aria-modal="true"><div class="modal-card">
 <h2>Política de Privacidad — Cuerda Viva Música</h2>
 <h4>1. Responsable</h4><p>Cuerda Viva Música, correo de contacto <strong>cuerdavivamusica@gmail.com</strong>.</p>
-<h4>2. Datos y finalidad</h4><p>Tratamos los datos que facilitas al crear tu cuenta y tu ficha: correo, nombre artístico o del evento, ciudad, descripción, enlace de comprobación y, según tu caso, cargo, datos del evento (tipo, fecha, lugar y referencia) y tu cuenta de Instagram, estudios y experiencia si decides facilitarlos, además de las condiciones y firmas de los acuerdos los mensajes del chat y las valoraciones entre usuarios. La finalidad es revisar y publicar tu ficha, y permitir el contacto entre músicos y organizadores. No solicitamos DNI, selfie ni teléfono.</p>
+<h4>2. Datos y finalidad</h4><p>Tratamos los datos que facilitas al crear tu cuenta y tu ficha: correo, nombre artístico o del evento, ciudad, descripción, enlace de comprobación y, según tu caso, cargo, datos del evento (tipo, fecha, lugar y referencia) y tu cuenta de Instagram, estudios y experiencia si decides facilitarlos, tu preferencia de unirte a otros músicos para formar dúo, trío o cuarteto si la marcas, además de las condiciones y firmas de los acuerdos los mensajes del chat y las valoraciones entre usuarios. La finalidad es revisar y publicar tu ficha, y permitir el contacto entre músicos y organizadores. No solicitamos DNI, selfie ni teléfono.</p>
 <h4>3. Base jurídica</h4><p>Tu consentimiento expreso (art. 6.1.a RGPD), otorgado al marcar las casillas antes de enviar cada formulario.</p>
-<h4>4. Visibilidad de los datos</h4><p>Solo son públicos el nombre artístico o del evento, el instrumento, la ciudad, la descripción, los estudios y la experiencia (si los añades) y la valoración media de las fichas aprobadas; las fichas de organizadores particulares no se publican. El correo, el enlace de comprobación, el Instagram y los datos del evento los ve el equipo administrador para revisar la ficha. Los mensajes del chat solo los ven las dos partes de una solicitud aceptada y, si hay un reporte, el equipo administrador.</p>
+<h4>4. Visibilidad de los datos</h4><p>Solo son públicos el nombre artístico o del evento, el instrumento, la ciudad, la descripción, los estudios y la experiencia (si los añades) y la valoración media de las fichas aprobadas y, si la marcas, tu disponibilidad para formar dúo, trío o cuarteto con otros músicos; las fichas de organizadores particulares no se publican. El correo, el enlace de comprobación, el Instagram y los datos del evento los ve el equipo administrador para revisar la ficha. Los mensajes del chat solo los ven las dos partes de una solicitud aceptada y, si hay un reporte, el equipo administrador.</p>
 <h4>5. Conservación</h4><p>Conservamos tus datos mientras mantengas tu cuenta. Puedes pedir la baja y la supresión en cualquier momento por correo.</p>
 <h4>6. Destinatarios</h4><p>Supabase actúa como encargado del tratamiento y aloja los datos en la Unión Europea. Los formularios de sugerencias y contacto, y el aviso interno de nueva ficha (tipo, nombre y ciudad), se envían mediante FormSubmit al correo del responsable. No vendemos datos.</p>
 <h4>7. Derechos</h4><p>Puedes retirar tu consentimiento y ejercer los derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a <strong>cuerdavivamusica@gmail.com</strong>, o reclamar ante la Agencia Española de Protección de Datos (www.aepd.es).</p>
 <div style="margin-top:1.25rem;text-align:right"><button type="button" class="btn btn-primary" onclick="closePrivacyModal()">Entendido, cerrar</button></div>
 </div></div>
+
 
 <div id="modalFirma" class="modal-backdrop" role="dialog" aria-modal="true"><div class="modal-card">
 <h2>Firma del acuerdo</h2>
@@ -295,6 +316,7 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <div id="msgFirma" class="status-msg"></div>
 </div></div>
 
+
 <div id="modalChat" class="modal-backdrop" role="dialog" aria-modal="true"><div class="modal-card">
 <h2>Chat privado</h2>
 <p>Solo lo veis vosotros dos. No des tu dirección ni datos personales hasta fiarte, quedad en lugares públicos o en el recinto y no pagues nunca por tocar. Si algo no te cuadra, cierra el chat y pulsa Reportar.</p>
@@ -303,6 +325,7 @@ footer{background:#060304;border-top:1px solid rgba(212,169,79,.5);padding:2.4re
 <div class="row"><button type="button" class="btn btn-primary btn-sm" onclick="enviarMsg()">Enviar</button><button type="button" class="btn btn-secondary btn-sm" onclick="cargarChat()">Actualizar</button><button type="button" class="btn btn-secondary btn-sm" onclick="cerrarChat()">Cerrar</button></div>
 <div id="chatMsg" class="status-msg"></div>
 </div></div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -318,11 +341,13 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let regEmail='',regPass='',PF={},chatId=null,chatT=null,modoAdmin=false,esAdmin=false,yo=null,miPerfil=null,destino=null,firmaId=null,AC={},NM={};
 
+
 function msg(t,ok){const m=$('msg');m.textContent=t||'';m.className='status-msg '+(ok?'status-ok':'status-err');}
 function vista(v){['vAuth','vPerfil','vPanel','vSolicitud','vAdmin','vClave','vEditar','vEvento'].forEach(x=>$(x).style.display=x===v?'block':'none');}
 function mostrarRegistro(){modoAdmin=false;$('registro').classList.add('open');refrescar();}
 function ocultarRegistro(){modoAdmin=false;$('registro').classList.remove('open');}
 document.querySelectorAll('a[href="#registro"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();mostrarRegistro();}));
+
 
 async function refrescar(){
   msg('');
@@ -344,6 +369,7 @@ async function refrescar(){
   if(miPerfil||esAdmin)await cargarPanel();
   cargarDirectorio();
 }
+
 
 function traducir(e){
   const c=e.code||'',m=(e.message||'').toLowerCase();
@@ -375,7 +401,7 @@ function modoCuenta(reg){
 function camposTipo(){
   const f=$('fPerfil'),org=f.tipo.value==='organizador',sub=f.subtipo.value;
   $('restoFicha').style.display=f.tipo.value?'block':'none';$('blInstr').style.display=org?'none':'block';
-  $('blOrg').style.display=org?'block':'none';
+  $('blOrg').style.display=org?'block':'none';$('blGrupo').style.display=(f.tipo.value==='musico')?'block':'none';if(f.tipo.value!=='musico'){$('bgCheck').checked=false;toggleGrupo('bgCheck','bgFormato');}
   $('blEntidad').style.display=(org&&sub==='entidad')?'block':'none';
   $('blPart').style.display=(org&&sub==='particular')?'block':'none';
   f.instrumento.required=f.tipo.value==='musico';f.subtipo.required=org;f.cargo.required=org&&sub==='entidad';
@@ -409,7 +435,7 @@ async function cargarAdmin(){
     const igl=ig?(/^[A-Za-z0-9._]{1,30}$/.test(ig)?`<a href="https://instagram.com/${ig}" target="_blank" rel="noopener noreferrer">@${ig}</a>`:esc(p.instagram)):'—';
     const org=p.tipo!=='organizador'?'':(p.subtipo==='entidad'?`<br>Entidad · Cargo: ${esc(p.cargo)}`:`<br>Particular · ${esc(p.evento_tipo)} el ${esc(p.evento_fecha)} en ${esc(p.evento_lugar)}<br>Referencia: ${esc(p.referencia)}`);
     const b=(e,t,c)=>`<button class="btn ${c} btn-sm" onclick="decidir('${p.id}','${e}')">${t}</button>`;
-    return `<div class="ac"><h4>${p.tipo==='musico'?'Músico':'Organizador'}: ${esc(p.nombre)} (${esc(p.ciudad)})${p.verificado?' ✓':''}</h4>${esc(p.instrumento||'')}<br>${esc(p.descripcion)}${org}<br>Enlace: ${enl}<br>Instagram: ${igl}<br>Código que debe aparecer en su perfil o mensaje: <strong>${esc(p.codigo)}</strong><br>Correo: ${esc(p.email)}<br>Recibida: ${new Date(p.creado).toLocaleString('es-ES')}<div class="row">${est!=='aprobado'?b('aprobado','Aprobar','btn-primary'):''}${est!=='rechazado'?b('rechazado','Rechazar','btn-secondary'):''}${est==='aprobado'?b('suspendido','Suspender','btn-secondary'):''}${est!=='pendiente'&&est!=='aprobado'?b('pendiente','Volver a pendiente','btn-secondary'):''}${est==='aprobado'?`<button class="btn btn-secondary btn-sm" onclick="verificar('${p.id}',${!p.verificado})">${p.verificado?'Quitar insignia':'Marcar comprobado'}</button>`:''}</div></div>`;
+    return `<div class="ac"><h4>${p.tipo==='musico'?'Músico':'Organizador'}: ${esc(p.nombre)} (${esc(p.ciudad)})${p.verificado?' ✓':''}</h4>${esc(p.instrumento||'')}<br>${esc(p.descripcion)}${org}<br>Enlace: ${enl}<br>Instagram: ${igl}${p.busca_grupo?'<br>Busca formar grupo: '+esc(p.formato_grupo||'cualquier formato'):''}<br>Código que debe aparecer en su perfil o mensaje: <strong>${esc(p.codigo)}</strong><br>Correo: ${esc(p.email)}<br>Recibida: ${new Date(p.creado).toLocaleString('es-ES')}<div class="row">${est!=='aprobado'?b('aprobado','Aprobar','btn-primary'):''}${est!=='rechazado'?b('rechazado','Rechazar','btn-secondary'):''}${est==='aprobado'?b('suspendido','Suspender','btn-secondary'):''}${est!=='pendiente'&&est!=='aprobado'?b('pendiente','Volver a pendiente','btn-secondary'):''}${est==='aprobado'?`<button class="btn btn-secondary btn-sm" onclick="verificar('${p.id}',${!p.verificado})">${p.verificado?'Quitar insignia':'Marcar comprobado'}</button>`:''}</div></div>`;
   }).join('');
 }
 async function verificar(id,v){const {error}=await sb.rpc('admin_set_verificado',{p_id:id,p_v:v});if(error){msg('No se pudo actualizar.');return;}msg(v?'Marcada como comprobada.':'Insignia retirada.',true);cargarAdmin();}
@@ -448,13 +474,13 @@ async function abrirEditar(){
   const {data:fi}=await sb.rpc('mi_ficha');if(!fi){msg('No se pudo cargar tu ficha.');return;}
   const f=$('fEditar'),mus=fi.tipo==='musico';
   f.ciudad.value=fi.ciudad||'';f.descripcion.value=fi.descripcion||'';f.enlace.value=fi.enlace||'';f.instagram.value=fi.instagram||'';
-  f.instrumento.value=fi.instrumento||'';f.estudios.value=fi.estudios||'';f.experiencia.value=fi.experiencia||'';
+  f.instrumento.value=fi.instrumento||'';$('edBgCheck').checked=!!fi.busca_grupo;$('edBgFormato').value=fi.formato_grupo||'';toggleGrupo('edBgCheck','edBgFormato');$('edBgFormato').value=fi.formato_grupo||'';$('edGrupo').style.display=mus?'block':'none';f.estudios.value=fi.estudios||'';f.experiencia.value=fi.experiencia||'';
   $('edMus').style.display=mus?'flex':'none';$('edMus2').style.display=mus?'block':'none';f.instrumento.required=mus;
   msg('');vista('vEditar');
 }
 $('fEditar').addEventListener('submit',async e=>{
   e.preventDefault();const f=e.target,g=n=>f[n].value.trim();
-  const {error}=await sb.rpc('actualizar_ficha',{p:{ciudad:g('ciudad'),descripcion:g('descripcion'),enlace:g('enlace'),instagram:g('instagram'),instrumento:f.instrumento.value,estudios:g('estudios'),experiencia:g('experiencia')}});
+  const {error}=await sb.rpc('actualizar_ficha',{p:{ciudad:g('ciudad'),descripcion:g('descripcion'),enlace:g('enlace'),instagram:g('instagram'),instrumento:f.instrumento.value,estudios:g('estudios'),experiencia:g('experiencia'),busca_grupo:($('edGrupo').style.display!=='none'&&$('edBgCheck').checked),formato_grupo:($('edGrupo').style.display!=='none'&&$('edBgCheck').checked)?(f.formato_grupo.value||null):null}});
   await refrescar();msg(error?'No se pudieron guardar los cambios.':'Cambios guardados.',!error);
 });
 function abrirEvento(){msg('');$('fEvento').reset();vista('vEvento');}
@@ -474,10 +500,11 @@ async function valorar(acId,destId){
 async function salir(){await sb.auth.signOut();refrescar();}
 sb.auth.onAuthStateChange(()=>{if($('registro').classList.contains('open'))refrescar();});
 
+
 $('fPerfil').addEventListener('submit',async e=>{
   e.preventDefault();const f=e.target;
   const v=n=>f[n].value.trim()||null,org=f.tipo.value==='organizador',sub=org?f.subtipo.value:'',ent=sub==='entidad',par=sub==='particular';
-  const d={tipo:f.tipo.value,subtipo:org?sub:null,nombre:v('nombre'),instrumento:f.instrumento.value||null,ciudad:v('ciudad'),descripcion:v('descripcion'),enlace:v('enlace'),cargo:ent?v('cargo'):null,evento_tipo:par?v('evento_tipo'):null,evento_fecha:par?v('evento_fecha'):null,evento_lugar:par?v('evento_lugar'):null,referencia:par?v('referencia'):null,instagram:$('c3').checked?v('instagram'):null};
+  const d={tipo:f.tipo.value,subtipo:org?sub:null,nombre:v('nombre'),instrumento:f.instrumento.value||null,ciudad:v('ciudad'),descripcion:v('descripcion'),enlace:v('enlace'),cargo:ent?v('cargo'):null,evento_tipo:par?v('evento_tipo'):null,evento_fecha:par?v('evento_fecha'):null,evento_lugar:par?v('evento_lugar'):null,referencia:par?v('referencia'):null,instagram:$('c3').checked?v('instagram'):null,busca_grupo:(f.tipo.value==='musico'&&$('bgCheck').checked),formato_grupo:(f.tipo.value==='musico'&&$('bgCheck').checked)?(f.formato_grupo.value||null):null};
   if(!yo){
     const b=$('bPerfil');if(b.disabled)return;esperar(b,60,'Crear cuenta y enviar ficha');
     const email=regEmail,password=regPass;
@@ -493,6 +520,7 @@ $('fPerfil').addEventListener('submit',async e=>{
   avisarAdmin(d);
   refrescar();msg('Ficha enviada. La revisaremos manualmente antes de publicarla.',true);
 });
+
 
 async function reenviar(d){
   const {data,error}=await sb.rpc('reenviar_ficha',{p:d});
@@ -527,12 +555,13 @@ async function resetClave(){
 }
 async function cargarDirectorio(){
   const g=$('gridCards');
-  const {data,error}=await sb.from('perfiles').select('id,tipo,nombre,instrumento,ciudad,descripcion,estudios,experiencia,verificado').eq('estado','aprobado').order('creado',{ascending:false});
+  const {data,error}=await sb.from('perfiles').select('id,tipo,nombre,instrumento,ciudad,descripcion,estudios,experiencia,verificado,busca_grupo,formato_grupo').eq('estado','aprobado').order('creado',{ascending:false});
   if(error||!data||!data.length){g.innerHTML='<p class="section-subtitle">Todavía no hay fichas publicadas. ¡Sé el primero en registrarte!</p>';return;}
   const {data:md}=await sb.rpc('medias',{p_ids:data.map(p=>p.id)});const M={};(md||[]).forEach(m=>M[m.user_id]=m);
   const puede=miPerfil&&miPerfil.tipo==='organizador'&&miPerfil.estado==='aprobado';
-  g.innerHTML=data.map(p=>{const m=M[p.id];return `<article class="card"><span class="card-tag">${p.tipo==='musico'?'Músico':'Evento'} · ${esc(p.instrumento||'Cuerda')}${p.verificado?' · ✓ Comprobado':''}</span><h3>${esc(p.nombre)} <small>(${esc(p.ciudad)})</small></h3>${m?`<div class="stars">★ ${m.media} <small>(${m.total})</small></div>`:''}<p>${esc(p.descripcion)}</p>${p.estudios?`<p><strong>Estudios:</strong> ${esc(p.estudios)}</p>`:''}${p.experiencia?`<p><strong>Experiencia:</strong> ${esc(p.experiencia)}</p>`:''}${puede&&p.tipo==='musico'?`<button class="btn btn-primary btn-sm" onclick="solicitar('${p.id}','${esc(p.nombre).replace(/'/g,'')}')">Solicitar contacto</button>`:''}</article>`;}).join('');
+  g.innerHTML=data.map(p=>{const m=M[p.id];return `<article class="card"><span class="card-tag">${p.tipo==='musico'?'Músico':'Evento'} · ${esc(p.instrumento||'Cuerda')}${p.verificado?' · ✓ Comprobado':''}</span><h3>${esc(p.nombre)} <small>(${esc(p.ciudad)})</small></h3>${m?`<div class="stars">★ ${m.media} <small>(${m.total})</small></div>`:''}<p>${esc(p.descripcion)}</p>${p.busca_grupo?`<p><span class="card-tag">♫ Busca formar ${({duo:'un dúo',trio:'un trío',cuarteto:'un cuarteto'})[p.formato_grupo]||'dúo, trío o cuarteto'}</span></p>`:''}${p.estudios?`<p><strong>Estudios:</strong> ${esc(p.estudios)}</p>`:''}${p.experiencia?`<p><strong>Experiencia:</strong> ${esc(p.experiencia)}</p>`:''}${puede&&p.tipo==='musico'?`<button class="btn btn-primary btn-sm" onclick="solicitar('${p.id}','${esc(p.nombre).replace(/'/g,'')}')">Solicitar contacto</button>`:''}</article>`;}).join('');
 }
+
 
 function solicitar(id,nombre){destino=id;$('solDest').textContent=nombre;mostrarRegistro2();}
 function mostrarRegistro2(){$('registro').classList.add('open');vista('vSolicitud');}
@@ -542,6 +571,7 @@ $('fSol').addEventListener('submit',async e=>{
   if(error){msg(String(error.message).includes('valoraciones_pendientes')?MSG_VAL:String(error.message).includes('limite_solicitudes')?'Has alcanzado el límite de solicitudes por ahora. Podrás enviar más cuando te respondan o pasen 24 horas.':'No se pudo enviar la solicitud. Comprueba que tu ficha está aprobada.');return;}
   f.reset();await refrescar();msg('Solicitud enviada. El músico la verá en su panel.',true);
 });
+
 
 async function cargarPanel(){
   if(!miPerfil){$('estadoFicha').textContent='Sesión iniciada. Para gestionar fichas, usa el enlace «Administración» al pie de la página.';$('listaAcuerdos').innerHTML='';return;}
@@ -571,10 +601,12 @@ async function cargarPanel(){
   }).join('');
 }
 
+
 async function responder(id,estado){
   const {error}=await sb.from('acuerdos').update({estado}).eq('id',id);
   if(error)msg(String(error.message).includes('valoraciones_pendientes')?MSG_VAL:'No se pudo actualizar el acuerdo.');else cargarPanel();
 }
+
 
 const cv=$('cvFirma'),cx=cv.getContext('2d');let dib=false,tocado=false;
 function limpiarFirma(){cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);cx.lineWidth=3;cx.lineCap='round';cx.strokeStyle='#111';tocado=false;}
@@ -591,6 +623,7 @@ async function confirmarFirma(){
   $('modalFirma').classList.remove('open');cargarPanel();
 }
 
+
 function pdf(id){
   const a=AC[id],d=new window.jspdf.jsPDF(),f=t=>t?new Date(t).toLocaleString('es-ES'):'';
   const L=['ACUERDO DE ACTUACION - Cuerda Viva Musica','','Organizador: '+NM[a.organizador_id],'Musico: '+NM[a.musico_id],'Fecha: '+a.fecha,'Lugar: '+a.lugar,'Tarifa: '+a.tarifa,'Forma y plazo de pago: '+a.pago,'Cancelacion: '+a.cancelacion,'','Cuerda Viva Musica solo pone en contacto a las partes. No es parte de este acuerdo ni responsable de su cumplimiento.','','Firmado electronicamente por el organizador el '+f(a.firma_org_at)+' y por el musico el '+f(a.firma_mus_at)+'.'];
@@ -599,13 +632,18 @@ function pdf(id){
   d.text('Organizador',20,y+34);d.text('Musico',110,y+34);d.save('acuerdo-cuerda-viva.pdf');
 }
 
+
 const privacyModal=$('privacyModal');
 function openPrivacyModal(e){if(e)e.preventDefault();privacyModal.classList.add('open');}
 function closePrivacyModal(){privacyModal.classList.remove('open');}
 privacyModal.addEventListener('click',e=>{if(e.target===privacyModal)closePrivacyModal();});
 
+
 $('edInstrSel').innerHTML=document.querySelector('#fPerfil select[name=instrumento]').innerHTML;
-document.querySelectorAll('.igp').forEach(e=>e.textContent=IG_PLATAFORMA);
+document.querySelectorAll('.igp').forEach(e=>{const a=document.createElement('a');a.className='ig-link';a.href='https://instagram.com/'+IG_PLATAFORMA.replace(/^@/,'');a.target='_blank';a.rel='noopener noreferrer';a.textContent=IG_PLATAFORMA;e.appendChild(a);});
+function toggleGrupo(cb,sel){const c=$(cb),x=$(sel);x.style.display=c.checked?'block':'none';if(!c.checked)x.value='';}
+$('bgCheck').addEventListener('change',()=>toggleGrupo('bgCheck','bgFormato'));
+$('edBgCheck').addEventListener('change',()=>toggleGrupo('edBgCheck','edBgFormato'));
 refrescar();
 </script>
 </body>
